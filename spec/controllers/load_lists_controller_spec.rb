@@ -45,7 +45,7 @@ describe LoadListsController do
 
     it "should be success" do
 
-      get :edit, :id => @load_list 
+      get :edit, :id => @load_list
       response.should be_success
     end
   end
@@ -94,18 +94,16 @@ describe LoadListsController do
   end
   #启动流程处理
   describe "PUT process_handle" do
-    before(:each) do
-      @load_list ||= Factory(:load_list_with_bills)
-    end
     it "load_list state should become shipped" do
-      put :process_handle,:id =>@load_list 
+      load_list ||= Factory(:load_list_with_bills)
+      put :process_handle,:id =>load_list
       response.should be_success
     end
 
     it "load_list state should become 'reached' after reach process" do
       shipped_list = Factory(:load_list_shipped)
-      put :process_handle,:id =>shipped_list 
-      response.should be_success 
+      put :process_handle,:id =>shipped_list
+      response.should be_success
     end
   end
 end

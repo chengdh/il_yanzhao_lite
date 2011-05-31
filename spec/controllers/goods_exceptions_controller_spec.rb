@@ -10,12 +10,11 @@ describe GoodsExceptionsController do
   login_admin
   render_views
 
-  before(:each) do
-    @goods_exception = Factory(:goods_exception)
-  end
-
-
   describe "GET index" do
+    before(:each) do
+      @goods_exception = Factory(:goods_exception)
+    end
+
     it "assigns all goods_exceptions as @goods_exceptions" do
       get :index
       response.should be_success
@@ -23,6 +22,10 @@ describe GoodsExceptionsController do
   end
 
   describe "GET show" do
+    before(:each) do
+      @goods_exception = Factory(:goods_exception)
+    end
+
     it "should be success" do
       get :show, :id => @goods_exception
       response.should be_success
@@ -89,6 +92,10 @@ describe GoodsExceptionsController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      @goods_exception = Factory(:goods_exception)
+    end
+
     it "destroys the requested goods_exception" do
       lambda do
         delete :destroy, :id => @goods_exception

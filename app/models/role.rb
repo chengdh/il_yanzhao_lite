@@ -46,7 +46,7 @@ class Role < ActiveRecord::Base
     if ids.blank?
       @system_finctions =[]
     else
-      @system_functions ||= SystemFunction.find(ids,:conditions => {:is_active => true},:include => [:system_function_group]) if ids.present?
+      @system_functions ||= SystemFunction.where(:id => ids,:is_active => true).includes(:system_function_group) if ids.present?
     end
   end
   #得到被授权的system_function_group

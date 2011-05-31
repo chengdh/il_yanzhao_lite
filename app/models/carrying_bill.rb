@@ -1,16 +1,4 @@
 #coding: utf-8
-class CustomerCodeValidator < ActiveModel::EachValidator
-  def validate_each(object,attribute,value)
-    if value.present?
-      from_customer = Customer.find_by_code_and_name_and_is_active(value,object.from_customer_name,true)
-      if from_customer.blank?
-        object.errors[attribute] <<(options[:message] || "客户编号与姓名不匹配" )
-      else
-        object.from_customer = from_customer
-      end
-    end
-  end
-end
 class CarryingBill < ActiveRecord::Base
   attr_protected :insured_rate,:original_carrying_fee,:original_goods_fee,:original_from_short_carrying_fee,:original_to_short_carrying_fee,:original_insured_amount,:original_insured_fee
   #营业额统计
@@ -33,11 +21,10 @@ class CarryingBill < ActiveRecord::Base
   scope :with_association,:include => [:from_org,:to_org,:transit_org,:send_list_line,:user]
 
 
-  #before_validation :set_customer
   #保存成功后,设置原始费用
   before_create :set_original_fee
-  #计算手续费
-  before_save :cal_hand_fee
+  #产生货号 计算手续费
+  before_save :generate_goods_no,:cal_hand_fee
 
   belongs_to :user
   belongs_to :from_org,:class_name => "Org"
@@ -75,10 +62,9 @@ class CarryingBill < ActiveRecord::Base
   #验证中转运费和中转手续费不可大运运费
   validate :check_transit_fee
 
-  validates :bill_no,:goods_no,:uniqueness => true
-  validates_presence_of :bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
+  validates :bill_no,:uniqueness => true,:length => 7..9
+  validates_presence_of :bill_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
   validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:goods_num
-  validates :customer_code,:customer_code => true
 
   #定义state_machine
   #已开票
@@ -121,7 +107,7 @@ class CarryingBill < ActiveRecord::Base
                  :payment_listed => :paid,#货款已支付
                  :paid => :posted) #过帐结束
 
-      #普通运单到货后有分发操作,中转运单不存在分发操作
+      #普通运单到货后,可进行提货操作
       transition :reached => :distributed,:distributed => :deliveried,:if => lambda {|bill| bill.transit_org_id.blank?}
 
       #中转运单处理流程
@@ -145,9 +131,6 @@ class CarryingBill < ActiveRecord::Base
     #根据运单状态进行验证操作
     state :loaded,:shipped,:reached do
       validates_presence_of :load_list_id
-    end
-    state :distributed do
-      validates_presence_of :distribution_list_id
     end
     end
 
@@ -333,37 +316,6 @@ class CarryingBill < ActiveRecord::Base
           sum_array << ""
         end
       end
-      #sum_array << "" if options[:methods].include?(:bill_date)
-      #sum_array << "" if options[:methods].include?(:bill_no)
-      #sum_array << "" if options[:methods].include?(:goods_no)
-      #sum_array << "" if options[:methods].include?(:from_customer_name)
-      #sum_array << "" if options[:methods].include?(:from_customer_phone)
-      #sum_array << "" if options[:methods].include?(:from_customer_mobile)
-      #sum_array << "" if options[:methods].include?(:to_customer_name)
-      #sum_array << "" if options[:methods].include?(:to_customer_phone)
-      #sum_array << "" if options[:methods].include?(:to_customer_mobile)
-      #sum_array << "" if options[:methods].include?(:from_org_name)
-      #sum_array << "" if options[:methods].include?(:transit_org_name)
-      #sum_array << "" if options[:methods].include?(:to_org_name)
-      #用于显示合计票数
-      #sum_array << "合计:#{sum_info[:count]}票"
-      #sum_array << sum_info[:sum_from_short_carrying_fee] if options[:methods].include?(:from_short_carrying_fee)
-      #sum_array << sum_info[:sum_to_short_carrying_fee] if options[:methods].include?(:to_short_carrying_fee)
-      #sum_array << sum_info[:sum_carrying_fee] if options[:methods].include?(:carrying_fee)
-      #sum_array << sum_info[:sum_carrying_fee_th] if options[:methods].include?(:carrying_fee_th)
-      #sum_array << sum_info[:sum_k_carrying_fee] if options[:methods].include?(:k_carrying_fee)
-      #sum_array << sum_info[:sum_k_hand_fee] if options[:methods].include?(:k_hand_fee)
-      #sum_array << sum_info[:sum_goods_fee] if options[:methods].include?(:goods_fee)
-      #sum_array << sum_info[:sum_insured_fee] if options[:methods].include?(:insured_fee)
-      #sum_array << sum_info[:sum_transit_carrying_fee] if options[:methods].include?(:transit_carrying_fee)
-      #sum_array << sum_info[:sum_transit_hand_fee] if options[:methods].include?(:transit_hand_fee)
-
-      #sum_array << sum_info[:sum_act_pay_fee] if options[:methods].include?(:act_pay_fee)
-      #sum_array << sum_info[:sum_agent_carrying_fee] if options[:methods].include?(:agent_carrying_fee)
-      #sum_array << sum_info[:sum_th_amount] if options[:methods].include?(:th_amount)
-      #sum_array << sum_info[:sum_goods_num] if options[:methods].include?(:goods_num)
-      #sum_array << "" if options[:methods].include?(:human_state_name)
-
       ret = ret + sum_array.export_line_csv
       ret
     end
@@ -422,35 +374,11 @@ class CarryingBill < ActiveRecord::Base
           :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:note,:human_state_name
       ]}
     end
-    #机打运单编号从4000000开始
-    #生成票据编号
-    def generate_bill_no
-      self.bill_no = "%07d" % (CarryingBill.where(:type => ["ComputerBill","TransitBill"]).count > 0 ? 4000000 + CarryingBill.count : 4000000)
-    end
     def generate_goods_no
-      #货号规则
-      #6位年月日+始发地市+到达地市+始发组织机构代码（如返程货则为到达地组织机构代码）+序列号+“-”+件数
-      #新建单据/修改发货地/到货地/中转地 重新生成货号
-      if self.new_record?  or (self.changes[:from_org_id].present? or self.changes[:to_org_id].present? or self.changes[:transit_org_id].present?)
-        self.goods_no ="#{bill_date.strftime('%y%m%d')}#{from_org.simp_name}#{to_org.simp_name}#{today_sequence}-#{goods_num}" if self.to_org.present?
-        self.goods_no ="#{bill_date.strftime('%y%m%d')}#{from_org.simp_name}#{transit_org.simp_name}#{today_sequence}-#{goods_num}" if self.transit_org.present?
-      end
+      #货号规则:运单编号后四位+ "-" + 货物件数
+      self.goods_no = "#{self.bill_no[3,4]}-#{self.goods_num}"
     end
     private
-    #获取当日发货单序列
-    def today_sequence
-      sequence = 1
-      sequence = CarryingBill.where(:bill_date => Date.today,:from_org_id => from_org_id,:to_org_id => to_org_id).count + 1 if self.to_org_id.present?
-      sequence = CarryingBill.where(:bill_date => Date.today,:from_org_id => from_org_id,:transit_org_id => transit_org_id).count + 1 if self.transit_org_id.present?
-      sequence
-    end
-    def set_customer
-      if customer_code.blank?
-        self.from_customer = nil
-      elsif Vip.exists?(:code => customer_code,:name => from_customer_name,:is_active => true)
-        self.from_customer = Vip.where(:is_active => true).find_by_code(customer_code)
-      end
-    end
     #计算手续费
     def cal_hand_fee
       if self.goods_fee_cash?

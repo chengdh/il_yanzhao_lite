@@ -9,12 +9,13 @@ describe SendListBacksController do
   login_admin
   render_views
 
-  before(:each) do
-    @send_list_back = Factory(:send_list_back)
-  end
 
 
   describe "GET index" do
+    before(:each) do
+      @send_list_back = Factory(:send_list_back)
+    end
+
     it "assigns all send_list_backs as @send_list_backs" do
       get :index
       response.should be_success
@@ -22,6 +23,10 @@ describe SendListBacksController do
   end
 
   describe "GET show" do
+    before(:each) do
+      @send_list_back = Factory(:send_list_back)
+    end
+
 
     it "should be success" do
       get :show, :id => @send_list_back
@@ -69,6 +74,10 @@ describe SendListBacksController do
   end
 
   describe "DELETE destroy" do
+    before(:each) do
+      @send_list_back = Factory(:send_list_back)
+    end
+
     it "destroys the requested send_list_back" do
       lambda do
         delete :destroy, :id => @send_list_back

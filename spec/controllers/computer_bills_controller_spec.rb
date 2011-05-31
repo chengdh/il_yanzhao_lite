@@ -47,6 +47,7 @@ describe ComputerBillsController do
   describe "POST create" do
     before(:each) do
       @attr = Factory.build(:computer_bill).attributes
+      @attr["bill_no"] = '9999999'
     end
     describe "success" do
       it "能够成功保存票据信息" do

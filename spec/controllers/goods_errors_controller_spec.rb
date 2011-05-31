@@ -9,13 +9,11 @@ describe GoodsErrorsController do
   login_admin
   render_views
 
-  before(:each) do
-    @goods_error = Factory(:goods_error)
-    @bill = Factory(:computer_bill)
-  end
-
-
   describe "GET index" do
+    before(:each) do
+      @goods_error = Factory(:goods_error)
+    end
+
     it "assigns all goods_errors as @goods_errors" do
       get :index
       response.should be_success
@@ -23,6 +21,10 @@ describe GoodsErrorsController do
   end
 
   describe "GET show" do
+    before(:each) do
+      @goods_error = Factory(:goods_error)
+    end
+
     it "should be success" do
       get :show, :id => @goods_error
       response.should be_success
@@ -42,6 +44,10 @@ describe GoodsErrorsController do
   end
 
   describe "GET edit" do
+    before(:each) do
+      @goods_error = Factory(:goods_error)
+    end
+
     it "assigns the requested goods_error as @goods_error" do
       get :edit, :id => @goods_error
       response.should be_success
@@ -51,6 +57,7 @@ describe GoodsErrorsController do
   describe "POST create" do
     before(:each) do
       @attr = Factory.build(:goods_error).attributes
+      @bill = Factory(:computer_bill)
     end
     describe "success" do
       it "能够成功保存多货少货信息" do
@@ -70,8 +77,10 @@ describe GoodsErrorsController do
 
   describe "PUT update" do
     before :each do
+      @goods_error = Factory(:goods_error)
       @attr = {:note => 'updated goods_exception'}
     end
+
 
     describe "with valid params" do
       it "updates the requested goods_exception" do
@@ -92,6 +101,10 @@ describe GoodsErrorsController do
   end
 
   describe "DELETE destroy" do
+    before :each do
+      @goods_error = Factory(:goods_error)
+    end
+
     it "destroys the requested goods_exception" do
       lambda do
         delete :destroy, :id => @goods_error

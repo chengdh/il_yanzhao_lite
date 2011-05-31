@@ -19,6 +19,4 @@ class ShortFeeInfosController < BaseController
     @search = end_of_association_chain.where(["short_fee_infos.org_id = ? or short_fee_infos.op_org_id =?",current_user.default_org.id,current_user.default_org.id]).search(params[:search])
     get_collection_ivar || set_collection_ivar(@search.select("DISTINCT #{resource_class.table_name}.*").order(sort_column + ' ' + sort_direction).paginate(:page => params[:page]))
   end
-
-
 end
