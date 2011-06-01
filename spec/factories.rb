@@ -63,6 +63,7 @@ end
 Factory.define :computer_bill do |bill|
   bill.bill_date Date.today
   bill.bill_no "0000001"
+  bill.goods_no "0001-20"
   bill.from_customer_name "发货人"
   bill.from_customer_phone "13676997527"
   bill.to_customer_name "收货人"
@@ -209,6 +210,7 @@ end
 Factory.define :hand_bill do |bill|
   bill.bill_date Date.today
   bill.bill_no "0000003"
+  bill.goods_no "0003-20"
   bill.from_customer_name "发货人"
   bill.from_customer_phone "13676997527"
   bill.to_customer_name "收货人"
@@ -223,13 +225,13 @@ Factory.define :hand_bill do |bill|
   bill.to_short_carrying_fee 20
   bill.pay_type CarryingBill::PAY_TYPE_CASH
   bill.goods_num 20
-  bill.goods_no "110320郑石11-100"
   bill.goods_info "手工运单"
 end
 #中转票
 Factory.define :transit_bill do |bill|
   bill.bill_date Date.today
   bill.bill_no "0000002"
+  bill.goods_no "0002-20"
   bill.from_customer_name "发货人"
   bill.from_customer_phone "13676997527"
   bill.to_customer_name "收货人"
@@ -271,6 +273,7 @@ end
 Factory.define :hand_transit_bill do |bill|
   bill.bill_date Date.today
   bill.bill_no "0000004"
+  bill.goods_no "0004-20"
   bill.from_customer_name "发货人"
   bill.from_customer_phone "13676997527"
   bill.to_customer_name "收货人"
@@ -283,7 +286,6 @@ Factory.define :hand_transit_bill do |bill|
   bill.to_short_carrying_fee 20
   bill.pay_type CarryingBill::PAY_TYPE_CASH
 
-  bill.goods_no "110320安郑1-3"
   bill.goods_info "手工中转运单"
   bill.association :from_org,:factory => :ay
   bill.association :transit_org,:factory => :zz
@@ -431,6 +433,7 @@ Factory.define :transit_info do |ti|
   ti.association :org,:factory => :zz
   ti.association :transit_company
   ti.transit_carrying_fee 100
+  ti.transit_bill_no "0000001"
 end
 Factory.define :transit_info_with_bill,:parent => :transit_info do |ti|
   ti.association :carrying_bill,:factory => :transit_bill_reached

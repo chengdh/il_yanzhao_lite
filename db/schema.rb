@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110530034727) do
+ActiveRecord::Schema.define(:version => 20110601081541) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20110530034727) do
     t.decimal  "original_from_short_carrying_fee",               :precision => 15, :scale => 2, :default => 0.0
     t.decimal  "original_to_short_carrying_fee",                 :precision => 15, :scale => 2, :default => 0.0
     t.string   "package",                          :limit => 30
+    t.string   "transit_bill_no",                  :limit => 20
   end
 
   add_index "carrying_bills", ["bill_date"], :name => "index_carrying_bills_on_bill_date"

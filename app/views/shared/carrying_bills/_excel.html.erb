@@ -19,6 +19,8 @@
       <th class="transit_carrying_fee hide">中转运费</th>
       <th class="transit_hand_fee hide">中转手续费</th>
       <th class="agent_carrying_fee hide">代收运费</th>
+      <th class='transit_bill_no hide'>中转票号</th>
+      <th class='transit_company hide'>中转公司</th>
       <th class="th_amount hide">提货应收</th>
       <th class="from_short_carrying_fee hide">发货地短途运费</th>
       <th class="to_short_carrying_fee hide">到货地短途运费</th>
@@ -70,6 +72,8 @@
         <td class="transit_carrying_fee hide"><%=bill.transit_carrying_fee%></td>
         <td class="transit_hand_fee hide"><%=bill.transit_hand_fee%></td>
         <td class="agent_carrying_fee hide"><%=bill.agent_carrying_fee%></td>
+        <td class='transit_bill_no hide'>bill.transit_bill_no</td>
+        <td class='transit_company hide'>bill.transit_info.try(:transit_company)</td>
         <td class="th_amount hide"><%=bill.th_amount%></td>
         <td class="from_short_carrying_fee hide"><%= bill.from_short_carrying_fee %></td>
         <td class="to_short_carrying_fee hide"><%= bill.to_short_carrying_fee %></td>
@@ -103,6 +107,8 @@
       <td class="transit_carrying_fee hide"><%=sum_info[:sum_transit_carrying_fee]%></td>
       <td class="transit_hand_fee hide"><%=sum_info[:sum_transit_hand_fee]%></td>
       <td class="agent_carrying_fee hide"><%=sum_info[:sum_agent_carrying_fee]%></td>
+      <td class='transit_bill_no hide'>&nbsp;</td>
+      <td class='transit_company hide'>&nbsp;</td>
       <td class="th_amount hide"><%=sum_info[:sum_th_amount]%></td>
       <td class="from_short_carrying_fee hide"><%= sum_info[:sum_from_short_carrying_fee] %></td>
       <td class="to_short_carrying_fee hide"><%= sum_info[:sum_to_short_carrying_fee] %></td>

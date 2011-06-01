@@ -171,11 +171,6 @@ jQuery(function($) {
 	$('form.carrying_bill').live("change", calculate_carrying_bill);
 	$('form.carrying_bill').livequery(calculate_carrying_bill);
 
-	//根据不同的运单录入界面,隐藏部分字段
-	$('form.carrying_bill input[name*="goods_no"]').livequery(function() {
-		$(this).attr('readonly', true);
-	});
-
 	$('form.return_bill').livequery(function() {
 		$(this).find('input').attr('readonly', true);
 		$('#return_bill_note').attr('readonly', false);

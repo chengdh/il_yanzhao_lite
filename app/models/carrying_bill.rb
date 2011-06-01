@@ -24,7 +24,7 @@ class CarryingBill < ActiveRecord::Base
   #保存成功后,设置原始费用
   before_create :set_original_fee
   #产生货号 计算手续费
-  before_save :generate_goods_no,:cal_hand_fee
+  before_save :cal_hand_fee
 
   belongs_to :user
   belongs_to :from_org,:class_name => "Org"
@@ -62,8 +62,8 @@ class CarryingBill < ActiveRecord::Base
   #验证中转运费和中转手续费不可大运运费
   validate :check_transit_fee
 
-  validates :bill_no,:uniqueness => true,:length => 7..9
-  validates_presence_of :bill_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
+  validates :bill_no,:uniqueness => true
+  validates_presence_of :bill_no,:goods_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
   validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:goods_num
 
   #定义state_machine
@@ -252,13 +252,6 @@ class CarryingBill < ActiveRecord::Base
       ((Date.today.end_of_day - self.bill_date.beginning_of_day) /1.day).to_i
     end
 
-    #定义customer_code虚拟属性
-    def customer_code
-      @customer_code || self.from_customer.try(:code)
-    end
-    def customer_code=(customer_code)
-      @customer_code = customer_code
-    end
     #生成退货单据
     #录入原运单编号后回车，可显示原票信息退货信息：
     #退货运单编号为TH原运单编号，
@@ -276,6 +269,7 @@ class CarryingBill < ActiveRecord::Base
     def generate_return_bill
       override_attr = {
         "bill_no" => "TH#{self.bill_no}",
+        "goods_no" => "TH#{self.goods_no}",
         "bill_date"=> Date.today,
         "from_org_id"=> self.to_org_id,
         "to_org_id"=> self.from_org_id,
@@ -293,7 +287,6 @@ class CarryingBill < ActiveRecord::Base
       #如果是中转票据,则将中转站与始发站调换
       override_attr.merge!("from_org_id"=> self.transit_org_id,"to_org_id"=> self.from_org_id) unless self.transit_org_id.blank?
       return_attr = self.attributes.merge(override_attr)
-      return_attr.delete("goods_no")
       self.build_return_bill(return_attr)
     end
     #重写to_s方法
@@ -373,10 +366,6 @@ class CarryingBill < ActiveRecord::Base
           :carrying_fee,:carrying_fee_th,:k_carrying_fee,:k_hand_fee,:goods_fee,:insured_fee,:transit_carrying_fee,
           :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:note,:human_state_name
       ]}
-    end
-    def generate_goods_no
-      #货号规则:运单编号后四位+ "-" + 货物件数
-      self.goods_no = "#{self.bill_no[3,4]}-#{self.goods_num}"
     end
     private
     #计算手续费
