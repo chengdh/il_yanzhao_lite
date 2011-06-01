@@ -56,12 +56,12 @@ describe TransitInfosController do
     describe "with valid params" do
       it "the load_list should success create" do
         lambda do
-          post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company)},:bill_ids=> [@transit_bill.id]
+          post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company),:transit_bill_no => "transit_bill_no"},:bill_ids=> [@transit_bill.id]
         end.should change(TransitInfo,:count).by(1)
       end
 
-      it "redirects to the created load_list" do
-        post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company)},:bill_ids=> [@transit_bill.id]
+      it "redirects to the created transit_info" do
+        post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company),:transit_bill_no => "transit_bill_no"},:bill_ids=> [@transit_bill.id]
         response.should redirect_to(assigns[:transit_info])
       end
     end
