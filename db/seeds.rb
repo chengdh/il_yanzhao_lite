@@ -18,6 +18,7 @@ sf_hash = {
   :subject_title => subject_title,
   :subject => subject,
   :default_action => 'new_computer_bill_path',
+  :is_active => false,
   :function => {
   #查看相关运单,其他机构发往当前用户机构的运单
   :create => {:title => "新建"},
@@ -49,8 +50,8 @@ subject = "TransitBill"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-
   :default_action => 'new_transit_bill_path',
+  :is_active => false,
   :subject => subject,
   :function => {
   :create => {:title => "新建"},
