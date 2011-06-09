@@ -226,13 +226,6 @@ class CarryingBill < ActiveRecord::Base
     def act_pay_fee
       ret = self.goods_fee - self.k_hand_fee - self.k_carrying_fee - self.transit_hand_fee
     end
-    #代收运费解释：原票运费支付方式为提货付的，代收运费=原运费—中转运费；
-    #原票运费支付方式为现金付的，代收运费为0
-    def agent_carrying_fee
-      ret = 0
-      ret = self.carrying_fee_th - self.transit_carrying_fee if self.pay_type == CarryingBill::PAY_TYPE_TH
-      ret
-    end
 
     #得到提货应收金额
     def th_amount
@@ -243,10 +236,28 @@ class CarryingBill < ActiveRecord::Base
     def carrying_fee_total
       carrying_fee + insured_fee
     end
+    #毛利润
+    #毛利润 =  收入的运费 - 中转运费 - 业务员提成 + 扣手续费
+    def profit
+      carrying_fee - transit_carrying_fee - commission + k_hand_fee
+    end
+
+    #毛利润-按照重量计算
+    #@unit_price 每公斤费用
+    def profit_weight(unit_price_weight)
+      transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2).to_i - commission + k_hand_fee
+    end
+
     #代收货款支付方式,无客户编号时,为现金支付
     def goods_fee_cash?
       self.from_customer.blank?
     end
+    #中转费用
+    #包括业务员提成
+    def total_transit_carrying_fee
+      transit_carrying_fee + commission
+    end
+
     #滞留天数
     def stranded_days
       ((Date.today.end_of_day - self.bill_date.beginning_of_day) /1.day).to_i
@@ -411,11 +422,5 @@ class CarryingBill < ActiveRecord::Base
     #提货付运费且货款为0,收款清单确认后,自动完成
     def set_completed_refunded_confirmed
       self.update_attributes(:completed => true) if self.pay_type.eql? PAY_TYPE_TH and self.goods_fee == 0
-    end
-
-    #验证中转费用
-    def check_transit_fee
-      errors.add(:transit_carrying_fee,"中转运费不能大于原运费.") if transit_carrying_fee >= carrying_fee
-      errors.add(:transit_hand_fee,"中转手续费不能大于原运费.") if transit_hand_fee >= carrying_fee
     end
     end

@@ -107,8 +107,8 @@
         <td class="transit_carrying_fee" style='display : none;'><%=bill.transit_carrying_fee%></td>
         <td class="transit_hand_fee" style='display : none;'><%=bill.transit_hand_fee%></td>
         <td class="agent_carrying_fee" style='display : none;'><%=bill.agent_carrying_fee%></td>
-        <td class='transit_bill_no' style='display :none;'>bill.transit_bill_no</td>
-        <td class='transit_company' style='display :none;'>bill.transit_info.try(:transit_company)</td>
+        <td class='transit_bill_no' style='display :none;'><%=bill.transit_bill_no %></td>
+        <td class='transit_company' style='display :none;'><%=bill.transit_info.try(:transit_company) %></td>
 
         <td class="th_amount" style='display : none;'><%=bill.th_amount%></td>
 

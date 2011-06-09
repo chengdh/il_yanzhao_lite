@@ -1,0 +1,2 @@
+class KidsTransitBillsController < CarryingBillsController
+end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110601081541) do
+ActiveRecord::Schema.define(:version => 20110609074755) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -78,7 +78,11 @@ ActiveRecord::Schema.define(:version => 20110601081541) do
     t.decimal  "original_from_short_carrying_fee",               :precision => 15, :scale => 2, :default => 0.0
     t.decimal  "original_to_short_carrying_fee",                 :precision => 15, :scale => 2, :default => 0.0
     t.string   "package",                          :limit => 30
-    t.string   "transit_bill_no",                  :limit => 20
+    t.decimal  "transit_fee",                                    :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "agent_carrying_fee",                             :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "commission",                                     :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "unit_price_weight",                              :precision => 15, :scale => 2, :default => 0.3
+    t.decimal  "send_fee",                                       :precision => 15, :scale => 2, :default => 0.0
   end
 
   add_index "carrying_bills", ["bill_date"], :name => "index_carrying_bills_on_bill_date"
@@ -695,14 +699,16 @@ ActiveRecord::Schema.define(:version => 20110601081541) do
   add_index "transit_companies", ["is_active"], :name => "index_transit_companies_on_is_active"
 
   create_table "transit_deliver_infos", :force => true do |t|
-    t.integer  "org_id",                                                        :null => false
-    t.date     "bill_date",                                                     :null => false
+    t.integer  "org_id",                                                                         :null => false
+    t.date     "bill_date",                                                                      :null => false
     t.text     "note"
     t.decimal  "transit_hand_fee",               :precision => 15, :scale => 2
     t.string   "state",            :limit => 20
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.decimal  "send_fee",                       :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "commission",                     :precision => 15, :scale => 2, :default => 0.0
   end
 
   add_index "transit_deliver_infos", ["bill_date"], :name => "index_transit_deliver_infos_on_bill_date"
@@ -721,6 +727,7 @@ ActiveRecord::Schema.define(:version => 20110601081541) do
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.decimal  "agent_carrying_fee",                 :precision => 15, :scale => 2, :default => 0.0
   end
 
   add_index "transit_infos", ["bill_date"], :name => "index_transit_infos_on_bill_date"

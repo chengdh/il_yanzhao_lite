@@ -1,0 +1,2 @@
+class KidsTransitBill < CarryingBill
+end
