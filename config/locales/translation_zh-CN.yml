@@ -190,6 +190,8 @@ zh-CN:
         fee_from: "起始金额"  #g
         fee_to: "结束金额"  #g
         hand_fee: "手续费"  #g
+        org_id: "机构名称"
+        org: "机构名称"
         is_active: "有效"  #g
 
       config_transit:
