@@ -291,6 +291,31 @@ Factory.define :hand_transit_bill do |bill|
   bill.association :transit_org,:factory => :zz
   bill.to_area "开封"
 end
+#手工中转票
+Factory.define :kids_transit_bill do |bill|
+  bill.bill_date Date.today
+  bill.bill_no "0000005"
+  bill.goods_no "0005-20"
+  bill.from_customer_name "发货人"
+  bill.from_customer_phone "13676997527"
+  bill.to_customer_name "收货人"
+  bill.to_customer_phone "15138665197"
+  bill.insured_amount 1000
+  bill.insured_rate 0.001
+  bill.carrying_fee 200
+  bill.goods_fee 5000
+  bill.from_short_carrying_fee 20
+  bill.to_short_carrying_fee 20
+  bill.pay_type CarryingBill::PAY_TYPE_CASH
+  bill.goods_weight 100
+  bill.unit_price_weight 0.3
+
+  bill.goods_info "中转运单(童装)"
+  bill.association :from_org,:factory => :ay
+  bill.association :transit_org,:factory => :zz
+  bill.to_area "开封"
+end
+
 #大车装车单,还未装车
 Factory.define :load_list do |load_list|
   load_list.bill_no "load_list_bill_no_001"
@@ -476,6 +501,7 @@ Factory.define :admin,:parent => :user do |admin|
 end
 #手续费设置(现金)
 Factory.define :config_cash do |config|
+  config.association :org,:factory => :zz
   config.fee_from 0
   config.fee_to 1000
   config.hand_fee 1
