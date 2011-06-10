@@ -59,9 +59,6 @@ class CarryingBill < ActiveRecord::Base
   #当前活动的只能有一条
   has_one :send_list_line
 
-  #验证中转运费和中转手续费不可大运运费
-  validate :check_transit_fee
-
   validates :bill_no,:uniqueness => true
   validates_presence_of :bill_no,:goods_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
   validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:goods_num
@@ -236,6 +233,10 @@ class CarryingBill < ActiveRecord::Base
     def carrying_fee_total
       carrying_fee + insured_fee
     end
+    #重量*单价
+    def weight_fee
+      (goods_weight*unit_price_weight).round
+    end
     #毛利润
     #毛利润 =  收入的运费 - 中转运费 - 业务员提成 + 扣手续费
     def profit
@@ -244,8 +245,8 @@ class CarryingBill < ActiveRecord::Base
 
     #毛利润-按照重量计算
     #@unit_price 每公斤费用
-    def profit_weight(unit_price_weight)
-      transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2).to_i - commission + k_hand_fee
+    def profit_weight
+      transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2) - commission + k_hand_fee
     end
 
     #代收货款支付方式,无客户编号时,为现金支付
@@ -346,7 +347,7 @@ class CarryingBill < ActiveRecord::Base
         #:sum_to_short_carrying_fee => search.relation.sum(:to_short_carrying_fee),
         #:sum_goods_num => search.relation.sum(:goods_num)
       }
-      sum_info_tmp = search.select('sum(1) as count,sum(carrying_fee) as sum_carrying_fee,sum(k_hand_fee) as sum_k_hand_fee,sum(goods_fee) as sum_goods_fee,sum(insured_fee) as sum_insured_fee,sum(transit_carrying_fee) as sum_transit_carrying_fee,sum(transit_hand_fee) as sum_transit_hand_fee,sum(from_short_carrying_fee) as sum_from_short_carrying_fee,sum(to_short_carrying_fee) as sum_to_short_carrying_fee,sum(goods_num) as sum_goods_num').first.attributes
+      sum_info_tmp = search.select('sum(1) as count,sum(carrying_fee) as sum_carrying_fee,sum(k_hand_fee) as sum_k_hand_fee,sum(goods_fee) as sum_goods_fee,sum(insured_fee) as sum_insured_fee,sum(transit_carrying_fee) as sum_transit_carrying_fee,sum(transit_hand_fee) as sum_transit_hand_fee,sum(from_short_carrying_fee) as sum_from_short_carrying_fee,sum(to_short_carrying_fee) as sum_to_short_carrying_fee,sum(goods_num) as sum_goods_num,sum(goods_weight) as sum_goods_weight,sum(transit_fee) as sum_transit_fee,sum(agent_carrying_fee) as sum_agent_carrying_fee,sum(commission) as sum_commission,sum(send_fee) as sum_send_fee,sum(goods_weight*unit_price_weight) as sum_weight_fee,sum(carrying_fee - transit_carrying_fee - commission + k_hand_fee) as sum_profit,sum(transit_carrying_fee + commission) as sum_total_transit_carrying_fee,sum(transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2) - commission + k_hand_fee) as sum_profit_weight').first.attributes
       sum_info_tmp.each do |key,value|
         sum_info_tmp.delete(key)
         sum_info_tmp[key.to_sym] = value.blank? ? 0 : value
@@ -354,9 +355,7 @@ class CarryingBill < ActiveRecord::Base
       sum_info.merge!(sum_info_tmp)
       #实提货款合计
       sum_info[:sum_act_pay_fee] = sum_info[:sum_goods_fee] - sum_info[:sum_k_carrying_fee] - sum_info[:sum_k_hand_fee] - sum_info[:sum_transit_hand_fee]
-      sum_info[:sum_agent_carrying_fee] =0
-      #提付运费大于零时,才有代收运费,否则代收运费为0
-      sum_info[:sum_agent_carrying_fee] = sum_info[:sum_carrying_fee_th] - sum_info[:sum_transit_carrying_fee] if sum_info[:sum_carrying_fee_th] > 0
+
       sum_info[:sum_th_amount] = sum_info[:sum_carrying_fee_th] - sum_info[:sum_transit_carrying_fee] -  sum_info[:sum_transit_hand_fee] + sum_info[:sum_goods_fee]
       sum_info
     end

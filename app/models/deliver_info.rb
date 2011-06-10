@@ -7,7 +7,10 @@ class DeliverInfo < ActiveRecord::Base
   #定义状态机
   state_machine :initial => :billed do
     after_transition do |deliver_info,transition|
-      deliver_info.carrying_bills.each {|bill| bill.standard_process}
+      deliver_info.carrying_bills.each do |bill|
+        bill.send_fee = deliver_info.send_fee
+        bill.standard_process
+      end
     end
     event :process do
       transition :billed =>:deliveried

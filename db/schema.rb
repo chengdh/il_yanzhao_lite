@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110609074755) do
+ActiveRecord::Schema.define(:version => 20110610065513) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -78,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20110609074755) do
     t.decimal  "original_from_short_carrying_fee",               :precision => 15, :scale => 2, :default => 0.0
     t.decimal  "original_to_short_carrying_fee",                 :precision => 15, :scale => 2, :default => 0.0
     t.string   "package",                          :limit => 30
+    t.string   "transit_bill_no",                  :limit => 20
     t.decimal  "transit_fee",                                    :precision => 15, :scale => 2, :default => 0.0
     t.decimal  "agent_carrying_fee",                             :precision => 15, :scale => 2, :default => 0.0
     t.decimal  "commission",                                     :precision => 15, :scale => 2, :default => 0.0
@@ -216,15 +217,17 @@ ActiveRecord::Schema.define(:version => 20110609074755) do
   add_index "customers", ["type"], :name => "index_customers_on_type"
 
   create_table "deliver_infos", :force => true do |t|
-    t.date     "deliver_date",                :null => false
+    t.date     "deliver_date",                                                                :null => false
     t.integer  "user_id"
-    t.string   "customer_name", :limit => 60, :null => false
+    t.string   "customer_name", :limit => 60,                                                 :null => false
     t.string   "customer_no",   :limit => 30
     t.string   "state",         :limit => 30
     t.text     "note"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "org_id",                      :null => false
+    t.integer  "org_id",                                                                      :null => false
+    t.decimal  "send_fee",                    :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "commission",                  :precision => 15, :scale => 2, :default => 0.0
   end
 
   add_index "deliver_infos", ["deliver_date"], :name => "index_deliver_infos_on_deliver_date"

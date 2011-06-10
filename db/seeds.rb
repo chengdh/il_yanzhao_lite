@@ -18,7 +18,6 @@ sf_hash = {
   :subject_title => subject_title,
   :subject => subject,
   :default_action => 'new_computer_bill_path',
-  :is_active => false,
   :function => {
   #查看相关运单,其他机构发往当前用户机构的运单
   :create => {:title => "新建"},
@@ -51,13 +50,13 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :default_action => 'new_transit_bill_path',
-  :is_active => false,
   :subject => subject,
   :function => {
   :create => {:title => "新建"},
   :re_print => {:title => "票据打印",:conditions =>"{:state => 'billed'}"},
   :destroy => {:title => "删除",:conditions =>"{:state => ['loaded','billed']}"},
   :export => {:title => "导出"}
+
 
 }
 }
@@ -76,6 +75,22 @@ sf_hash = {
   :create => {:title => "新建"},
   :destroy => {:title => "删除",:conditions =>"{:state => ['loaded','billed']}"},
   :export => {:title => "导出"}
+}
+}
+SystemFunction.create_by_hash(sf_hash)
+##############################童装运单录入#################################################
+subject_title = "童装运单录入"
+subject = "KidsTransitBill"
+sf_hash = {
+  :group_name => group_name,
+  :subject_title => subject_title,
+  :default_action => 'new_kids_transit_bill_path',
+  :subject => subject,
+  :function => {
+  :create => {:title => "新建"},
+  :destroy => {:title => "删除",:conditions =>"{:state => ['loaded','billed']}"},
+  :export => {:title => "导出"}
+
 }
 }
 SystemFunction.create_by_hash(sf_hash)
@@ -234,7 +249,10 @@ sf_hash = {
   :update_carrying_fee_100 =>{:title =>"修改运费(100%)"},
   :update =>{:title =>"修改运单信息"},
   :reset =>{:title =>"重置运单",:conditions =>"{:from_org_id => user.current_ability_org_ids}"},
-  :export => {:title => "导出"}
+  :export => {:title => "导出"},
+  :read_commission => {:title => "查看业务员提成"},
+  :edit_commission => {:title => "录入业务员提成"}
+
 }
 }
 SystemFunction.create_by_hash(sf_hash)

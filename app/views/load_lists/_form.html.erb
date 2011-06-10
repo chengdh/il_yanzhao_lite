@@ -8,6 +8,6 @@
     <%= f.input :to_org_id,:as => :select,:hint => "可录入拼音简写查询地区(例如:安阳,可录入ay)",:collection => exclude_current_ability_orgs_for_select(true),:include_blank => true,:input_html => {:class => "select_org",:id => :to_org_id} %>
     <%= f.input :note,:as => :string,:input_html => {:size => 60} %>
     <%=hidden_field_tag :state_eq,:billed%>
-    <%=hidden_field_tag :type_in,"","data-type" => ['ComputerBill','HandBill','ReturnBill','TransitBill','HandTransitBill'].to_json %>
+    <%=hidden_field_tag :type_in,"","data-type" => ['ComputerBill','HandBill','ReturnBill','TransitBill','HandTransitBill','KidsTransitBill'].to_json %>
   <% end %>
 <% end%>

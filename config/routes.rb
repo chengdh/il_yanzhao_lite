@@ -1,6 +1,10 @@
 IlYanzhao::Application.routes.draw do
 
-  resources :kids_transit_bills
+  resources :kids_transit_bills do
+    get :search,:on => :collection
+    get :export_excel,:on => :collection
+  end
+
 
   resources :goods_errors do
     #显示核销界面

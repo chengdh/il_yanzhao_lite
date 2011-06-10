@@ -2,13 +2,18 @@
 <table class="table <%=params[:rpt_type]%>" id="bills_table" data-ids='<%=search_ids%>' data-sum = '<%=sum_info.to_json%>' data-showFields='<%=params[:show_fields]%>,<%=defined?(show_fields)? show_fields : ""%>' data-hideFields='<%=params[:hide_fields]%>,<%=defined?(hide_fields)? hide_fields : ""%>'>
   <thead>
     <tr class='select_bill_bar' style='display : none;'>
-      <th colspan="7">
+      <th colspan="3">
         选择:
         <%=link_to_function "全选",'',:id => "btn_select_all",:title => "选中全部票据",:class => 'tipsy'%>
         |
         <%=link_to_function "不选",'',:id => "btn_unselect_all",:title => "取消选中的票据",:class => 'tipsy'%>
       </th>
       <th><span id="bill_count"></span></th>
+      <th class='goods_no'>&nbsp;</th>
+      <th class='from_to'>&nbsp;</th>
+      <th class='customer'>&nbsp;</th>
+      <th class='pay_type'>&nbsp;</th>
+
       <th class="carrying_fee"><span id="sum_carrying_fee"></span></th>
       <th class="carrying_fee_th" style='display : none;'><span id="sum_carrying_fee_th"></span></th>
       <th class="goods_fee"><span id="sum_goods_fee"></span></th>
@@ -16,9 +21,21 @@
       <th class="k_carrying_fee" style='display : none;'><span id="sum_k_carrying_fee"></span></th>
       <th class="act_pay_fee" style='display : none;'><span id="sum_act_pay_fee"></span></th>
       <th class="insured_fee"><span id="sum_insured_fee"></span></th>
+
+      <th class="transit_fee" style='display : none;'><span id="sum_transit_fee"></span></th>
       <th class="transit_carrying_fee" style='display : none;'><span id="sum_transit_carrying_fee"></span></th>
+      <th class="total_transit_carrying_fee" style='display : none;'><span id="sum_total_transit_carrying_fee"></span></th>
       <th class="transit_hand_fee" style='display : none;'><span id="sum_transit_hand_fee"></span></th>
       <th class="agent_carrying_fee" style='display : none;'><span id="sum_agent_carrying_fee"></span></th>
+
+      <th class="commission" style='display : none;'><span id="sum_commission"></span></th>
+      <th class="goods_weight" style='display : none;'><span id="sum_goods_weight"></span></th>
+      <th class="unit_price_weight" style='display : none;'>&nbsp;</th>
+      <th class="weight_fee" style='display : none;'><span id="sum_weight_fee"></th>
+      <th class="send_fee" style='display : none;'><span id="sum_send_fee"></span></th>
+      <th class="profit" style='display : none;'><span id="sum_profit"></span></th>
+      <th class="profit_weight" style='display : none;'><span id="sum_profit_weight"></span></th>
+
       <th class='transit_bill_no' style='display :none;'>&nbsp;</th>
       <th class='transit_company' style='display :none;'>&nbsp;</th>
       <th class="th_amount" style='display : none;'><span id="sum_th_amount"></span></th>
@@ -35,10 +52,10 @@
       <th class="first">序号</th>
       <th><%=sortable "bill_date","票据日期" %></th>
       <th><%=sortable "bill_no","票号" %></th>
-      <th><%=sortable "goods_no","货号" %></th>
-      <th><%=sortable "from_org_id","发货地" %>--<%=sortable "to_org_id","到货地" %></th>
-      <th>发货人-收货人</th>
-      <th><%=sortable "pay_type","付款方式" %></th>
+      <th class='goods_no'><%=sortable "goods_no","货号" %></th>
+      <th class='from_to'><%=sortable "from_org_id","发货地" %>--<%=sortable "to_org_id","到货地" %></th>
+      <th class='customer'>发货人-收货人</th>
+      <th class='pay_type'><%=sortable "pay_type","付款方式" %></th>
       <th class="carrying_fee">运费</th>
       <th class="carrying_fee_th" style='display : none;'>提付运费</th>
       <th class="goods_fee">代收货款</th>
@@ -46,9 +63,23 @@
       <th class="k_carrying_fee" style='display : none;'>扣运费</th>
       <th class="act_pay_fee" style='display : none;'>实提货款</th>
       <th class="insured_fee">保价费</th>
-      <th class="transit_carrying_fee" style='display : none;'>中转运费</th>
+
+      <th class="transit_fee" style='display : none;'>转货费</th>
+      <th class="transit_carrying_fee" style='display : none;'>中转费</th>
+      <th class="total_transit_carrying_fee" style='display : none;'>中转费</th>
+
       <th class="transit_hand_fee" style='display : none;'>中转手续费</th>
       <th class="agent_carrying_fee" style='display : none;'>代收运费</th>
+
+      <th class="commission" style='display : none;'>提成</th>
+      <th class="goods_weight" style='display : none;'>货物重量</th>
+      <th class="unit_price_weight" style='display : none;'>单价</th>
+      <th class="weight_fee" style='display : none;'>费用</th>
+      <th class="send_fee" style='display : none;'>送货费</th>
+      <th class="profit" style='display : none;'>利润</th>
+      <th class="profit_weight" style='display : none;'>利润</th>
+
+
       <th class='transit_bill_no' style='display :none;'>中转票号</th>
       <th class='transit_company' style='display :none;'>中转公司</th>
       <th class="th_amount" style='display : none;'>提货应收</th>
@@ -74,21 +105,21 @@
         <td>
           <%=bill.bill_date.strftime('%y-%m-%d')%>
         </td>
-        <td>
+        <td class='bill_no'>
           <%=bill.bill_no%>
         </td>
-        <td>
+        <td class='goods_no'>
           <%=bill.goods_no%>
         </td>
-        <td>
+        <td class='from_to'>
           <%=bill.from_org_name%>~<%=["TransitBill","HandTransitBill"].include?(bill.type) ? "#{bill.transit_org.name}~#{bill.to_area}" : bill.to_org_name%>
         </td>
-        <td>
+        <td class='customer'>
           <%=bill.from_customer_name%>
           --
           <%=bill.to_customer_name%>
         </td>
-        <td>
+        <td class='pay_type'>
           <%=pay_type_des(bill.pay_type) %>
         </td>
         <td class="carrying_fee">
@@ -104,9 +135,23 @@
         <td class="k_carrying_fee" style='display : none;'><%= bill.k_carrying_fee %></td>
         <td class="act_pay_fee" style='display : none;'><%= bill.act_pay_fee %></td>
         <td class="insured_fee"><%=bill.insured_fee%></td>
+
+        <td class="transit_fee" style='display : none;'><%=bill.transit_fee%></td>
         <td class="transit_carrying_fee" style='display : none;'><%=bill.transit_carrying_fee%></td>
+        <td class="total_transit_carrying_fee" style='display : none;'><%=bill.total_transit_carrying_fee%></td>
+
+
         <td class="transit_hand_fee" style='display : none;'><%=bill.transit_hand_fee%></td>
         <td class="agent_carrying_fee" style='display : none;'><%=bill.agent_carrying_fee%></td>
+
+        <td class="commission" style='display : none;'><%= bill.commission %></td>
+        <td class="goods_weight" style='display : none;'><%= bill.goods_weight %></td>
+        <td class="unit_price_weight" style='display : none;'><%= bill.unit_price_weight%></td>
+        <td class="weight_fee" style='display : none;'><%=bill.weight_fee%></td>
+        <td class="send_fee" style='display : none;'><%=bill.send_fee%></td>
+        <td class="profit" style='display : none;'><%=bill.profit%></td>
+        <td class="profit_weight" style='display : none;'><%= bill.profit_weight%></td>
+
         <td class='transit_bill_no' style='display :none;'><%=bill.transit_bill_no %></td>
         <td class='transit_company' style='display :none;'><%=bill.transit_info.try(:transit_company) %></td>
 
@@ -132,10 +177,10 @@
       <td>&nbsp;</td>
       <td>&nbsp;</td>
       <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>总计</td>
-      <td><%=sum_info[:count]%>票</td>
+      <td class='goods_no'>&nbsp;</td>
+      <td class='from_to'>&nbsp;</td>
+      <td class='customer'>总计</td>
+      <td class='pay_type'><%=sum_info[:count]%>票</td>
       <td class="carrying_fee"><%=sum_info[:sum_carrying_fee]%></td>
       <td class="carrying_fee_th" style='display : none;'><%=sum_info[:sum_carrying_fee_th]%></td>
       <td class="goods_fee"><%=sum_info[:sum_goods_fee]%></td>
@@ -143,9 +188,23 @@
       <td class="k_carrying_fee" style='display : none;'><%= sum_info[:sum_k_carrying_fee] %></td>
       <td class="act_pay_fee" style='display : none;'><%= sum_info[:sum_act_pay_fee] %></td>
       <td class="insured_fee"><%=sum_info[:sum_insured_fee]%></td>
-      <td class="transit_carrying_fee" style='display : none;'><%=sum_info[:sum_transit_carrying_fee]%></td>
+
+      <td class="transit_fee" style='display : none;'><%=sum_info[:sum_transit_fee] %></th>
+      <td class="transit_carrying_fee" style='display : none;'><%=sum_info[:sum_transit_carrying_fee] %></th>
+      <td class="total_transit_carrying_fee" style='display : none;'><%=sum_info[:sum_total_transit_carrying_fee]%></th>
+
       <td class="transit_hand_fee" style='display : none;'><%=sum_info[:sum_transit_hand_fee]%></td>
       <td class="agent_carrying_fee" style='display : none;'><%=sum_info[:sum_agent_carrying_fee]%></td>
+
+      <td class="commission" style='display : none;'><%=sum_info[:sum_commission]%></td>
+      <td class="goods_weight" style='display : none;'><%=sum_info[:sum_goods_weight] %></td>
+      <td class="unit_price_weight" style='display : none;'>&nbsp;</td>
+      <td class="weight_fee" style='display : none;'><%=sum_info[:sum_weight_fee]%></td>
+      <td class="send_fee" style='display : none;'><%= sum_info[:sum_send_fee] %></td>
+      <td class="profit" style='display : none;'><%=sum_info[:sum_profit]%></td>
+      <td class="profit_weight" style='display : none;'><%= sum_info[:sum_profit_weight]%></td>
+
+
       <td class='transit_bill_no' style='display :none;'>&nbsp;</td>
       <td class='transit_company' style='display :none;'>&nbsp;</td>
       <td class="th_amount" style='display : none;'><%=sum_info[:sum_th_amount]%></td>

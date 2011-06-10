@@ -20,7 +20,7 @@
     <tr>
       <td>发货站</td>
       <td><%= f.select :from_org_id,current_ability_orgs_for_select,{},:class => 'select_org' %></td>
-      <% if ["TransitBill","HandTransitBill"].include? f.object.type %>
+      <% if ["TransitBill","HandTransitBill","KidsTransitBill"].include? f.object.type %>
         <td>中转站</td>
         <td><%= f.select :transit_org_id,yards_for_select ,{},:class => 'select_org'%></td>
         <td>到货地</td>

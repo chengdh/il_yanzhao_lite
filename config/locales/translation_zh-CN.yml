@@ -52,6 +52,7 @@ zh-CN:
       goods_exception_identify: "货物异常信息责任鉴定"  #g
       hand_bill: "手工运单"  #g
       hand_transit_bill: "手工中转运单"  #g
+      kids_transit_bill: "中转运单(童装)"
       il_config: "系统设置"  #g
       imported_customer: "贵宾资料"  #g
       journal: "帐目盘点登记表"  #g
