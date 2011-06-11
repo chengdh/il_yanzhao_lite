@@ -58,6 +58,9 @@ jQuery(function($) {
 		$('#sum_fee').text(sum_fee);
 
 	};
+	$('.editable-select').editableSelect({
+		bg_iframe: true
+	});
 
 	//双击某条记录打开详细信息
 	$('tr[data-dblclick]').livequery('dblclick', function() {
@@ -161,12 +164,12 @@ jQuery(function($) {
 		if (code == "") return;
 		$.get('/vips', {
 			"search[code_eq]": code,
-                        "in_wich" : 'carrying_bill_form'
+			"in_wich": 'carrying_bill_form'
 		},
 		null, 'script');
 
 	};
-        //lite系统中没有客户编号
+	//lite系统中没有客户编号
 	//$('#customer_code').live('change', search_customer_by_code);
 	$('form.carrying_bill').live("change", calculate_carrying_bill);
 	$('form.carrying_bill').livequery(calculate_carrying_bill);
@@ -386,7 +389,7 @@ jQuery(function($) {
 			"search[to_org_id_or_transit_org_id_eq]": $('#to_org_id').val(),
 			"search[state_eq]": 'deliveried',
 			"search[completed_eq]": 0,
-			"search[type_in][]": ['ComputerBill', 'HandBill', 'ReturnBill', 'TransitBill', 'HandTransitBill','KidsTransitBill'],
+			"search[type_in][]": ['ComputerBill', 'HandBill', 'ReturnBill', 'TransitBill', 'HandTransitBill', 'KidsTransitBill'],
 			//以下设定运单列表中的显示及隐藏字段,设定为css选择符
 			"hide_fields": ".carrying_fee,.insured_fee",
 			"show_fields": ".transit_carrying_fee,.transit_hand_fee,.carrying_fee_th,.th_amount"
@@ -409,10 +412,11 @@ jQuery(function($) {
 	//生成返款清单时,收款单位变化时,列出结算清单
 	$('#btn_refound_refresh').click(function() {
 		$.get('/settlements', {
-                        "show_select" : 1, //是否显示选择列表
+			"show_select": 1,
+			//是否显示选择列表
 			"search[carrying_bills_from_org_id_eq]": $('[name="refound[to_org_id]"]').val(),
 			"search[carrying_bills_to_org_id_or_carrying_bills_transit_org_id_eq]": $('[name="refound[from_org_id]"]').val(),
-			"search[carrying_bills_type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill","KidsTransitBill", "ReturnBill"],
+			"search[carrying_bills_type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill", "ReturnBill"],
 			"search[carrying_bills_state_eq]": "settlemented",
 			"search[carrying_bills_completed_eq]": 0,
 			"search[carrying_bills_goods_fee_or_carrying_bills_carrying_fee_gt]": 0
@@ -446,7 +450,7 @@ jQuery(function($) {
 		var params = {
 			"search[from_org_id_eq]": $('[name="refound[to_org_id]"]').val(),
 			"search[to_org_id_or_transit_org_id_eq]": $('[name="refound[from_org_id]"]').val(),
-			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "ReturnBill","KidsTransitBill"],
+			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "ReturnBill", "KidsTransitBill"],
 			"search[state_eq]": "settlemented",
 			"search[completed_eq]": 0,
 			"search[goods_fee_or_carrying_fee_gt]": 0,
@@ -469,7 +473,7 @@ jQuery(function($) {
 	var gen_payment_list = function(evt) {
 		var params = {
 			"search[state_eq]": "refunded_confirmed",
-			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill","KidsTransitBill"],
+			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill"],
 			"search[goods_fee_gt]": 0,
 			"search[completed_eq]": 0,
 			//运单列表显示的字段
@@ -514,7 +518,7 @@ jQuery(function($) {
 
 		}
 		var params = {
-			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill","KidsTransitBill"],
+			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill"],
 			"search[state_eq]": "payment_listed",
 			"search[payment_list_id_in][]": selected_bill_ids,
 			"hide_fields": ".carrying_fee,.insured_fee",
@@ -539,7 +543,7 @@ jQuery(function($) {
 			"search[state_eq]": 'paid',
 			"search[completed_eq]": 0,
 			"search[from_customer_id_is_null]": 1,
-			"search[type_in][]": ['ComputerBill', 'HandBill', 'TransitBill', 'HandTransitBill',"KidsTransitBill"],
+			"search[type_in][]": ['ComputerBill', 'HandBill', 'TransitBill', 'HandTransitBill', "KidsTransitBill"],
 			"hide_fields": ".carrying_fee,.insured_fee",
 			"show_fields": ".k_carrying_fee,.transit_hand_fee,.k_hand_fee,.act_pay_fee"
 

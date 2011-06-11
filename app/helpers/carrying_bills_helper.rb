@@ -31,5 +31,9 @@ module CarryingBillsHelper
     ret_class="black-bill" if days >= 21
     ret_class
   end
+  #货物信息列表
+  def goods_infos_for_select
+    [['童装','童装'],['劳保用品','劳保用品'],['衣服','衣服'],['电器','电器'],['其他','其他']]
+  end
 
 end
