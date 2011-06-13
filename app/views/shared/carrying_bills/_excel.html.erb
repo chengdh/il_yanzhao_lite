@@ -3,12 +3,12 @@
   <thead>
     <tr class='text-center'>
       <th class="first">序号</th>
-      <th><%=sortable "bill_date","票据日期" %></th>
-      <th><%=sortable "bill_no","票号" %></th>
-      <th><%=sortable "goods_no","货号" %></th>
-      <th><%=sortable "from_org_id","发货地" %>--<%=sortable "to_org_id","到货地" %></th>
-      <th>发货人-收货人</th>
-      <th><%=sortable "pay_type","付款方式" %></th>
+      <th>票据日期</th>
+      <th>票号</th>
+      <th>货号</th>
+      <th>发货地~到货地</th>
+      <th>发货人~收货人</th>
+      <th>付款方式</th>
       <th class="carrying_fee">运费</th>
       <th class="carrying_fee_th hide">提付运费</th>
       <th class="goods_fee">代收货款</th>
@@ -16,9 +16,19 @@
       <th class="k_carrying_fee hide">扣运费</th>
       <th class="act_pay_fee hide">实提货款</th>
       <th class="insured_fee">保价费</th>
+      <th class="transit_fee hide">转货费</th>
       <th class="transit_carrying_fee hide">中转运费</th>
+      <th class="total_transit_carrying_fee hide">中转运费</th>
       <th class="transit_hand_fee hide">中转手续费</th>
       <th class="agent_carrying_fee hide">代收运费</th>
+      <th class="commission hide">提成</th>
+      <th class="goods_weight hide">重量</th>
+      <th class="unit_price_weight hide">单价</th>
+      <th class="weight_fee hide">费用</th>
+      <th class="send_fee hide">送货费</th>
+      <th class="profit hide">利润</th>
+      <th class="profit_weight">利润</th>
+
       <th class='transit_bill_no hide'>中转票号</th>
       <th class='transit_company hide'>中转公司</th>
       <th class="th_amount hide">提货应收</th>
@@ -69,9 +79,22 @@
         <td class="k_carrying_fee hide"><%= bill.k_carrying_fee %></td>
         <td class="act_pay_fee hide"><%= bill.act_pay_fee %></td>
         <td class="insured_fee"><%=bill.insured_fee%></td>
+
+        <td class="transit_fee hide"><%=bill.transit_fee%></td>
         <td class="transit_carrying_fee hide"><%=bill.transit_carrying_fee%></td>
+        <td class="total_transit_carrying_fee hide"><%=bill.total_transit_carrying_fee%></td>
         <td class="transit_hand_fee hide"><%=bill.transit_hand_fee%></td>
         <td class="agent_carrying_fee hide"><%=bill.agent_carrying_fee%></td>
+
+        <td class="commission hide"><%= bill.commission %></td>
+        <td class="goods_weight hide"><%= bill.goods_weight %></td>
+        <td class="unit_price_weight hide"><%= bill.unit_price_weight%></td>
+        <td class="weight_fee hide"><%=bill.weight_fee%></td>
+        <td class="send_fee hide"><%=bill.send_fee%></td>
+        <td class="profit hide"><%=bill.profit%></td>
+        <td class="profit_weight hide"><%= bill.profit_weight%></td>
+
+
         <td class='transit_bill_no hide'>bill.transit_bill_no</td>
         <td class='transit_company hide'>bill.transit_info.try(:transit_company)</td>
         <td class="th_amount hide"><%=bill.th_amount%></td>
@@ -104,9 +127,22 @@
       <td class="k_carrying_fee hide"><%= sum_info[:sum_k_carrying_fee] %></td>
       <td class="act_pay_fee hide"><%= sum_info[:sum_act_pay_fee] %></td>
       <td class="insured_fee"><%=sum_info[:sum_insured_fee]%></td>
+
+      <td class="transit_fee hide"><%=sum_info[:sum_transit_fee] %></th>
       <td class="transit_carrying_fee hide"><%=sum_info[:sum_transit_carrying_fee]%></td>
+      <td class="total_transit_carrying_fee hide"><%=sum_info[:sum_total_transit_carrying_fee]%></td>
       <td class="transit_hand_fee hide"><%=sum_info[:sum_transit_hand_fee]%></td>
       <td class="agent_carrying_fee hide"><%=sum_info[:sum_agent_carrying_fee]%></td>
+
+      <td class="commission hide"><%=sum_info[:sum_commission]%></td>
+      <td class="goods_weight hide"><%=sum_info[:sum_goods_weight] %></td>
+      <td class="unit_price_weight hide">&nbsp;</td>
+      <td class="weight_fee hide"><%=sum_info[:sum_weight_fee]%></td>
+      <td class="send_fee hide"><%= sum_info[:sum_send_fee] %></td>
+      <td class="profit hide"><%=sum_info[:sum_profit]%></td>
+      <td class="profit_weight hide"><%= sum_info[:sum_profit_weight]%></td>
+
+
       <td class='transit_bill_no hide'>&nbsp;</td>
       <td class='transit_company hide'>&nbsp;</td>
       <td class="th_amount hide"><%=sum_info[:sum_th_amount]%></td>

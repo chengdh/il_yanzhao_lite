@@ -61,7 +61,7 @@ class CarryingBill < ActiveRecord::Base
 
   validates :bill_no,:uniqueness => true
   validates_presence_of :bill_no,:goods_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
-  validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:goods_num
+  validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:goods_num,:agent_carrying_fee,:transit_fee,:commission,:unit_price_weight,:send_fee
 
   #定义state_machine
   #已开票

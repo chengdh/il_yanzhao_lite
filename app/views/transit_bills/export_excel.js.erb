@@ -1,1 +1,1 @@
-<%=render :file => 'shared/carrying_bills/export_excel',:show_fields => ".transit_carrying_fee,.transit_hand_fee,.agent_carrying_fee,.transit_bill_no,.transit_company",:hide_fields => ".insured_fee" %>
+<%= render "shared/carrying_bills/export_excel",:show_fields => "#{can?(:read_commission,CarryingBill)? '.transit_carrying_fee,.commission' : '.total_transit_carrying_fee'},.transit_fee,.transit_hand_fee,.agent_carrying_fee,.profit,.k_hand_fee",:hide_fields => ".insured_fee,.note" %>
