@@ -266,7 +266,7 @@ jQuery(function($) {
 	});
 	//search box
 	$('.search_box').livequery(function() {
-		$(this).watermark('录入运单编号查询', {
+		$(this).watermark('录入运单编号或货号查询', {
 			userNative: false
 		}).focus(function() {
 			$(this).select();
@@ -275,7 +275,7 @@ jQuery(function($) {
 				if ($(this).val() == "") return;
 				var params = $(this).data('params');
 				$.extend(params, {
-					"search[bill_no_eq]": $(this).val()
+					"search[bill_no_or_goods_no_eq]": $(this).val()
 				});
 				//添加发货站或到货站id
 				if ($('#from_org_id').length > 0) $.extend(params, {
