@@ -294,3 +294,9 @@ tr.cur_select {
 .ui-treeList ul {
   padding : 0;
 }
+
+/*货物中转 中转提货录入框*/
+.transit_carrying_fee_edit input, .transit_hand_fee_edit input, .agent_carrying_fee_edit input, .commission_edit input, .send_fee_edit input{
+  width : 40px;
+}
+.transit_bill_no_edit input {width : 80px;}

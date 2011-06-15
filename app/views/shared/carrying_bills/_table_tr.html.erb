@@ -1,25 +1,25 @@
-<tr id='<%="bill_#{bill.id}" %>'  <%=can?(:read,bill) ? "data-dblclick='true'" : "" %> data-bill='<%=bill.to_json(:methods => [:carrying_fee_th,:k_carrying_fee,:act_pay_fee,:th_amount,:send_state])%>' class='bill_cal_sum'>
-  <td>
+<tr id='<%="bill_#{bill.id}" %>'  <%=can?(:read,bill) ? "data-dblclick='false'" : "" %> data-bill='<%=bill.to_json(:methods => [:carrying_fee_th,:k_carrying_fee,:act_pay_fee,:th_amount,:weight_fee,:total_transit_carrying_fee,:profit,:profit_weight,:send_state])%>' class='bill_cal_sum'>
+  <td class='bill_date'>
     <%= link_to "查看",   polymorphic_url(bill,:format => :js),:class => "show_link fancybox",:style => 'display : none;'%>
     <%=bill.bill_date.strftime('%y-%m-%d')%>
   </td>
-  <td>
+  <td class='bill_no'>
     <%=bill.bill_no%>
   </td>
-  <td>
+  <td class='goods_no'>
     <%=bill.goods_no%>
   </td>
-  <td>
+  <td class='from_to'>
     <%=bill.from_org_name%>~<%=["TransitBill","HandTransitBill"].include?(bill.type) ? "#{bill.transit_org.name}~#{bill.to_area}" : bill.to_org_name%>
   </td>
-  <td>
+  <td class='customer'>
     <%=bill.from_customer_name%>
     <%="(#{bill.from_customer_phone})"%>
-    --
+    ~
     <%=bill.to_customer_name%>
     <%="(#{bill.to_customer_phone})"%>
   </td>
-  <td>
+  <td class='pay_type'>
     <%=pay_type_des(bill.pay_type) %>
   </td>
   <td class="carrying_fee">
@@ -36,8 +36,33 @@
   </td>
   <td class="k_hand_fee" style='display : none;'><%=bill.k_hand_fee%></td>
   <td class="k_carrying_fee" style='display : none;'><%= bill.k_carrying_fee %></td>
-  <td class="transit_hand_fee" style='display : none;'><%= bill.transit_hand_fee %></td>
+
+  <td class="transit_fee" style='display : none;'><%= bill.transit_fee %></td>
   <td class="transit_carrying_fee" style='display : none;'><%= bill.transit_carrying_fee %></td>
+  <td class="transit_carrying_fee_edit" style='display : none;'><%= text_field_tag "transit_carrying_fee_edit[]",bill.transit_carrying_fee %></td>
+  <td class="total_transit_carrying_fee" style='display : none;'><%= bill.total_transit_carrying_fee %></td>
+  <td class="transit_hand_fee" style='display : none;'><%= bill.transit_hand_fee %></td>
+  <td class="transit_hand_fee_edit" style='display : none;'><%=text_field_tag "transit_hand_fee_edit[]", bill.transit_hand_fee %></td>
+  <td class="agent_carrying_fee" style='display : none;'><%= bill.agent_carrying_fee %></td>
+  <td class="agent_carrying_fee_edit" style='display : none;'><%= text_field_tag "agent_carrying_fee_edit[]",bill.agent_carrying_fee %></td>
+  <td class="commission" style='display : none;'><%= bill.commission %></td>
+  <td class="commission_edit" style='display : none;'><%= text_field_tag "commission_edit[]",bill.commission %></td>
+  <td class="goods_weight" style='display : none;'<%= bill.goods_weight %>></td>
+  <td class="unit_price_weight" style='display : none;'><%= bill.unit_price_weight %></td>
+  <td class="weight_fee" style='display : none;'><%= bill.weight_fee %></td>
+  <td class="send_fee" style='display : none;'><%= bill.send_fee %></td>
+  <td class="send_fee_edit" style='display : none;'><%= text_field_tag "send_fee_edit[]",bill.send_fee %></td>
+  <td class="profit" style='display : none;'><%= bill.profit %></td>
+  <td class="profit_weight" style='display : none;'><%= bill.profit_weight %></td>
+
+
+  <td class='transit_bill_no' style='display :none;'><%= bill.transit_bill_no %></td>
+  <td class='transit_bill_no_edit' style='display :none;'><%=text_field_tag "transit_bill_no_edit[]", bill.transit_bill_no %></td>
+  <td class='transit_company' style='display :none;'><%=  bill.transit_info.try(:transit_company)%></td>
+
+
+
+
   <td class="act_pay_fee" style='display : none;'><%= bill.act_pay_fee %></td>
   <td class="insured_fee"><%=bill.insured_fee%></td>
   <td class="from_short_carrying_fee" style='display : none;'><%= bill.from_short_carrying_fee %></td>

@@ -330,8 +330,20 @@ jQuery(function($) {
 		var sum_goods_fee = 0;
 		var sum_carrying_fee_th = 0;
 		var sum_k_carrying_fee = 0;
+
+		var sum_transit_fee = 0;
 		var sum_transit_carrying_fee = 0;
+		var sum_total_transit_carrying_fee = 0;
+
 		var sum_transit_hand_fee = 0;
+		var sum_agent_carrying_fee = 0;
+		var sum_commission = 0;
+		var sum_goods_weight = 0;
+		var sum_weight_fee = 0;
+		var sum_send_fee = 0;
+		var sum_profit = 0;
+		var sum_profit_weight = 0;
+
 		var sum_k_hand_fee = 0;
 		var sum_act_pay_fee = 0;
 		var sum_from_short_carrying_fee = 0;
@@ -344,8 +356,21 @@ jQuery(function($) {
 			sum_carrying_fee += parseFloat(the_bill.carrying_fee);
 			sum_carrying_fee_th += parseFloat(the_bill.carrying_fee_th);
 			sum_k_carrying_fee += parseFloat(the_bill.k_carrying_fee);
+
+			sum_transit_fee += parseFloat(the_bill.transit_fee);
+
 			sum_transit_carrying_fee += parseFloat(the_bill.transit_carrying_fee);
+			sum_total_transit_carrying_fee += parseFloat(the_bill.total_transit_carrying_fee);
+
 			sum_transit_hand_fee += parseFloat(the_bill.transit_hand_fee);
+			sum_agent_carrying_fee += parseFloat(the_bill.agent_carrying_fee);
+			sum_commission += parseFloat(the_bill.commission);
+			sum_goods_weight += parseFloat(the_bill.goods_weight);
+			sum_weight_fee += parseFloat(the_bill.weight_fee);
+			sum_send_fee += parseFloat(the_bill.send_fee);
+			sum_profit += parseFloat(the_bill.profit);
+			sum_profit_weight += parseFloat(the_bill.profit_weight);
+
 			sum_th_amount += parseFloat(the_bill.th_amount);
 			sum_k_hand_fee += parseFloat(the_bill.k_hand_fee);
 			sum_act_pay_fee += parseFloat(the_bill.act_pay_fee);
@@ -361,8 +386,20 @@ jQuery(function($) {
 		$('#sum_from_short_carrying_fee').html(sum_from_short_carrying_fee);
 		$('#sum_to_short_carrying_fee').html(sum_to_short_carrying_fee);
 		$('#sum_k_carrying_fee').html(sum_k_carrying_fee);
-		$('#sum_transit_hand_fee').html(sum_transit_hand_fee);
+		$('sum_transit_fee').html(sum_transit_fee);
+
 		$('#sum_transit_carrying_fee').html(sum_transit_carrying_fee);
+		$('sum_total_transit_carrying_fee').html(sum_total_transit_carrying_fee);
+
+		$('#sum_transit_hand_fee').html(sum_transit_hand_fee);
+		$('#sum_agent_carrying_fee').html(sum_agent_carrying_fee);
+		$('#sum_commission').html(sum_commission);
+		$('#sum_goods_weight').html(sum_goods_weight);
+		$('#sum_weight_fee').html(sum_weight_fee);
+		$('#sum_send_fee').html(sum_send_fee);
+		$('#sum_profit').html(sum_profit);
+		$('#sum_profit_weight').html(sum_profit_weight);
+
 		$('#sum_carrying_fee_th').html(sum_carrying_fee_th);
 		$('#sum_k_hand_fee').html(sum_k_hand_fee);
 		$('#sum_act_pay_fee').html(sum_act_pay_fee);
@@ -370,14 +407,24 @@ jQuery(function($) {
 		$('#sum_th_amount').html(sum_th_amount);
 		$('#sum_insured_fee').html(sum_insured_fee);
 
+		//计算可修改字段
+		var cal_edit_field_sum = function(field_class) {
+			var sum = 0;
+			$(".bill_cal_sum " + "." + field_class + " input").each(function() {
+				var val = parseFloat($(this).val());
+				sum += val;
+			});
+			$("#sum_" + field_class).html(sum);
+		};
+		var edit_fields = ["transit_carrying_fee_edit", "transit_hand_fee_edit", "agent_carrying_fee_edit", "commission_edit", "send_fee_edit", "transit_bill_no"]
+		$.each(edit_fields, function(index, value) {
+			cal_edit_field_sum(value)
+		});
+
 	};
 
-	$('.bill_cal_sum').livequery(function() {
-		cal_sum();
-	},
-	function() {
-		cal_sum();
-	});
+	$('.bill_cal_sum').livequery(cal_sum, cal_sum);
+	$(".transit_carrying_fee_edit input, .transit_hand_fee_edit input, .agent_carrying_fee_edit input, .commission_edit input, .send_fee_edit input").livequery('change', cal_sum);
 	//生成结算清单时,绑定查询条件
 	$('#btn_generate_settlement').bind('ajax:before', function() {
 		var params = {
