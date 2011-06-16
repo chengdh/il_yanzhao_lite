@@ -1,6 +1,7 @@
 #多货少货信息
 class GoodsError < ActiveRecord::Base
-  belongs_to :carrying_bill
+  belongs_to :carrying_bill,:order => "from_org_id ASC,bill_date ASC,bill_no ASC"
+
   belongs_to :org
   #处理部门
   belongs_to :op_org,:class_name => "Org"

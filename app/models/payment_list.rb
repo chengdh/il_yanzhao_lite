@@ -2,7 +2,8 @@
 class PaymentList < ActiveRecord::Base
   belongs_to :bank
   belongs_to :org
-  has_many :carrying_bills
+  has_many :carrying_bills,:order => "from_org_id ASC,bill_date ASC,bill_no ASC"
+
   belongs_to :user
 
   default_value_for :bill_date,Date.today

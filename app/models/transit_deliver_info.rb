@@ -2,7 +2,8 @@
 class TransitDeliverInfo < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
-  has_many :carrying_bills
+  has_many :carrying_bills,:order => "from_org_id ASC,bill_date ASC,bill_no ASC"
+
   validates_presence_of :org_id
 
   #定义状态机

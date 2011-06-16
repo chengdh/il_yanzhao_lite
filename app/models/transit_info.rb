@@ -4,7 +4,8 @@ class TransitInfo < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
   belongs_to :transit_company  #中转公司
-  has_many :carrying_bills
+  has_many :carrying_bills,:order => "from_org_id ASC,bill_date ASC,bill_no ASC"
+
   validates_presence_of :org_id
 
   accepts_nested_attributes_for :transit_company

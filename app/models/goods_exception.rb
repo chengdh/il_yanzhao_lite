@@ -1,6 +1,7 @@
 #coding: utf-8
 class GoodsException < ActiveRecord::Base
-  belongs_to :carrying_bill
+  belongs_to :carrying_bill,:order => "from_org_id ASC,bill_date ASC,bill_no ASC"
+
   belongs_to :user
   belongs_to :org
   #处理部门
