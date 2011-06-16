@@ -35,19 +35,20 @@ describe TransitDeliverInfosController do
     describe "with valid params" do
       it "success create transit_deliver_info" do
         lambda do
-          post :create,:transit_deliver_info => {:org_id => Factory(:zz),:transit_hand_fee => 10},:bill_ids => [@transit_bill.id]
+          post :create,:transit_deliver_info => {:org_id => Factory(:zz),:transit_hand_fee => 10},:bill_ids => [@transit_bill.id],:transit_hand_fee_edit => [1.99],:commission_edit => [1.99],:send_fee_edit => [1.99]
         end.should change(TransitDeliverInfo,:count).by(1)
       end
 
       it "redirects to the created cash_pay_info" do
-          post :create,:transit_deliver_info => {:org_id => Factory(:zz),:transit_hand_fee => 10},:bill_ids => [@transit_bill.id]
+          post :create,:transit_deliver_info => {:org_id => Factory(:zz),:transit_hand_fee => 10},:bill_ids => [@transit_bill.id],:transit_hand_fee_edit => [1.99],:commission_edit => [1.99],:send_fee_edit => [1.99]
+
         response.should redirect_to(assigns(:transit_deliver_info))
       end
     end
 
     describe "with invalid params" do
       it "re-render the new 'template'" do
-        post :create, :transit_deliver_info => {}
+        post :create, :transit_deliver_info => {},:transit_hand_fee_edit => [1.99],:commission_edit => [1.99],:send_fee_edit => [1.99]
         response.should render_template('new')
       end
     end

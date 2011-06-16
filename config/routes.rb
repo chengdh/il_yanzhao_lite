@@ -81,14 +81,14 @@ IlYanzhao::Application.routes.draw do
 
   resources :transit_deliver_infos do
     get :search,:on => :collection
-    resource :carrying_bill
+    resources :carrying_bills
   end
 
   resources :transit_companies
 
   resources :transit_infos do
     get :search,:on => :collection
-    resource :carrying_bill
+    resources :carrying_bills
   end
 
   resources :post_infos do

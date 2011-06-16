@@ -296,13 +296,25 @@ jQuery(function($) {
 
 			}
 
-		})
+		});
 	});
 	//绑定提货/提款/中转/中转提货处理的ajax:before
 	$('#deliver_info_form,#cash_pay_info_form,#transfer_pay_info_form,#transit_info_form,#transit_deliver_info_form,#short_fee_info_form,#goods_exception_form,#send_list_form,#send_list_post_form,#post_info_form').livequery(function() {
 		$(this).bind('ajax:before', function() {
 			var bill_els = $('[data-bill]');
 			var bill_ids = [];
+			//中转提货相关费用
+			//获取中转相关费用array
+			var get_transit_edit_fields_val = function(el_name) {
+				var ret_val = [];
+
+				$('[name^="' + el_name + '"]').each(function() {
+					ret_val.push($(this).val());
+
+				});
+				return ret_val;
+			};
+
 			if (bill_els.length == 0) {
 				$.notifyBar({
 					html: "未查找到任何运单,请先查询要处理的运单",
@@ -318,7 +330,13 @@ jQuery(function($) {
 					bill_ids.push(bill_id);
 				});
 				$(this).data('params', {
-					"bill_ids[]": bill_ids
+					"bill_ids[]": bill_ids,
+                                        "transit_carrying_fee_edit[]" : get_transit_edit_fields_val('transit_carrying_fee_edit'),
+                                        "transit_hand_fee_edit[]" : get_transit_edit_fields_val('transit_hand_fee_edit'),
+                                        "agent_carrying_fee_edit[]" : get_transit_edit_fields_val('agent_carrying_fee_edit'),
+                                        "commission_edit[]" : get_transit_edit_fields_val('commission_edit'),
+                                        "send_fee_edit[]" : get_transit_edit_fields_val('send_fee_edit'),
+                                        "transit_bill_no_edit[]" : get_transit_edit_fields_val('transit_bill_no_edit')
 				});
 			}
 			return true;

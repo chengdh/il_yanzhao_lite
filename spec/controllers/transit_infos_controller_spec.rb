@@ -54,21 +54,21 @@ describe TransitInfosController do
       @transit_bill = Factory(:transit_bill_reached)
     end
     describe "with valid params" do
-      it "the load_list should success create" do
+      it "the transit_info should success create" do
         lambda do
-          post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company),:transit_bill_no => "transit_bill_no"},:bill_ids=> [@transit_bill.id]
+          post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company),:transit_bill_no => "transit_bill_no"},:bill_ids=> [@transit_bill.id],:transit_carrying_fee_edit => [1.99],:agent_carrying_fee_edit => [1.99],:transit_bill_no_edit => ['1234556']
         end.should change(TransitInfo,:count).by(1)
       end
 
       it "redirects to the created transit_info" do
-        post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company),:transit_bill_no => "transit_bill_no"},:bill_ids=> [@transit_bill.id]
+        post :create,:transit_info => {:org_id => Factory(:zz),:transit_carrying_fee => 100,:transit_company_id => Factory(:transit_company),:transit_bill_no => "transit_bill_no"},:bill_ids=> [@transit_bill.id],:transit_carrying_fee_edit => [1.99],:agent_carrying_fee_edit => [1.99],:transit_bill_no_edit => ['1234556']
         response.should redirect_to(assigns[:transit_info])
       end
     end
 
     describe "with invalid params" do
       it "re-renders the 'new' template" do
-        post :create,:transit_info => {},:bill_ids=> [@transit_bill.id]
+        post :create,:transit_info => {},:bill_ids=> [@transit_bill.id],:transit_carrying_fee_edit => [1.99],:agent_carrying_fee_edit => [1.99],:transit_bill_no_edit => ['1234556']
         response.should render_template('new')
       end
     end

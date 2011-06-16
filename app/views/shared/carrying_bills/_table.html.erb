@@ -50,8 +50,8 @@
     <tr class='text-center table-header'>
       <th class="cbx_select_bill" style='display : none;'>&nbsp;</th>
       <th class="first">序号</th>
-      <th><%=sortable "bill_date","票据日期" %></th>
-      <th><%=sortable "bill_no","票号" %></th>
+      <th class='bill_date'><%=sortable "bill_date","票据日期" %></th>
+      <th class='bill_no'><%=sortable "bill_no","票号" %></th>
       <th class='goods_no'><%=sortable "goods_no","货号" %></th>
       <th class='from_to'><%=sortable "from_org_id","发货地" %>--<%=sortable "to_org_id","到货地" %></th>
       <th class='customer'>发货人-收货人</th>
@@ -102,7 +102,7 @@
         <td>
           <%= order_no(index,params[:page]) %>
         </td>
-        <td>
+        <td class='bill_date'>
           <%=bill.bill_date.strftime('%y-%m-%d')%>
         </td>
         <td class='bill_no'>
@@ -175,8 +175,8 @@
     <tr>
       <td class="cbx_select_bill" style='display : none;'>&nbsp;</td>
       <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
+      <td class='bill_date'>&nbsp;</td>
+      <td class='bill_no'>&nbsp;</td>
       <td class='goods_no'>&nbsp;</td>
       <td class='from_to'>&nbsp;</td>
       <td class='customer'>总计</td>

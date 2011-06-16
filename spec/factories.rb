@@ -461,7 +461,9 @@ Factory.define :transit_info do |ti|
   ti.transit_bill_no "0000001"
 end
 Factory.define :transit_info_with_bill,:parent => :transit_info do |ti|
-  ti.association :carrying_bill,:factory => :transit_bill_reached
+  ti.after_create do |ti|
+    ti.carrying_bills << Factory(:transit_bill_reached)
+  end
 end
 #中转票据提货信息
 Factory.define :transit_deliver_info do |td|
@@ -469,7 +471,9 @@ Factory.define :transit_deliver_info do |td|
   td.transit_hand_fee 10
 end
 Factory.define :transit_deliver_info_with_bill,:parent => :transit_deliver_info do |td|
-  td.association :carrying_bill,:factory => :transit_bill_transited
+  td.after_create do |td|
+    td.carrying_bills << Factory(:transit_bill_transited)
+  end
 end
 Factory.define :role do |role|
   role.name "admin_role"

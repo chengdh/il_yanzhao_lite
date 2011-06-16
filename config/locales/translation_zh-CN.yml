@@ -408,7 +408,7 @@ zh-CN:
         org: "所属机构"  #g
         transit_company_id: "中转公司"  #g
         transit_company: "中转公司"  #g
-        carrying_bill: "中转运单"  #g
+        carrying_bills: "中转运单"  #g
 
       user:
         email: "电子邮箱"  #g

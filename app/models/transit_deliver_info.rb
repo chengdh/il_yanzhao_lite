@@ -2,17 +2,13 @@
 class TransitDeliverInfo < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
-  has_one :carrying_bill
+  has_many :carrying_bills
   validates_presence_of :org_id
 
-  default_scope :include => :carrying_bill
   #定义状态机
   state_machine :initial => :billed do
     after_transition do |deliver,transition|
-      deliver.carrying_bill.transit_hand_fee = deliver.transit_hand_fee
-      deliver.carrying_bill.send_fee = deliver.send_fee
-      deliver.carrying_bill.commission = deliver.commission
-      deliver.carrying_bill.standard_process
+      deliver.carrying_bills.each {|bill| bill.standard_process }
     end
     event :process do
       transition :billed =>:deliveried
