@@ -434,7 +434,7 @@ jQuery(function($) {
 			});
 			$("#sum_" + field_class).html(sum);
 		};
-		var edit_fields = ["transit_carrying_fee_edit", "transit_hand_fee_edit", "agent_carrying_fee_edit", "commission_edit", "send_fee_edit", "transit_bill_no"]
+		var edit_fields = ["transit_carrying_fee_edit", "transit_hand_fee_edit", "agent_carrying_fee_edit", "commission_edit", "send_fee_edit"]
 		$.each(edit_fields, function(index, value) {
 			cal_edit_field_sum(value)
 		});

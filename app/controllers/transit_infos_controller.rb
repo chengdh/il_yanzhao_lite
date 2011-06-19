@@ -1,6 +1,6 @@
 #coding: utf-8
 class TransitInfosController < BaseController
-  table :bill_date,:org,:transit_company,:transit_carrying_fee,:carrying_bill
+  table :bill_date,:org,:transit_company,:user,:note,:human_state_name
   def create
     @transit_info = TransitInfo.new(params[:transit_info])
 
