@@ -169,7 +169,7 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :subject => subject,
-  :default_action => 'new_deliver_info_path',
+  :default_action => 'new_deliver_info_path(:show_multi => 1)',
   :function => {
   :read =>{:title => "查看",:conditions =>"{:org_id => user.current_ability_org_ids }"},
   :create => {:title => "新建"},

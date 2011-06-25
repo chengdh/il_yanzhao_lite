@@ -81,7 +81,7 @@ namespace :db do
                                :code => "zz",
                                :is_yard => true,
                                :location => "南四环十八里河")
-    %w[磁县 漯河 临漳 沙河 涉县 大名 鸡泽 侯马 峰峰 武安 邯郸 邢台].each_with_index do |name,index|
+    %w[磁县 漯河 临漳 沙河 涉县 大名 鸡泽 侯马 峰峰 武安 邯郸1部 邯郸2部 邢台].each_with_index do |name,index|
       Branch.create!(:name => name,:simp_name => name.first,:location => name,:code => index + 1)
     end
     #银行信息,只有建设银行和浦发银行
@@ -116,17 +116,29 @@ namespace :db do
   end
   #######################################################################################################3
   desc "向数据库中添加示例数据"
-  task :create_admin => :environment do
+  task :create_user => :environment do
     #创建系统默认用户
     role = Role.new_with_default(:name => '管理员角色')
     role.role_system_function_operates.each { |r| r.is_select = true }
     role.save!
+    common_role = Role.new_with_default(:name => '操作员角色')
+    common_role.role_system_function_operates.each { |r| r.is_select = true }
+    common_role.save!
+
 
     #管理员角色
     admin = User.new_with_roles(:username => 'admin',:real_name => "管理员",:password => 'admin',:is_admin => true)
     admin.user_orgs.each { |user_org| user_org.is_select = true }
     admin.user_roles.each {|user_role| user_role.is_select = true}
     admin.save!
+    #建立各个分理用户
+    %w[磁县 漯河 临漳 沙河 涉县 大名 鸡泽 侯马 峰峰 武安 邯郸1部 邯郸2部 邢台].each do |org_name|
+      the_org = Org.find_by_name(org_name)
+      the_user = User.new(:username => org_name,:real_name => org_name,:password => '1')
+      the_user.user_roles.build(:role => common_role,:is_select => true)
+      the_user.user_orgs.build(:org => the_org,:is_select => true)
+      the_user.save!
+    end
   end
   desc "初始化系统"
   task :init_system => :environment do
