@@ -3,12 +3,12 @@
   <thead>
     <tr class='text-center'>
       <th class="first">序号</th>
-      <th>票据日期</th>
-      <th>票号</th>
-      <th>货号</th>
-      <th>发货地~到货地</th>
-      <th>发货人~收货人</th>
-      <th>付款方式</th>
+      <th class='bill_date'>票据日期</th>
+      <th class='bill_no'>票号</th>
+      <th class='goods_no'>货号</th>
+      <th class='from_to'>发货地~到货地</th>
+      <th class='customer'>发货人~收货人</th>
+      <th class='paytype'>付款方式</th>
       <th class="carrying_fee">运费</th>
       <th class="carrying_fee_th hide">提付运费</th>
       <th class="goods_fee">代收货款</th>
@@ -27,7 +27,7 @@
       <th class="weight_fee hide">费用</th>
       <th class="send_fee hide">送货费</th>
       <th class="profit hide">利润</th>
-      <th class="profit_weight">利润</th>
+      <th class="profit_weight hide">利润</th>
 
       <th class='transit_bill_no hide'>中转票号</th>
       <th class='transit_company hide'>中转公司</th>
@@ -46,24 +46,24 @@
         <td>
           <%= index + 1 %>
         </td>
-        <td>
+        <td class='bill_date'>
           <%=bill.bill_date.strftime('%y-%m-%d')%>
         </td>
-        <td>
+        <td class='bill_no'>
           &nbsp;<%=bill.bill_no%>
         </td>
-        <td>
-          <%=bill.goods_no%>
+        <td class='goods_no'>
+          &nbsp;<%=bill.goods_no%>
         </td>
-        <td>
+        <td class='from_to'>
           <%=bill.from_org_name%>~<%=["TransitBill","HandTransitBill"].include?(bill.type) ? "#{bill.transit_org.name}~#{bill.to_area}" : bill.to_org_name%>
         </td>
-        <td>
+        <td class='customer'>
           <%=bill.from_customer_name%>
           --
           <%=bill.to_customer_name%>
         </td>
-        <td>
+        <td class='paytype'>
           <%=pay_type_des(bill.pay_type) %>
         </td>
         <td class="carrying_fee">
@@ -114,12 +114,12 @@
   <tfoot>
     <tr>
       <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>&nbsp;</td>
-      <td>总计</td>
-      <td><%=sum_info[:count]%>票</td>
+      <td class='bill_date'>&nbsp;</td>
+      <td class='bill_no'>&nbsp;</td>
+      <td class='goods_no'>&nbsp;</td>
+      <td class='from_to'>&nbsp;</td>
+      <td class='customer'>总计</td>
+      <td class='paytype'><%=sum_info[:count]%>票</td>
       <td class="carrying_fee"><%=sum_info[:sum_carrying_fee]%></td>
       <td class="carrying_fee_th hide"><%=sum_info[:sum_carrying_fee_th]%></td>
       <td class="goods_fee"><%=sum_info[:sum_goods_fee]%></td>

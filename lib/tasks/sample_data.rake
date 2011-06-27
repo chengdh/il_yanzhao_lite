@@ -81,7 +81,7 @@ namespace :db do
                                :code => "zz",
                                :is_yard => true,
                                :location => "南四环十八里河")
-    %w[磁县 漯河 临漳 沙河 涉县 大名 鸡泽 侯马 峰峰 武安 邯郸1部 邯郸2部 邢台].each_with_index do |name,index|
+    %w[磁县南站 商都 马头 光录 邯郸1部 邯郸2部].each_with_index do |name,index|
       Branch.create!(:name => name,:simp_name => name.first,:location => name,:code => index + 1)
     end
     #银行信息,只有建设银行和浦发银行
@@ -132,7 +132,7 @@ namespace :db do
     admin.user_roles.each {|user_role| user_role.is_select = true}
     admin.save!
     #建立各个分理用户
-    %w[磁县 漯河 临漳 沙河 涉县 大名 鸡泽 侯马 峰峰 武安 邯郸1部 邯郸2部 邢台].each do |org_name|
+    %w[磁县南站 商都 马头 光录 邯郸1部 邯郸2部].each do |org_name|
       the_org = Org.find_by_name(org_name)
       the_user = User.new(:username => org_name,:real_name => org_name,:password => '1')
       the_user.user_roles.build(:role => common_role,:is_select => true)

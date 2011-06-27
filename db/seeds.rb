@@ -247,7 +247,7 @@ sf_hash = {
   :update_carrying_fee_20 =>{:title =>"修改运费(20%)"},
   :update_carrying_fee_50 =>{:title =>"修改运费(50%)"},
   :update_carrying_fee_100 =>{:title =>"修改运费(100%)"},
-  :update =>{:title =>"修改运单信息"},
+  :update_all =>{:title =>"修改运单信息"},
   :reset =>{:title =>"重置运单",:conditions =>"{:from_org_id => user.current_ability_org_ids}"},
   :export => {:title => "导出"},
   :read_commission => {:title => "查看业务员提成"},

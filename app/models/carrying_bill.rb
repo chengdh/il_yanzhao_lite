@@ -14,7 +14,7 @@ class CarryingBill < ActiveRecord::Base
   scope :recent_bills,lambda {|from_org_ids| where(:from_org_id => from_org_ids).order("created_at DESC").limit(12)}
 
   #待提货票据(不包括中转票据)
-  scope :ready_delivery,lambda {|to_org_ids| select('sum(1) as bill_count').where(:to_org_id => to_org_ids,:state => :distributed)}
+  scope :ready_delivery,lambda {|to_org_ids| select('sum(1) as bill_count').where(:to_org_id => to_org_ids,:state => :reached)}
   #待提款票据
   scope :ready_pay,lambda {|from_org_ids| search(:from_customer_id_is_null => 1).where(:from_org_id => from_org_ids,:state => :payment_listed).select('sum(goods_fee) as goods_fee,sum(1) as bill_count')}
 
@@ -105,7 +105,7 @@ class CarryingBill < ActiveRecord::Base
                  :paid => :posted) #过帐结束
 
       #普通运单到货后,可进行提货操作
-      transition :reached => :distributed,:distributed => :deliveried,:if => lambda {|bill| bill.transit_org_id.blank?}
+      transition :reached => :deliveried,:if => lambda {|bill| bill.transit_org_id.blank?}
 
       #中转运单处理流程
       transition :reached => :transited,:transited => :deliveried,:if => lambda {|bill| bill.transit_org_id.present?}
@@ -118,7 +118,7 @@ class CarryingBill < ActiveRecord::Base
     #after_transition :on => :return,[:reached,:distributed] => :returned,:do => :generate_return_bill
     event :return do
       #货物已发出,进行退货操作,会自动生成一张相反的单据
-      transition [:reached,:distributed] => :returned
+      transition :reached => :returned
     end
     #运单重置处理
     after_transition :on => :reset,any => :billed,:do => :reset_bill
