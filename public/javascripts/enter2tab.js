@@ -1,5 +1,5 @@
 jQuery(function($) {
-	var enter2tab = function(e) {
+	$.fn.enter2tab = function(e) {
 		if (e.keyCode == 13) {
 
 			/* FOCUS ELEMENT */
@@ -17,7 +17,9 @@ jQuery(function($) {
 		}
 
 	};
-	$('form input:visible,form select:visible,form textarea:visible').livequery("keypress", enter2tab);
-	$('.enter2tab input:visible,.enter2tab select:visible,.enter2tab textarea:visible').livequery("keypress", enter2tab);
+	$('form input:visible,form select:visible,form textarea:visible').livequery("keypress", $.fn.enter2tab);
+	$('.enter2tab input:visible,.enter2tab select:visible,.enter2tab textarea:visible').livequery("keypress", $.fn.enter2tab);
+        //可编辑的select需要单独设置回车事件,keypress不起作用
+	$('.editable-select').livequery('keydown',$.fn.enter2tab);
 });
 

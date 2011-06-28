@@ -62,6 +62,8 @@ jQuery(function($) {
 		bg_iframe: true
 	});
 
+
+
 	//双击某条记录打开详细信息
 	$('tr[data-dblclick]').livequery('dblclick', function() {
 		var el_anchor = $(this).find('.show_link');
