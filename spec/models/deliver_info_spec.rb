@@ -3,7 +3,7 @@ require 'spec_helper'
 
 describe DeliverInfo do
   before :each do
-    @computer_bill = Factory(:computer_bill_distributed)
+    @computer_bill = Factory(:computer_bill_reached)
     @deliver_info = Factory.build(:deliver_info)
     @deliver_info.carrying_bills << @computer_bill
   end

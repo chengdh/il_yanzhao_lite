@@ -126,7 +126,6 @@ Factory.define :computer_bill_deliveried,:parent => :computer_bill do |bill|
     bill.standard_process   #装车操作
     bill.standard_process   #发货操作
     bill.standard_process   #到货操作
-    bill.standard_process   #分货操作
     bill.standard_process   #提货操作
   end
 end
@@ -140,7 +139,6 @@ Factory.define :computer_bill_settlemented,:parent => :computer_bill do |bill|
     bill.standard_process   #装车操作
     bill.standard_process   #发货操作
     bill.standard_process   #到货操作
-    bill.standard_process   #分货操作
     bill.standard_process   #提货操作
     bill.standard_process   #结算操作
   end
@@ -156,7 +154,6 @@ Factory.define :computer_bill_refounded_confirmed,:parent => :computer_bill do |
     bill.standard_process   #装车操作
     bill.standard_process   #发货操作
     bill.standard_process   #到货操作
-    bill.standard_process   #分货操作
     bill.standard_process   #提货操作
     bill.standard_process   #结算操作
     bill.standard_process   #返款操作
@@ -175,7 +172,6 @@ Factory.define :computer_bill_payment_listed,:parent => :computer_bill do |bill|
     bill.standard_process   #装车操作
     bill.standard_process   #发货操作
     bill.standard_process   #到货操作
-    bill.standard_process   #分货操作
     bill.standard_process   #提货操作
     bill.standard_process   #结算操作
     bill.standard_process   #返款操作
