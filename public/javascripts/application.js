@@ -755,14 +755,14 @@ jQuery(function($) {
 	});
 
 	//根据参数显示或隐藏字段
-//	$('[data-showFields]').livequery(function() {
-//		$($(this).data('showFields')).show();
+        //在render 'shared/carrying_bills/table'中使用
+	$('[data-showFields]').livequery(function() {
+		$($(this).data('showFields')).show();
 
-//	});
-//	$('[data-hideFields]').livequery(function() {
-//		$($(this).data('hideFields')).hide();
-
-//	});
+	});
+	$('[data-hideFields]').livequery(function() {
+		$($(this).data('hideFields')).hide();
+	});
 	//运单修改时,判断权限
 	$('.update_carrying_fee').livequery(function() {
 		$('#carrying_bill_form :input').attr('readonly', true);
