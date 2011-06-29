@@ -22,6 +22,9 @@ gem 'uuid'
 gem 'factory_girl_rails', '1.0'
 gem 'easy_http_cache'
 gem "meta_search"
+#js and css compressor
+gem "jammit"
+gem "yui-compressor"
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

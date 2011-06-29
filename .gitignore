@@ -10,6 +10,4 @@ doc/app
 *.sw?
 *~
 .DS_Store
-public/javascripts/il-javascripts.js
-public/javascripts/il-ie-javascripts.js
-public/stylesheets/il-stylesheets.css
+public/assets/*
