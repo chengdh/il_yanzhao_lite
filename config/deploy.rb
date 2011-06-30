@@ -3,7 +3,7 @@
 set :application, "il_yanzhao_lite"
 #set :repository,  "git://github.com/chengdh/il_yanzhao.git"
 set :repository, "."
-set :local_repository, "file:///media//WORK/il_yanzhao_lite/.git"
+set :local_repository, "file:///f:/il_yanzhao_lite/.git"
 set :deploy_via, :copy
 set :copy_cache, true
 set :default_environment, {'PATH' => "/opt/rubyee/bin/:$PATH"}
