@@ -1,5 +1,5 @@
 #add bundler support
-require 'bundler/capistrano'
+#require 'bundler/capistrano'
 set :application, "il_yanzhao_lite"
 #set :repository,  "git://github.com/chengdh/il_yanzhao.git"
 set :repository, "."
