@@ -53,6 +53,8 @@ group :development do
   gem 'annotate-models', '1.0.4'
   gem 'jquery-rails'
   gem "bullet"
+  #windows下运行需要
+  #gem "win32-open3"
 end
 group :development, :test do
   gem 'rspec-rails','~>2.4.1'

@@ -81,6 +81,7 @@ IlYanzhao::Application.routes.draw do
 
   resources :transit_deliver_infos do
     get :search,:on => :collection
+    get :export_excel,:on => :member
     resources :carrying_bills
   end
 
@@ -88,6 +89,7 @@ IlYanzhao::Application.routes.draw do
 
   resources :transit_infos do
     get :search,:on => :collection
+    get :export_excel,:on => :member
     resources :carrying_bills
   end
 

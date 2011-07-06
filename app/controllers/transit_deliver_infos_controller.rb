@@ -17,4 +17,8 @@ class TransitDeliverInfosController < BaseController
   def search
     render :partial => "search"
   end
+  #GET transit_deliver_info/1/export_excel
+  def export_excel
+    @transit_deliver_info = resource_class.find(params[:id],:include => [:org,:user,:carrying_bills])
+  end
 end

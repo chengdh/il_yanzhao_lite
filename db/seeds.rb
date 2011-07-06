@@ -251,7 +251,8 @@ sf_hash = {
   :reset =>{:title =>"重置运单",:conditions =>"{:from_org_id => user.current_ability_org_ids}"},
   :export => {:title => "导出"},
   :read_commission => {:title => "查看业务员提成"},
-  :edit_commission => {:title => "录入业务员提成"}
+  :edit_commission => {:title => "录入业务员提成"},
+  :read_profit => {:title => "查看运单利润"}
 
 }
 }

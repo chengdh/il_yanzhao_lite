@@ -120,10 +120,10 @@
 
     <td>利润</td>
     <% if ["TransitBill","HandTransitBill"].include? show.type %>
-      <td><%= show.profit %></td>
+      <td><%= can?(:read_profit,CarryingBill)? show.profit : "" %></td>
     <%end%>
     <% if ["KidsTransitBill"].include? show.type %>
-      <td><%= show.profit_weight %></td>
+      <td><%= can?(:read_profit,CarryingBill)? show.profit_weight : "" %></td>
     <%end%>
     <td colspan='10'>&nbsp;</td>
   </tr>
