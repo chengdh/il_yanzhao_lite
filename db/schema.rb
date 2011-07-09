@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110610092856) do
+ActiveRecord::Schema.define(:version => 20110709080619) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -391,6 +391,13 @@ ActiveRecord::Schema.define(:version => 20110610092856) do
   add_index "load_lists", ["state"], :name => "index_load_lists_on_state"
   add_index "load_lists", ["to_org_id"], :name => "index_load_lists_on_to_org_id"
   add_index "load_lists", ["user_id"], :name => "index_load_lists_on_user_id"
+
+  create_table "notifies", :force => true do |t|
+    t.text     "notify_text"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "orgs", :force => true do |t|
     t.string   "name",            :limit => 60,                    :null => false

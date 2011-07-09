@@ -37,6 +37,14 @@
             </li>
           </ul>
         </div>
+        <%if Notify.last.present?%>
+          <div id='notify-bar' style='display : none;'>
+            <span class='notify-text' data-notify='<%=Notify.last.to_json%>'><%=Notify.last.try(:notify_text)%></span>
+            <span class='notify-close'><a title='关闭提醒信息'>x</a></span>
+          </div>
+        <%end%>
+
+
         <div id="main-navigation">
           <ul class="wat-cf">
             <li class='first active'><%= link_to image_tag('home.png') + "业务看板", root_path %></li>

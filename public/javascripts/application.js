@@ -62,8 +62,6 @@ jQuery(function($) {
 		bg_iframe: true
 	});
 
-
-
 	//双击某条记录打开详细信息
 	$('tr[data-dblclick]').livequery('dblclick', function() {
 		var el_anchor = $(this).find('.show_link');
@@ -333,12 +331,12 @@ jQuery(function($) {
 				});
 				$(this).data('params', {
 					"bill_ids[]": bill_ids,
-                                        "transit_carrying_fee_edit[]" : get_transit_edit_fields_val('transit_carrying_fee_edit'),
-                                        "transit_hand_fee_edit[]" : get_transit_edit_fields_val('transit_hand_fee_edit'),
-                                        "agent_carrying_fee_edit[]" : get_transit_edit_fields_val('agent_carrying_fee_edit'),
-                                        "commission_edit[]" : get_transit_edit_fields_val('commission_edit'),
-                                        "send_fee_edit[]" : get_transit_edit_fields_val('send_fee_edit'),
-                                        "transit_bill_no_edit[]" : get_transit_edit_fields_val('transit_bill_no_edit')
+					"transit_carrying_fee_edit[]": get_transit_edit_fields_val('transit_carrying_fee_edit'),
+					"transit_hand_fee_edit[]": get_transit_edit_fields_val('transit_hand_fee_edit'),
+					"agent_carrying_fee_edit[]": get_transit_edit_fields_val('agent_carrying_fee_edit'),
+					"commission_edit[]": get_transit_edit_fields_val('commission_edit'),
+					"send_fee_edit[]": get_transit_edit_fields_val('send_fee_edit'),
+					"transit_bill_no_edit[]": get_transit_edit_fields_val('transit_bill_no_edit')
 				});
 			}
 			return true;
@@ -755,7 +753,7 @@ jQuery(function($) {
 	});
 
 	//根据参数显示或隐藏字段
-        //在render 'shared/carrying_bills/table'中使用
+	//在render 'shared/carrying_bills/table'中使用
 	$('[data-showFields]').livequery(function() {
 		$($(this).data('showFields')).show();
 
@@ -803,5 +801,51 @@ jQuery(function($) {
 		};
 		export_excel("<table>" + table_doc.html() + "</table>", set_style);
 	});
+
+	//模拟mouseclick事件
+	var fireClick = function(el) {
+		if (!el) return;
+		if (document.dispatchEvent) { // W3C
+			var oEvent = document.createEvent("MouseEvents") document;
+			oEvent.initMouseEvent("click", true, true, window, 1, 1, 1, 1, 1, false, false, false, false, 0, el);
+			el.dispatchEvent(oEvent);
+		}
+		else if (document.fireEvent) { // IE
+			el.click();
+		}
+	};
+
+	//快捷键设置
+	$(document).bind('keydown', 'n', function() {
+		fireClick($('.btn_new')[0]);
+	}).bind('keydown', 's', function() {
+		fireClick($('.btn_save')[0]);
+	}).bind('keydown', 'e', function() {
+		fireClick($('.btn_modify')[0]);
+	}).bind('keydown', 'f', function() {
+		fireClick($('.btn_search')[0]);
+	}).bind('keydown', 'd', function() {
+		fireClick($('.btn_delete')[0]);
+	}).bind('keydown', 'x', function() {
+		fireClick($('.btn_export_excel')[0]);
+	}).bind('keydown', 'l', function() {
+		fireClick($('keydown.btn_index')[0]);
+	}).bind('keydown', 'p', function() {
+		fireClick($('keydown.btn_print')[0]);
+	});
+	//设置notify cookie
+	//如果cookie中找到了对应的notify_id，则不显示
+	$('[data-notify]').livequery(function() {
+		var notify = $(this).data('notify');
+		if ($.cookies.get('il_notify_' + notify.id)) $('#notify-bar').hide();
+		else $('#notify-bar').show();
+	});
+	//关闭提醒
+	$('span.notify-close').click(function() {
+		var notify = $('[data-notify]').data('notify');
+                $.cookies.set('il_notify_' + notify.id, notify.notify_text);
+		$('#notify-bar').hide();
+	});
+
 });
 

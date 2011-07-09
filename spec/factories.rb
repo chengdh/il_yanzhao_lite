@@ -603,3 +603,7 @@ Factory.define :customer_level_config do |config|
   config.from_fee 0
   config.to_fee 1000
 end
+#notify
+Factory.define :notify do |n|
+  n.notify_text "测试提醒信息"
+end

@@ -40,10 +40,8 @@
       <th style='border : thin solid #000;'>货号</th>
       <th style='border : thin solid #000;'>发货人</th>
       <th style='border : thin solid #000;'>收货人</th>
-      <th style='border : thin solid #000;'>提付运费</th>
       <th style='border : thin solid #000;'>代收货款</th>
       <th style='border : thin solid #000;'>返款备注</th>
-      <th style='border : thin solid #000;'>运费支付方式</th>
       <th style='border : thin solid #000;'>备注</th>
     </tr>
   </thead>
@@ -53,13 +51,11 @@
       <tr>
         <td style='border : thin solid #000;'><%= index + 1 %></td>
         <td style='border : thin solid #000;'>&nbsp;<%= bill.bill_no %></td>
-        <td style='border : thin solid #000;'><%= bill.goods_no %></td>
+        <td style='border : thin solid #000;'>&nbsp;<%= bill.goods_no %></td>
         <td style='border : thin solid #000;'><%= bill.from_customer_name %></td>
         <td style='border : thin solid #000;'><%= bill.to_customer_name %></td>
-        <td style='border : thin solid #000;'><%= bill.carrying_fee_th %></td>
         <td style='border : thin solid #000;'><%= bill.goods_fee %></td>
         <td style='border : thin solid #000;'></td>
-        <td style='border : thin solid #000;'><%= bill.pay_type_des %></td>
         <td style='border : thin solid #000;'><%= bill.note %></td>
       </tr>
     <% end %>
@@ -67,7 +63,6 @@
   <tfoot>
     <tr>
       <td colspan='5' style='text-align : right;border : thin solid #000;'>合计</td>
-      <td style='border : thin solid #000;'><%=@refound.carrying_bills.to_a.sum(&:carrying_fee_th)%></td>
       <td style='border : thin solid #000;'><%=@refound.carrying_bills.sum(:goods_fee)%></td>
       <td style='border : thin solid #000;'></td>
       <td style='border : thin solid #000;'></td>

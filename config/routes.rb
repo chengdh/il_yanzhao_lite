@@ -1,5 +1,7 @@
 IlYanzhao::Application.routes.draw do
 
+  resources :notifies
+
   resources :kids_transit_bills do
     get :search,:on => :collection
     get :export_excel,:on => :collection
