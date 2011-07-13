@@ -19,7 +19,7 @@ class ConfigCash < ActiveRecord::Base
   #得到手续费设置比例数组
   def self.hand_fee_a(org_id)
     ret =[]
-    self.where(:is_active => true,:org_id => org_id).order('created_at DESC').each do |config|
+    self.where(:is_active => true,:org_id => org_id,:is_added_fee => false).order('created_at DESC').each do |config|
       ret += [[(config.fee_from..config.fee_to),config.hand_fee]]
     end
     ret
@@ -32,6 +32,22 @@ class ConfigCash < ActiveRecord::Base
       if fee_rate[0].include? goods_fee
         found = true
         ret = fee_rate[1]
+      end
+    end
+    ret = default_hand_fee(goods_fee) if !found
+    ret
+  end
+  def self.cal_added_fee(org_id,goods_fee)
+    added_fee_array = []
+    self.where(:is_active => true,:org_id => org_id,:is_added_fee => true).order('created_at DESC').each do |config|
+      added_fee_array += [[(config.fee_from..config.fee_to),config.added_fee]]
+    end
+    found = false
+    ret = 0
+    added_fee_array.each do |added_fee|
+      if added_fee[0].include? goods_fee
+        found = true
+        ret = added_fee[1]
       end
     end
     ret = 0 if !found

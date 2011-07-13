@@ -23,8 +23,6 @@ class CarryingBill < ActiveRecord::Base
 
   #保存成功后,设置原始费用
   before_create :set_original_fee
-  #产生货号 计算手续费
-  before_save :cal_hand_fee
 
   belongs_to :user
   belongs_to :from_org,:class_name => "Org"
@@ -381,7 +379,7 @@ class CarryingBill < ActiveRecord::Base
     #计算手续费
     def cal_hand_fee
       if self.goods_fee_cash?
-        self.k_hand_fee = ConfigCash.cal_hand_fee(self.from_org_id,self.goods_fee).ceil
+        self.k_hand_fee = (ConfigCash.cal_hand_fee(self.from_org_id,self.goods_fee) + ConfigCash.cal_added_fee(self.from_org_id,self.goods_fee)).ceil
       else
         self.k_hand_fee = (self.from_customer.config_transit.rate * self.goods_fee).ceil
       end

@@ -61,24 +61,29 @@ jQuery(function($) {
 	$('.editable-select').editableSelect({
 		bg_iframe: true
 	});
-
 	//双击某条记录打开详细信息
-	$('tr[data-dblclick]').livequery('dblclick', function() {
-		var el_anchor = $(this).find('.show_link');
-		if ($(el_anchor).hasClass('fancybox')) $(el_anchor).click();
-		else {
-			window.location = $(el_anchor).attr('href');
-			$.fancybox.showActivity();
+	$('#bills_table,table.table[id$="index_table"]').live('dblclick', function(evt) {
+		var target_el = $(evt.target).parent('tr');
+		if (target_el.attr('data-dblclick')) {
 
+			var el_anchor = $(target_el).find('.show_link');
+			if ($(el_anchor).hasClass('fancybox')) $(el_anchor).click();
+			else {
+				window.location = $(el_anchor).attr('href');
+				$.fancybox.showActivity();
+			}
+		}
+
+	}).live('click', function(evt) { //单击某条记录选中
+		var target_el = $(evt.target).parent('tr');
+		if (target_el.attr('data-dblclick')) {
+
+			$('tr[data-dblclick]').removeClass('cur_select');
+			$(target_el).addClass('cur_select');
 		}
 
 	});
-	//单击某条记录选中
-	$('tr[data-dblclick]').livequery('click', function() {
-		$('tr[data-dblclick]').removeClass('cur_select');
-		$(this).addClass('cur_select');
 
-	});
 	$('.btn_edit').click(function() {
 		var cur_select = $('tr[data-dblclick].cur_select .edit_link');
 		if (cur_select.length == 0) {
@@ -96,10 +101,10 @@ jQuery(function($) {
 
 	});
 	$('.btn_delete').click(function() {
-		var cur_select = $('tr[data-dblclick].cur_select .edit_delete');
+		var cur_select = $('tr[data-dblclick].cur_select .delete_link');
 		if (cur_select.length == 0) {
 			$.notifyBar({
-				html: "请先选择要编辑的数据!",
+				html: "请先选择要删除的数据!",
 				delay: 3000,
 				animationSpeed: "normal",
 				cls: 'error'
@@ -145,11 +150,11 @@ jQuery(function($) {
 		if ($(this).attr('href') == '') return false;
 
 	});
-
-	//form 自动获取焦点
-	$('#carrying_bill_form').livequery(function() {
-		$(this).focus();
-	});
+	//blockUI处理
+	$.blockUI.defaults.message = '<h1><img src="/images/ajax-spinner.gif" width="20px" height="20px"/>处理中,请稍候...</h1>';
+	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
+	//对需要长时间处理的操作,显示blockUI
+	$('.btn_process_handle').bind('click', $.blockUI);
 
 	//组织机构列表
 	$('#role_system_functions_list').accordion({
@@ -252,11 +257,6 @@ jQuery(function($) {
 	});
 	$('form.bill_selector').livequery(function() {
 		$(this).form_with_select_bills();
-	});
-	$('#container').ajaxStart(function() {
-		$.fancybox.showActivity();
-	}).ajaxStop(function() {
-		$.fancybox.hideActivity();
 	});
 	//首页运单查询
 	$('#home-search-box').watermark('录入运单号/货号查询').keypress(function(e) {
@@ -440,9 +440,17 @@ jQuery(function($) {
 		});
 
 	};
+	//绑定明细变化事件
+	//货物中转及中转提货时,进行合计
+	$('#bills_table_body').bind('tr_changed', cal_sum).bind('change', function(evt) {
+		var target_el = $(evt.target).parent('td');
 
-	$('.bill_cal_sum').livequery(cal_sum, cal_sum);
-	$(".transit_carrying_fee_edit input, .transit_hand_fee_edit input, .agent_carrying_fee_edit input, .commission_edit input, .send_fee_edit input").livequery('change', cal_sum);
+		if (target_el && (target_el.hasClass('transit_carrying_fee_edit') || target_el.hasClass('transit_hand_fee_edit') || target_el.hasClass('agent_carrying_fee_edit')))
+		//触发运单明细改变事件
+		$('#bills_table_body').trigger('tr_changed');
+
+	});
+
 	//生成结算清单时,绑定查询条件
 	$('#btn_generate_settlement').bind('ajax:before', function() {
 		var params = {
@@ -802,11 +810,16 @@ jQuery(function($) {
 		export_excel("<table>" + table_doc.html() + "</table>", set_style);
 	});
 
+	//form 自动获取焦点
+	$('.inner form').livequery(function() {
+		$('.inner form input:not([readonly])').not('input[type="hidden"]').first().focus();
+	});
+
 	//模拟mouseclick事件
 	var fireClick = function(el) {
 		if (!el) return;
 		if (document.dispatchEvent) { // W3C
-			var oEvent = document.createEvent("MouseEvents") document;
+			var oEvent = document.createEvent("MouseEvents");
 			oEvent.initMouseEvent("click", true, true, window, 1, 1, 1, 1, 1, false, false, false, false, 0, el);
 			el.dispatchEvent(oEvent);
 		}
@@ -832,6 +845,12 @@ jQuery(function($) {
 		fireClick($('keydown.btn_index')[0]);
 	}).bind('keydown', 'p', function() {
 		fireClick($('keydown.btn_print')[0]);
+	}).bind('keydown', 'alt+t', function() {
+		//任何情况下,点击ctrl+b打开运单录入
+		window.location = "/computer_bills/new";
+	}).bind('keydown', 'ctrl+z', function() {
+		//任何情况下，可点击ctrl_z打开运单查询界面
+		fireClick(document.getElementById('btn_advanced_search'));
 	});
 	//设置notify cookie
 	//如果cookie中找到了对应的notify_id，则不显示
@@ -843,7 +862,7 @@ jQuery(function($) {
 	//关闭提醒
 	$('span.notify-close').click(function() {
 		var notify = $('[data-notify]').data('notify');
-                $.cookies.set('il_notify_' + notify.id, notify.notify_text);
+		$.cookies.set('il_notify_' + notify.id, notify.notify_text);
 		$('#notify-bar').hide();
 	});
 

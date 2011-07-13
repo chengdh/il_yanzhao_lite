@@ -9,7 +9,8 @@ $('#table_wrap').html('');
 <%else%>
   <%if params[:show_multi].present?%>
     if($('#bill_<%=collection.first.id%>').length == 0)
-    $('#bills_table_body').append('<%= escape_javascript(render("shared/carrying_bills/table_tr",:bill => collection.first)) %>');
+    $('#bills_table_body').prepend('<%= escape_javascript(render("shared/carrying_bills/table_tr",:bill => collection.first)) %>').trigger('tr_changed');
+    //触发bills_table_body明细改变事件
   <%else%>
     //如果传入了show_group,则显示 table_group_by_from_org
   var bill_list = '<%= escape_javascript(render(params[:show_group].blank? ? "shared/carrying_bills/table" : "shared/carrying_bills/table_group_by_from_org")) %>';

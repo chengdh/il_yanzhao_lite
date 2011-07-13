@@ -10,12 +10,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110709080619) do
+ActiveRecord::Schema.define(:version => 20110713094411) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
     t.string   "code",       :limit => 20,                   :null => false
     t.boolean  "is_active",                :default => true
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "bill_nos", :force => true do |t|
+    t.integer  "bill_count", :default => 4000000
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -128,13 +134,15 @@ ActiveRecord::Schema.define(:version => 20110709080619) do
   add_index "claims", ["user_id"], :name => "index_claims_on_user_id"
 
   create_table "config_cashes", :force => true do |t|
-    t.decimal  "fee_from",   :precision => 15, :scale => 2, :default => 0.0
-    t.decimal  "fee_to",     :precision => 15, :scale => 2, :default => 0.0
-    t.decimal  "hand_fee",   :precision => 15, :scale => 2, :default => 0.0
-    t.boolean  "is_active",                                 :default => true, :null => false
+    t.decimal  "fee_from",     :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "fee_to",       :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "hand_fee",     :precision => 15, :scale => 2, :default => 0.0
+    t.boolean  "is_active",                                   :default => true,  :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "org_id"
+    t.decimal  "added_fee",    :precision => 10, :scale => 2, :default => 0.0
+    t.boolean  "is_added_fee",                                :default => false
   end
 
   create_table "config_transits", :force => true do |t|
@@ -325,6 +333,15 @@ ActiveRecord::Schema.define(:version => 20110709080619) do
   add_index "goods_exceptions", ["state"], :name => "index_goods_exceptions_on_state"
   add_index "goods_exceptions", ["user_id"], :name => "index_goods_exceptions_on_user_id"
 
+  create_table "goods_nos", :force => true do |t|
+    t.integer  "from_org_id",                :null => false
+    t.integer  "to_org_id",                  :null => false
+    t.date     "gen_date",                   :null => false
+    t.integer  "bill_count",  :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "il_configs", :force => true do |t|
     t.string   "key",        :limit => 60, :null => false
     t.string   "title",      :limit => 60
@@ -414,6 +431,7 @@ ActiveRecord::Schema.define(:version => 20110709080619) do
     t.datetime "updated_at"
     t.string   "py",              :limit => 20
     t.boolean  "is_yard",                       :default => false
+    t.integer  "order_by",                      :default => 0
   end
 
   add_index "orgs", ["code"], :name => "index_orgs_on_code"

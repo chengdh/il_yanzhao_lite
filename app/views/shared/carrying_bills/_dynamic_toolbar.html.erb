@@ -1,6 +1,12 @@
 <!--动态toolbar-->
 <div class="secondary-navigation">
   <ul class="wat-cf">
+    <%if params[:action] == "show" or params[:action] == "edit"%>
+      <li>
+        <%= link_to image_tag("arrow-turn-180-left.png",:alt => "返回"),  :back,:title => "返回",:class => "tipsy" %>
+      </li>
+    <%end%>
+
     <%if can? :read,resource_class%>
       <li class="first">
         <%= link_to image_tag("grid.png",:alt => "#{resource_class.model_name.human}列表") , collection_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[bill_date_eq]" => Date.today,"search[completed_eq]" => 0,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc"),:title => "#{resource_class.model_name.human}列表",:class => "tipsy btn_index"  %>
@@ -22,23 +28,23 @@
 
     <%if params[:action] == "new"%>
       <li>
-        <%= link_to_function image_tag("disk-black.png",:alt => "保存#{resource_class.model_name.human}"), "$.fancybox.showActivity();$('#carrying_bill_form').trigger('submit')",:title => "保存#{resource_class.model_name.human}",:class => "tipsy btn_save"  %>
+        <%= link_to_function image_tag("disk-black.png",:alt => "保存#{resource_class.model_name.human}"), "$('#carrying_bill_form').trigger('submit')",:title => "保存#{resource_class.model_name.human}",:class => "tipsy btn_save"  %>
       </li>
     <%end%>
     <%if params[:action] == "edit"%>
       <li>
-        <%= link_to_function image_tag("disk-black.png",:alt => "保存#{resource_class.model_name.human}"), "$.fancybox.showActivity();$('#carrying_bill_form').trigger('submit')",:title => "保存#{resource_class.model_name.human}",:class => "tipsy btn_save"  %>
+        <%= link_to_function image_tag("disk-black.png",:alt => "保存#{resource_class.model_name.human}"), "$('#carrying_bill_form').trigger('submit')",:title => "保存#{resource_class.model_name.human}",:class => "tipsy btn_save"  %>
       </li>
       <%if can? :destroy,resource_class%>
         <li>
-          <%= link_to image_tag("cross.png",:alt => "删除该记录"), resource,:method => :delete,:class =>"tipsy btn_delete",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
+          <%= link_to image_tag("cross.png",:alt => "删除该记录"), resource,:method => :delete,:class =>"tipsy btn_destroy",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
         </li>
       <%end%>
     <%end%>
     <%if params[:action] == "show"%>
       <%if can? :edit,resource%>
         <li>
-          <%= link_to image_tag("application--pencil.png",:alt => "修改当前记录"),  edit_resource_path(resource),:title => "修改当前记录",:class => "tipsy btn_edit" %>
+          <%= link_to image_tag("application--pencil.png",:alt => "修改当前记录"),  edit_resource_path(resource),:title => "修改当前记录",:class => "tipsy btn_modify" %>
         </li>
       <%end%>
       <%if can? :reset,resource%>
@@ -49,7 +55,7 @@
 
       <%if can? :destroy,resource%>
         <li>
-          <%= link_to image_tag("cross.png",:alt => "删除该记录"), resource,:method => :delete,:class =>"tipsy btn_delete",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
+          <%= link_to image_tag("cross.png",:alt => "删除该记录"), resource,:method => :delete,:class =>"tipsy btn_destroy",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
         </li>
 
       <%end%>

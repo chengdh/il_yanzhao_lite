@@ -7,6 +7,9 @@ class TransitInfosController < BaseController
     @transit_info.carrying_bill_ids  = params[:bill_ids]  unless params[:bill_ids].blank?
     @transit_info.carrying_bills.each_with_index do |bill,index|
       bill.transit_carrying_fee = params[:transit_carrying_fee_edit][index]
+      bill.transit_hand_fee = params[:transit_hand_fee_edit][index]
+      #中转票据,k_hand_fee 等于中转手续费
+      bill.k_hand_fee = params[:transit_hand_fee_edit][index]
       bill.agent_carrying_fee = params[:agent_carrying_fee_edit][index]
       bill.transit_bill_no = params[:transit_bill_no_edit][index]
     end

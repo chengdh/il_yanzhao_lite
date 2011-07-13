@@ -196,6 +196,8 @@ zh-CN:
         fee_from: "起始金额"  #g
         fee_to: "结束金额"  #g
         hand_fee: "手续费"  #g
+        added_fee: "附加费"
+        is_added_fee: "是否附加费"
         org_id: "机构名称"
         org: "机构名称"
         is_active: "有效"  #g
@@ -273,6 +275,7 @@ zh-CN:
         children: "下级机构"  #g
         customer_level_configs: "VIP分级设置"  #g
         is_yard: "中心货场"
+        order_by: "排序"
 
       distribution_list:
         bill_date: "清单日期"  #g
@@ -403,7 +406,7 @@ zh-CN:
         transit_hand_fee: "中转手续费"  #g
         state: "状态"  #g
         org: "组织机构"  #g
-        carrying_bill: "中转运单"  #g
+        carrying_bills: "中转运单"  #g
 
       transit_info:
         to_station_phone: "到货地电话"  #g

@@ -1,6 +1,12 @@
 <!--动态toolbar-->
 <div class="secondary-navigation">
   <ul class="wat-cf">
+    <%if params[:action] == "show" or params[:action] == "edit"%>
+      <li>
+        <%= link_to image_tag("arrow-turn-180-left.png",:alt => "返回"),  :back,:title => "返回",:class => "tipsy" %>
+      </li>
+    <%end%>
+
     <%if can? :read,resource_class%>
       <li class="first">
         <%= link_to image_tag("grid.png",:alt => "#{resource_class.model_name.human}列表") , collection_path,:title => "#{resource_class.model_name.human}列表",:class => "tipsy btn_index"  %>
@@ -15,7 +21,7 @@
       </li>
     <%end%>
 
-    <%if params[:action] == "new"%>
+    <%if params[:action] == "new" or params[:action] == "create" or params[:action] == "update"%>
       <li>
         <%= link_to_function image_tag("disk-black.png",:alt => "保存#{resource_class.model_name.human}"), "$('##{resource_class.model_name.underscore}_form').trigger('submit')",:title => "保存#{resource_class.model_name.human}",:class => "tipsy btn_save"  %>
       </li>
@@ -26,7 +32,7 @@
       </li>
       <%if can? :destroy,resource_class%>
         <li>
-          <%= link_to image_tag("cross.png",:alt => "删除该记录"), polymorphic_url(resource,:routing_type => :path),:method => :delete,:class =>"tipsy btn_delete",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
+          <%= link_to image_tag("cross.png",:alt => "删除该记录"), polymorphic_url(resource,:routing_type => :path),:method => :delete,:class =>"tipsy btn_destroy",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
         </li>
       <%end%>
     <%end%>
@@ -38,7 +44,7 @@
       <%end%>
       <%if can? :destroy,resource%>
         <li>
-          <%= link_to image_tag("cross.png",:alt => "删除该记录"), resource,:method => :delete,:class =>"tipsy btn_delete",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
+          <%= link_to image_tag("cross.png",:alt => "删除该记录"), resource,:method => :delete,:class =>"tipsy btn_destroy",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
         </li>
       <%end%>
     <%end%>
