@@ -1,37 +1,46 @@
 // Place your application-specific JavaScript functions and classes here
 // This file is automatically included by javascript_include_tag :defaults
-//自动加载validation及facebox类库
-//导出数据到excel, ie only
-var export_excel = function(table_content, func_set_style) {
-	try {
-
-		window.clipboardData.setData("Text", table_content);
-		ExApp = new ActiveXObject("Excel.Application");
-		var ExWBk = ExApp.Workbooks.add();
-		var ExWSh = ExWBk.ActiveSheet;
-		ExApp.DisplayAlerts = false;
-		if (func_set_style) func_set_style(ExWSh);
-		ExApp.visible = true;
-		ExWSh.Paste();
-	}
-	catch(e) {
-		$.notifyBar({
-			html: "导出失败,请确认您已安装excel软件,并调整了IE的安全设置.",
-			delay: 3000,
-			animationSpeed: "normal",
-			cls: 'error'
-		});
-		return false;
-	}
-};
-
 jQuery(function($) {
-	//初始化formtastic_validation
-	//var init_formtastic_validation = function() {
-	//	var formtasticValidation = new FormtasticValidation;
-	//	formtasticValidation.initialize();
-	//};
-	//init_formtastic_validation.apply();
+	//扩展jQuery function
+	$.extend({
+		//导出数据到excel, ie only
+		export_excel: function(table_content, func_set_style) {
+			try {
+
+				window.clipboardData.setData("Text", table_content);
+				ExApp = new ActiveXObject("Excel.Application");
+				var ExWBk = ExApp.Workbooks.add();
+				var ExWSh = ExWBk.ActiveSheet;
+				ExApp.DisplayAlerts = false;
+				if (func_set_style) func_set_style(ExWSh);
+				ExApp.visible = true;
+				ExWSh.Paste();
+			}
+			catch(e) {
+				$.notifyBar({
+					html: "导出失败,请确认您已安装excel软件,并调整了IE的安全设置.",
+					delay: 3000,
+					animationSpeed: "normal",
+					cls: 'error'
+				});
+				return false;
+			}
+		},
+		//模拟mouseclick
+		fireClick: function(el) {
+			if (!el) return;
+			if (document.dispatchEvent) { // W3C
+				var oEvent = document.createEvent("MouseEvents");
+				oEvent.initMouseEvent("click", true, true, window, 1, 1, 1, 1, 1, false, false, false, false, 0, el);
+				el.dispatchEvent(oEvent);
+			}
+			else if (document.fireEvent) { // IE
+				el.click();
+			}
+
+		}
+	});
+
 	//导出excel按钮绑定
 	$('.btn_export_excel').click(function() {
 		var url = $(this).attr('href');
@@ -67,7 +76,7 @@ jQuery(function($) {
 		if (target_el.attr('data-dblclick')) {
 
 			var el_anchor = $(target_el).find('.show_link');
-			if ($(el_anchor).hasClass('fancybox')) $(el_anchor).click();
+			if ($(el_anchor).hasClass('fancybox')) $.fireClick($(el_anchor)[0]);
 			else {
 				window.location = $(el_anchor).attr('href');
 				$.fancybox.showActivity();
@@ -299,7 +308,7 @@ jQuery(function($) {
 		});
 	});
 	//绑定提货/提款/中转/中转提货处理的ajax:before
-	$('#deliver_info_form,#cash_pay_info_form,#transfer_pay_info_form,#transit_info_form,#transit_deliver_info_form,#short_fee_info_form,#goods_exception_form,#send_list_form,#send_list_post_form,#post_info_form').livequery(function() {
+	$('#deliver_info_form,#settlement_form,#refound_form,#cash_pay_info_form,#transfer_pay_info_form,#transit_info_form,#transit_deliver_info_form,#short_fee_info_form,#goods_exception_form,#send_list_form,#send_list_post_form,#post_info_form').livequery(function() {
 		$(this).bind('ajax:before', function() {
 			var bill_els = $('[data-bill]');
 			var bill_ids = [];
@@ -472,9 +481,9 @@ jQuery(function($) {
 		$('#settlement_sum_transit_carrying_fee').val(sum_info.sum_transit_carrying_fee);
 		$('#settlement_sum_transit_hand_fee').val(sum_info.sum_transit_hand_fee);
 		$('#settlement_sum_fee').html(parseFloat(sum_info.sum_goods_fee) + parseFloat(sum_info.sum_carrying_fee_th) - parseFloat(sum_info.sum_transit_carrying_fee) - parseFloat(sum_info.sum_transit_hand_fee));
-		$('#settlement_form').data('params', {
-			'bill_ids[]': ids
-		});
+		//$('#settlement_form').data('params', {
+		//	'bill_ids[]': ids
+		//});
 	});
 
 	//生成返款清单时,收款单位变化时,列出结算清单
@@ -524,7 +533,7 @@ jQuery(function($) {
 			"search[goods_fee_or_carrying_fee_gt]": 0,
 			"search[settlement_id_in][]": selected_bill_ids,
 			"hide_fields": ".carrying_fee,.insured_fee",
-			'show_fields': ".carrying_fee_th,.th_amount,.transit_hand_fee,.transit_carrying_fee"
+			'show_fields': ".carrying_fee_th,.th_amount,.transit_hand_fee,.k_hand_fee,.transit_carrying_fee"
 		};
 		$(this).data('params', params);
 		//选定单据改变时,修改对应返款清单相关金额字段
@@ -807,50 +816,37 @@ jQuery(function($) {
 			work_sheet.Columns('A:A').ColumnWidth = 5;
 
 		};
-		export_excel("<table>" + table_doc.html() + "</table>", set_style);
+		$.export_excel("<table>" + table_doc.html() + "</table>", set_style);
 	});
 
 	//form 自动获取焦点
 	$('.inner form').livequery(function() {
-		$('.inner form input:not([readonly])').not('input[type="hidden"]').first().focus();
+          $('.inner form input:not([readonly])').not('input[type="hidden"]').first().focus();
 	});
-
-	//模拟mouseclick事件
-	var fireClick = function(el) {
-		if (!el) return;
-		if (document.dispatchEvent) { // W3C
-			var oEvent = document.createEvent("MouseEvents");
-			oEvent.initMouseEvent("click", true, true, window, 1, 1, 1, 1, 1, false, false, false, false, 0, el);
-			el.dispatchEvent(oEvent);
-		}
-		else if (document.fireEvent) { // IE
-			el.click();
-		}
-	};
 
 	//快捷键设置
 	$(document).bind('keydown', 'n', function() {
-		fireClick($('.btn_new')[0]);
+		$.fireClick($('.btn_new')[0]);
 	}).bind('keydown', 's', function() {
-		fireClick($('.btn_save')[0]);
+		$.fireClick($('.btn_save')[0]);
 	}).bind('keydown', 'e', function() {
-		fireClick($('.btn_modify')[0]);
+		$.fireClick($('.btn_modify')[0]);
 	}).bind('keydown', 'f', function() {
-		fireClick($('.btn_search')[0]);
+		$.fireClick($('.btn_search')[0]);
 	}).bind('keydown', 'd', function() {
-		fireClick($('.btn_delete')[0]);
+		$.fireClick($('.btn_delete')[0]);
 	}).bind('keydown', 'x', function() {
-		fireClick($('.btn_export_excel')[0]);
+		$.fireClick($('.btn_export_excel')[0]);
 	}).bind('keydown', 'l', function() {
-		fireClick($('keydown.btn_index')[0]);
+		$.fireClick($('keydown.btn_index')[0]);
 	}).bind('keydown', 'p', function() {
-		fireClick($('keydown.btn_print')[0]);
+		$.fireClick($('keydown.btn_print')[0]);
 	}).bind('keydown', 'alt+t', function() {
 		//任何情况下,点击ctrl+b打开运单录入
 		window.location = "/computer_bills/new";
 	}).bind('keydown', 'ctrl+z', function() {
 		//任何情况下，可点击ctrl_z打开运单查询界面
-		fireClick(document.getElementById('btn_advanced_search'));
+		$.fireClick(document.getElementById('btn_advanced_search'));
 	});
 	//设置notify cookie
 	//如果cookie中找到了对应的notify_id，则不显示
