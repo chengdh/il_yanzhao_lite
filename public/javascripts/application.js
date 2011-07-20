@@ -481,9 +481,9 @@ jQuery(function($) {
 		$('#settlement_sum_transit_carrying_fee').val(sum_info.sum_transit_carrying_fee);
 		$('#settlement_sum_transit_hand_fee').val(sum_info.sum_transit_hand_fee);
 		$('#settlement_sum_fee').html(parseFloat(sum_info.sum_goods_fee) + parseFloat(sum_info.sum_carrying_fee_th) - parseFloat(sum_info.sum_transit_carrying_fee) - parseFloat(sum_info.sum_transit_hand_fee));
-		//$('#settlement_form').data('params', {
-		//	'bill_ids[]': ids
-		//});
+		$('#settlement_form').data('params', {
+			'bill_ids[]': ids
+		});
 	});
 
 	//生成返款清单时,收款单位变化时,列出结算清单

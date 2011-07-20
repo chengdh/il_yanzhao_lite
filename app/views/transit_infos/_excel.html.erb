@@ -47,7 +47,7 @@
         <td style='border : thin solid #000;'>&nbsp;<%= bill.to_customer_phone %></td>
         <td style='border : thin solid #000;'><%= bill.carrying_fee %></td>
         <td style='border : thin solid #000;'><%= bill.goods_fee%></td>
-        <td style='border : thin solid #000;'><%= bill.transit_fee %></td>
+        <td style='border : thin solid #000;'><%= bill.transit_carrying_fee %></td>
         <td style='border : thin solid #000;'><%= bill.transit_hand_fee %></td>
         <td style='border : thin solid #000;'><%= bill.agent_carrying_fee%></td>
         <td style='border : thin solid #000;'>&nbsp;<%= bill.transit_bill_no %></td>
@@ -62,7 +62,7 @@
       <td colspan='8' style='text-align : right;border : thin solid #000;'>合计</td>
       <td style='border : thin solid #000;'><%=@transit_info.carrying_bills.sum(:carrying_fee)%></td>
       <td style='border : thin solid #000;'><%=@transit_info.carrying_bills.sum(:goods_fee)%></td>
-      <td style='border : thin solid #000;'><%=@transit_info.carrying_bills.sum(:transit_fee)%></td>
+      <td style='border : thin solid #000;'><%=@transit_info.carrying_bills.sum(:transit_carrying_fee)%></td>
       <td style='border : thin solid #000;'><%=@transit_info.carrying_bills.sum(:transit_hand_fee)%></td>
       <td style='border : thin solid #000;'><%=@transit_info.carrying_bills.sum(:agent_carrying_fee)%></td>
       <td style='border : thin solid #000;'></td>

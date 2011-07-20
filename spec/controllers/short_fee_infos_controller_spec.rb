@@ -9,8 +9,6 @@ describe ShortFeeInfosController do
   login_admin
   render_views
 
-
-
   describe "GET index" do
     before(:each) do
       @short_fee_info = Factory(:short_fee_info)
