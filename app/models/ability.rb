@@ -54,43 +54,36 @@ class Ability
     #可更新自身密码
     can :update_password,User
 
-
     #以下重新定义运单修改权限
-    if can? :update,CarryingBill
-      cannot :update,CarryingBill
-      can :update,CarryingBill,:state => ["billed","loaded","reached","shipped"]
-    end
+    set_bill_update_permission
 
+    #管理员可操作所有
+    #can :manage,:all if user.is_admin?
+  end
+  private
+  def set_bill_update_permission
     #可修改20%运费
     if can? :update_carrying_fee_20,CarryingBill
       #重新设置运单不可修改
-      cannot :update,CarryingBill
-      can :update,CarryingBill do |bill|
+      cannot :update_carrying_fee_20,CarryingBill
+      can :update_carrying_fee_20,CarryingBill do |bill|
         (bill.original_carrying_fee - bill.carrying_fee)/bill.original_carrying_fee <= 0.2 and ["billed","loaded","reached","shipped"].include?(bill.state)
       end
     end
     #可修改50%运费
     if can? :update_carrying_fee_50,CarryingBill
 
-      cannot :update,CarryingBill
-      can :update,CarryingBill do |bill|
+      cannot :update_carrying_fee_50,CarryingBill
+      can :update_carrying_fee_50,CarryingBill do |bill|
         (bill.original_carrying_fee - bill.carrying_fee)/bill.original_carrying_fee <= 0.5 and ["billed","loaded","reached","shipped"].include?(bill.state)
       end
     end
     #可修改100%运费
     if can? :update_carrying_fee_100,CarryingBill
-      cannot :update,CarryingBill
-      can :update,CarryingBill do |bill|
+      cannot :update_carrying_fee_100,CarryingBill
+      can :update_carrying_fee_100,CarryingBill do |bill|
         (bill.original_carrying_fee - bill.carrying_fee) >= 0 and ["billed","loaded","reached","shipped"].include?(bill.state)
       end
     end
-    #可修改全部运单字段
-    if can? :update_all,CarryingBill or can? :update,CarryingBill
-      cannot :update,CarryingBill
-      can :update,CarryingBill,:state => ["billed","loaded","reached","shipped"]
-    end
-
-    #管理员可操作所有
-    #can :manage,:all if user.is_admin?
   end
 end

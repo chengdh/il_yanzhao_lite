@@ -779,12 +779,14 @@ jQuery(function($) {
 		$($(this).data('hideFields')).hide();
 	});
 	//运单修改时,判断权限
-	$('.update_carrying_fee').livequery(function() {
+	$('form.update_carrying_fee ,form.update_goods_fee').livequery(function() {
 		$('#carrying_bill_form :input').attr('readonly', true);
 		$('#carrying_bill_form select').attr('disabled', true);
-		$('#carrying_fee').attr('readonly', false);
 	});
-	$('.update_all').livequery(function() {
+	$('form.update_carrying_fee #carrying_fee,form.update_goods_fee #goods_fee').livequery(function() {
+		$(this).attr('readonly', false);
+	});
+	$('form.update_all').livequery(function() {
 		$('#carrying_bill_form :input,#carrying_bill_form select').attr('readonly', false);
 	});
 
@@ -816,12 +818,12 @@ jQuery(function($) {
 			work_sheet.Columns('A:A').ColumnWidth = 5;
 
 		};
-		$.export_excel("<table>" + table_doc.html() + "</table>", set_style);
+		$.export_excel(table_doc.wrap('<div></div>').parent().html(), set_style);
 	});
 
 	//form 自动获取焦点
 	$('.inner form').livequery(function() {
-          $('.inner form input:not([readonly])').not('input[type="hidden"]').first().focus();
+		$('.inner form input:not([readonly])').not('input[type="hidden"]').first().focus();
 	});
 
 	//快捷键设置

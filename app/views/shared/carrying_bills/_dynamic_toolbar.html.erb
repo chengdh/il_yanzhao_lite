@@ -16,7 +16,7 @@
       </li>
       <%if self.respond_to?("search_#{controller_name.tableize}_path")%>
         <li>
-          <%= link_to image_tag("application-search-result.png",:alt => "查询运单"),defined?(search_bill_path) ? search_bill_path : search_carrying_bills_path(:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc",:not_remote => true),:title => "查询全部运单",:class => "fancybox tipsy btn_search" %>
+          <%= link_to image_tag("application-search-result.png",:alt => "查询运单"),defined?(search_bill_path) ? search_bill_path : self.send("search_#{controller_name.tableize}_path",:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc",:not_remote => true),:title => "查询全部运单",:class => "fancybox tipsy btn_search" %>
         </li>
       <%end%>
     <%end%>
@@ -42,7 +42,8 @@
       <%end%>
     <%end%>
     <%if params[:action] == "show"%>
-      <%if can? :edit,resource%>
+      <%if can?(:update_all,resource) or can?(:update_goods_fee,resource) or can?(:update_carrying_fee_20,resource) or can?(:update_carrying_fee_50,resource) or can?(:update_carrying_fee_100,resource)%>
+
         <li>
           <%= link_to image_tag("application--pencil.png",:alt => "修改当前记录"),  edit_resource_path(resource),:title => "修改当前记录",:class => "tipsy btn_modify" %>
         </li>
@@ -57,7 +58,6 @@
         <li>
           <%= link_to image_tag("cross.png",:alt => "删除该记录"), resource,:method => :delete,:class =>"tipsy btn_destroy",:title => "删除该记录",:confirm => "你确定要删除吗?" %>
         </li>
-
       <%end%>
       <%if can? :re_print,resource%>
         <li>

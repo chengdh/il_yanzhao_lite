@@ -1,7 +1,7 @@
 #coding: utf-8
 #运单controller基础类
 class CarryingBillsController < BaseController
-  http_cache :new,:last_modified => Proc.new {|c| c.send(:last_modified,Org.order('updated_at DESC').first)},:etag => Proc.new {|c| c.send(:etag,"carrying_bill_new")}
+  http_cache :new,:last_modified => Proc.new {|c| c.send(:last_modified)},:etag => Proc.new {|c| c.send(:etag,"carrying_bill_new")}
   #判断是否超过录单时间,超过录单时间后,不可再录入票据
   before_filter :check_expire,:only => :new
   before_filter :pre_process_search_params,:only => [:index,:rpt_turnover,:turnover_chart]
@@ -40,7 +40,11 @@ class CarryingBillsController < BaseController
   def update
     bill = get_resource_ivar || set_resource_ivar(resource_class.find(params[:id]))
     bill.attributes=params[resource_class.model_name.underscore.to_sym]
-    authorize! :update,bill
+    authorize! :update_all,bill if can? :update_all,bill
+    authorize! :update_goods_fee,bill if can? :update_goods_fee,bill
+    authorize! :update_goods_feeupdate_carrying_fee_20,bill if can? :update_carrying_fee_20, bill
+    authorize! :update_carrying_fee_50,bill if can? :update_carrying_fee_50, bill
+    authorize! :update_carrying_fee_100,bill if can_update? :update_carrying_fee_100, bill
     update!
   end
 
