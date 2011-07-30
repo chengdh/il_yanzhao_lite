@@ -38,18 +38,6 @@ describe LoadListsController do
     end
   end
 
-  describe "GET edit" do
-    before(:each) do
-      @load_list ||= Factory(:load_list_with_bills)
-    end
-
-    it "should be success" do
-
-      get :edit, :id => @load_list
-      response.should be_success
-    end
-  end
-
   describe "POST create" do
     before(:each) do
       @computer_bill = Factory(:computer_bill)

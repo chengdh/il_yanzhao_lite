@@ -38,17 +38,6 @@ describe TransitInfosController do
     end
   end
 
-  describe "GET edit" do
-    before(:each) do
-      @transit_info ||= Factory(:transit_info_with_bill)
-    end
-
-    it "should be success" do
-      get :edit, :id => @transit_info
-      response.should be_success
-    end
-  end
-
   describe "POST create" do
     before(:each) do
       @transit_bill = Factory(:transit_bill_reached)

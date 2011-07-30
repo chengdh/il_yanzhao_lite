@@ -43,17 +43,6 @@ describe GoodsErrorsController do
     end
   end
 
-  describe "GET edit" do
-    before(:each) do
-      @goods_error = Factory(:goods_error)
-    end
-
-    it "assigns the requested goods_error as @goods_error" do
-      get :edit, :id => @goods_error
-      response.should be_success
-    end
-  end
-
   describe "POST create" do
     before(:each) do
       @attr = Factory.build(:goods_error).attributes

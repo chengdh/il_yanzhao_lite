@@ -1,6 +1,6 @@
 #coding: utf-8
 class ReturnBillsController <  CarryingBillsController
-  skip_authorize_resource :only => :update
+  skip_authorize_resource :only => [:update,:edit]
   def before_new
   end
   def new

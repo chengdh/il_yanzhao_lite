@@ -64,7 +64,7 @@ describe RefoundsController do
       @refound ||= Factory(:refound_with_bills)
     end
     it "refound state should refunded_confirmed" do
-      put :process_handle,:id =>@refound 
+      put :process_handle,:id =>@refound
       response.should be_success
     end
   end
