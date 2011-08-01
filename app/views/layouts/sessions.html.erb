@@ -8,6 +8,7 @@
     <meta name="robots" content="all" />
     <title><%="#{IlConfig.system_title}"%>-登录</title>
     <%= stylesheet_link_tag 'login','SexyButtons/sexybuttons','jquery.notifyBar' %>
+    <%= javascript_include_tag "jquery" %>
   </head>
   <body class='login'>
     <div id="header" class='clearfix'>
@@ -17,5 +18,4 @@
       <%= yield %>
     </div>
   </body>
-  <%= javascript_include_tag "jquery" %>
 </html>
