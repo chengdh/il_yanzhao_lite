@@ -3,18 +3,20 @@ class Journal < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
   validates_presence_of :org_id
-  default_value_for :bill_date,Date.today
+  default_value_for :bill_date do
+    Date.today
+  end
   #带org的构造函数
   def self.new_with_org(org,bill_date=Date.today)
     journal = Journal.new(:org => org,:bill_date => bill_date)
     #已结算未汇金额
-    journal.settled_no_rebate_fee = 
-      CarryingBill.search(:state_eq => 'settlemented',:to_org_id_or_transit_org_id_eq => org.id,:pay_type_eq =>'TH' ).relation.sum(:carrying_fee) 
+    journal.settled_no_rebate_fee =
+      CarryingBill.search(:state_eq => 'settlemented',:to_org_id_or_transit_org_id_eq => org.id,:pay_type_eq =>'TH' ).relation.sum(:carrying_fee)
     + CarryingBill.search(:state_eq => 'settlemented',:to_org_id_or_transit_org_id_eq => org.id).relation.sum(:goods_fee)
     + CarryingBill.search(:state_eq => 'settlemented',:to_org_id_or_transit_org_id_eq => org.id).relation.sum(:to_short_carrying_fee)
     #已提货未结算金额
-    journal.deliveried_no_settled_fee = 
-      CarryingBill.search(:state_eq => 'deliveried',:to_org_id_or_transit_org_id_eq => org.id,:pay_type_eq =>'TH' ).relation.sum(:carrying_fee) 
+    journal.deliveried_no_settled_fee =
+      CarryingBill.search(:state_eq => 'deliveried',:to_org_id_or_transit_org_id_eq => org.id,:pay_type_eq =>'TH' ).relation.sum(:carrying_fee)
     + CarryingBill.search(:state_eq => 'deliveried',:to_org_id_or_transit_org_id_eq => org.id).relation.sum(:goods_fee)
     + CarryingBill.search(:state_eq => 'deliveried',:to_org_id_or_transit_org_id_eq => org.id).relation.sum(:to_short_carrying_fee)
     #黑/红/黄/绿/蓝/白

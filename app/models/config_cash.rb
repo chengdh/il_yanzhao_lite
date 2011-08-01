@@ -35,6 +35,7 @@ class ConfigCash < ActiveRecord::Base
       end
     end
     ret = default_hand_fee(goods_fee) if !found
+    ret = 0 if goods_fee == 0
     ret
   end
   def self.cal_added_fee(org_id,goods_fee)
@@ -51,6 +52,7 @@ class ConfigCash < ActiveRecord::Base
       end
     end
     ret = 0 if !found
+    ret = 0 if goods_fee == 0
     ret
   end
 end

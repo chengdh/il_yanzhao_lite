@@ -1,3 +1,3 @@
 class KidsTransitBill < CarryingBill
-  validates :transit_org_id,:to_area,:bill_no,:goods_no,:presence => true
+  validates :transit_org_id,:to_area,:presence => true
 end

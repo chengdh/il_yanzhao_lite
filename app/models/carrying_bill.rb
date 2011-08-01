@@ -23,6 +23,9 @@ class CarryingBill < ActiveRecord::Base
 
   #保存成功后,设置原始费用
   before_create :set_original_fee
+  #计算手续费
+  before_save :cal_hand_fee
+
 
   belongs_to :user
   belongs_to :from_org,:class_name => "Org"
@@ -59,7 +62,7 @@ class CarryingBill < ActiveRecord::Base
 
   validates :bill_no,:uniqueness => true
   validates_presence_of :bill_no,:goods_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
-  validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:goods_num,:agent_carrying_fee,:transit_fee,:transit_hand_fee,:transit_carrying_fee,:commission,:unit_price_weight,:send_fee
+  validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:goods_num,:agent_carrying_fee,:transit_fee,:transit_hand_fee,:transit_carrying_fee,:k_hand_fee,:commission,:unit_price_weight,:send_fee
   validates_numericality_of :carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:less_than => 100000
 
   #定义state_machine
@@ -139,11 +142,6 @@ class CarryingBill < ActiveRecord::Base
         validates_presence_of :short_fee_info_id
       end
     end
-    #字段默认值
-    default_value_for :bill_date,Date.today
-    default_value_for :goods_num,1
-    default_value_for :insured_rate,0.003#IlConfig.insured_rate
-
     PAY_TYPE_CASH = "CA"    #现金付
     PAY_TYPE_TH = "TH"      #提货付
     PAY_TYPE_RETURN = "RE"  #回执付
@@ -157,6 +155,14 @@ class CarryingBill < ActiveRecord::Base
         "自货款扣除" => PAY_TYPE_K_GOODSFEE
       }
     end
+    #字段默认值
+    default_value_for :bill_date do
+      Date.today
+    end
+    default_value_for :goods_num,1
+    default_value_for :insured_rate,0.003#IlConfig.insured_rate
+    default_value_for :pay_type, PAY_TYPE_TH
+
 
     #付款方式描述
     def pay_type_des
@@ -220,7 +226,7 @@ class CarryingBill < ActiveRecord::Base
     end
     #实提货款 原货款 - 扣运费 - 扣手续费
     def act_pay_fee
-      ret = self.goods_fee - self.k_hand_fee - self.k_carrying_fee - self.transit_hand_fee
+      ret = self.goods_fee - self.k_hand_fee - self.k_carrying_fee
     end
 
     #得到提货应收金额
@@ -239,7 +245,7 @@ class CarryingBill < ActiveRecord::Base
     #毛利润
     #毛利润 =  收入的运费 - 中转运费 - 业务员提成 + 扣手续费
     def profit
-      carrying_fee - transit_carrying_fee - commission + k_hand_fee
+      carrying_fee - transit_carrying_fee - commission - transit_hand_fee + k_hand_fee
     end
 
     #毛利润-按照重量计算
@@ -380,10 +386,14 @@ class CarryingBill < ActiveRecord::Base
     #计算手续费
     def cal_hand_fee
       if self.goods_fee_cash?
-        hand_fee = ConfigCash.cal_hand_fee(self.from_org_id,self.goods_fee)
-        added_fee = ConfigCash.cal_added_fee(self.from_org_id,self.goods_fee)
-        self.k_hand_fee = hand_fee.ceil
-        self.k_hand_fee = added_fee.ceil if added_fee > 0
+        if self.transit_org_id.present?
+          #中转货 手续费 = 中转手续费 + 附加费(6元)
+          hand_fee = self.transit_hand_fee
+          added_fee = ConfigCash.cal_added_fee(self.from_org_id,self.goods_fee)
+          self.k_hand_fee =(hand_fee + added_fee).ceil
+        else
+          self.k_hand_fee =ConfigCash.cal_hand_fee(self.from_org_id,self.goods_fee).ceil
+        end
       else
         self.k_hand_fee = (self.from_customer.config_transit.rate * self.goods_fee).ceil
       end

@@ -115,14 +115,15 @@
   <tr>
     <%if can? :read_commission,CarryingBill or can? :edit_commission,CarryingBill%>
       <td>业务员提成</td>
-      <td><%= show.transit_hand_fee %></td>
+      <td><%= show.commission %></td>
     <%end%>
 
-    <td>利润</td>
     <% if ["TransitBill","HandTransitBill"].include? show.type %>
+      <td>利润</td>
       <td><%= can?(:read_profit,CarryingBill)? show.profit : "" %></td>
     <%end%>
     <% if ["KidsTransitBill"].include? show.type %>
+      <td>利润</td>
       <td><%= can?(:read_profit,CarryingBill)? show.profit_weight : "" %></td>
     <%end%>
     <td colspan='10'>&nbsp;</td>
