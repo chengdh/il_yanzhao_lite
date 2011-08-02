@@ -24,6 +24,8 @@ javascripts:
     - public/javascripts/ukey.js
     - public/javascripts/chart/excanvas.js
     - public/javascripts/web_print.js
+  il_ie6_javascripts:
+    - public/javascripts/ie6.js
 
 stylesheets:
   il_stylesheets:
@@ -45,3 +47,5 @@ stylesheets:
 
   il_ie_stylesheets:
     - public/stylesheets/formtastic_ie6fixes.css
+    - public/stylesheets/ie6fixes.css
+
