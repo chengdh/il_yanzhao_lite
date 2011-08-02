@@ -140,11 +140,20 @@ namespace :db do
       the_user.save!
     end
   end
+  desc "导出机构/人员/权限/设置"
+  task :export_seed_to_csv => :environment do
+    [Bank,Org,ConfigCash,ConfigTransit,CustomerLevelConfig,IlConfig,SystemFunctionGroup,SystemFunction,SystemFunctionOperate,Role,RoleSystemFunctionOperate,User,UserOrg,UserRole].each {|model_class| model_class.export2csv }
+  end
+  desc "导入机构/人员/权限/设置"
+  task :import_seed_csv => :environment do
+    [Bank,Org,ConfigCash,ConfigTransit,CustomerLevelConfig,IlConfig,SystemFunctionGroup,SystemFunction,SystemFunctionOperate,Role,RoleSystemFunctionOperate,User,UserOrg,UserRole].each {|model_class| model_class.import_csv }
+    #删除机构中无效的数据和权限中无效的数据
+    UserOrg.search(:org_is_active_eq => false).each {|uo| uo.destroy}
+    Org.destroy_all(:is_active => false)
+  end
   desc "初始化系统"
   task :init_system => :environment do
-    Rake::Task['db:reset'].invoke
-    Rake::Task['db:imp_org'].invoke
-    Rake::Task['db:imp_customer'].invoke
-    Rake::Task['db:create_admin'].invoke
+    Rake::Task['db:import_seed_csv'].invoke
+    #Rake::Task['db:imp_customer'].invoke
   end
 end

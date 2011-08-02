@@ -1,0 +1,48 @@
+1,Tue Aug 02 09:59:26 UTC 2011,"can?(:create,ComputerBill) ? new_computer_bill_path : collection_path(""search[from_org_id_in]"" => current_user.current_ability_org_ids,""search[completed_eq]"" => 0,""search[bill_date_eq]"" => Date.today,:sort => ""carrying_bills.bill_date desc,goods_no"",:direction => ""asc"")",true,1,运单录入,1,Tue Aug 02 09:59:26 UTC 2011
+2,Tue Aug 02 09:59:26 UTC 2011,"can?(:create,HandBill) ? new_computer_bill_path : collection_path(""search[from_org_id_in]"" => current_user.current_ability_org_ids,""search[completed_eq]"" => 0,""search[bill_date_eq]"" => Date.today,:sort => ""carrying_bills.bill_date desc,goods_no"",:direction => ""asc"")",false,1,手工运单录入,1,Tue Aug 02 09:59:26 UTC 2011
+3,Tue Aug 02 09:59:26 UTC 2011,"can?(:create,TransitBill) ? new_transit_bill_path : collection_path(""search[from_org_id_in]"" => current_user.current_ability_org_ids,""search[completed_eq]"" => 0,""search[bill_date_eq]"" => Date.today,:sort => ""carrying_bills.bill_date desc,goods_no"",:direction => ""asc"")",true,1,中转运单录入,1,Tue Aug 02 09:59:26 UTC 2011
+4,Tue Aug 02 09:59:26 UTC 2011,"can?(:create,HandTransitBill) ? new_hand_transit_bill_path : collection_path(""search[from_org_id_in]"" => current_user.current_ability_org_ids,""search[completed_eq]"" => 0,""search[bill_date_eq]"" => Date.today,:sort => ""carrying_bills.bill_date desc,goods_no"",:direction => ""asc"")",false,1,手工中转运单录入,1,Tue Aug 02 09:59:26 UTC 2011
+5,Tue Aug 02 09:59:27 UTC 2011,"can?(:create,KidsTransitBill) ? new_kids_transit_bill_path : collection_path(""search[from_org_id_in]"" => current_user.current_ability_org_ids,""search[completed_eq]"" => 0,""search[bill_date_eq]"" => Date.today,:sort => ""carrying_bills.bill_date desc,goods_no"",:direction => ""asc"")",true,1,童装运单录入,1,Tue Aug 02 09:59:27 UTC 2011
+6,Tue Aug 02 09:59:27 UTC 2011,load_lists_path,true,1,货物运输清单管理,1,Tue Aug 02 09:59:27 UTC 2011
+7,Tue Aug 02 09:59:27 UTC 2011,"arrive_load_lists_path(""search[state_eq]"" => ""shipped"")",true,1,到货清单管理,1,Tue Aug 02 09:59:27 UTC 2011
+8,Tue Aug 02 09:59:27 UTC 2011,new_distribution_list_path,false,1,分货清单管理,1,Tue Aug 02 09:59:27 UTC 2011
+9,Tue Aug 02 09:59:27 UTC 2011,new_transit_info_path,true,1,货物中转,1,Tue Aug 02 09:59:27 UTC 2011
+10,Tue Aug 02 09:59:27 UTC 2011,new_deliver_info_path(:show_multi => 1),true,1,客户提货,1,Tue Aug 02 09:59:27 UTC 2011
+11,Tue Aug 02 09:59:28 UTC 2011,new_transit_deliver_info_path,true,1,中转提货,1,Tue Aug 02 09:59:28 UTC 2011
+12,Tue Aug 02 09:59:28 UTC 2011,before_new_return_bills_path,true,1,退货单管理,1,Tue Aug 02 09:59:28 UTC 2011
+13,Tue Aug 02 09:59:28 UTC 2011,short_fee_infos_path,false,1,短途运费管理,1,Tue Aug 02 09:59:28 UTC 2011
+14,Tue Aug 02 09:59:28 UTC 2011,"simple_search_carrying_bills_path(""search[completed]"" => false,""search[from_org_id_eq]"" => current_user.default_org.id,:sort => ""carrying_bills.bill_date desc,carrying_bills.goods_no"",:direction => ""asc"" )",true,1,运单修改,2,Tue Aug 02 09:59:28 UTC 2011
+15,Tue Aug 02 09:59:29 UTC 2011,"simple_search_carrying_bills_path(:rpt_type => ""rpt_no_delivery"",:show_fields =>"".stranded_days"",:hide_fields => "".insured_fee"",""search[state_in]"" => [""reached"",""distributed""],""search[from_org_id_eq]"" => current_user.default_org.id,:sort => ""carrying_bills.bill_date asc,carrying_bills.goods_no"",:direction => ""asc"" )",true,1,未提货报表,2,Tue Aug 02 09:59:29 UTC 2011
+16,Tue Aug 02 09:59:29 UTC 2011,"simple_search_carrying_bills_path(:rpt_type => ""rpt_no_delivery"",:show_fields =>"".stranded_days"",:hide_fields => "".insured_fee"",""search[state_in]"" => [""reached"",""distributed""],""search[to_org_id_eq]"" => current_user.default_org.id,:sort => ""carrying_bills.bill_date asc,carrying_bills.goods_no"",:direction => ""asc"" )",true,1,本地未提货统计,2,Tue Aug 02 09:59:29 UTC 2011
+17,Tue Aug 02 09:59:29 UTC 2011,"carrying_bills_path(:rpt_type => ""rpt_to_me"",""search[to_org_id_eq]"" => current_user.default_org.id,""search[bill_date_gte]"" => Date.today.beginning_of_day,""search[bill_date_lte]"" => Date.today.end_of_day,:sort => ""carrying_bills.bill_date desc,carrying_bills.goods_no"",:direction => ""asc"" )",true,1,始发地收货统计,2,Tue Aug 02 09:59:29 UTC 2011
+18,Tue Aug 02 09:59:29 UTC 2011,"simple_search_carrying_bills_path(:rpt_type => ""rpt_no_pay"",""search[to_org_id_eq]"" => current_user.default_org.id,""search[state_in]"" => [""refunded_confirmed"",""payment_listed""],""search[bill_date_gte]"" => Date.today.beginning_of_day,""search[bill_date_lte]"" => Date.today.end_of_day,:sort => ""carrying_bills.bill_date desc,carrying_bills.goods_no"",:direction => ""asc"")",true,1,提货未提款统计,2,Tue Aug 02 09:59:29 UTC 2011
+19,Tue Aug 02 09:59:29 UTC 2011,"rpt_turnover_carrying_bills_path(""search[type_in]"" => [""ComputerBill"",""HandBill"",""ReturnBill""],""search[bill_date_gte]"" => Date.today.beginning_of_day,""search[bill_date_lte]"" => Date.today.end_of_day)",true,1,日营业额统计,2,Tue Aug 02 09:59:29 UTC 2011
+20,Tue Aug 02 09:59:29 UTC 2011,"turnover_chart_carrying_bills_path(""search[type_in]"" => [""ComputerBill"",""HandBill"",""ReturnBill""],""search[bill_date_gte]"" => Date.today.beginning_of_day,""search[bill_date_lte]"" => Date.today.end_of_day)",true,1,日营业额统计图,2,Tue Aug 02 09:59:29 UTC 2011
+21,Tue Aug 02 09:59:29 UTC 2011,"rpt_turnover_carrying_bills_path(""search[type_in]"" => [""ComputerBill"",""HandBill"",""ReturnBill""],""search[bill_date_gte]"" => Date.today.beginning_of_month,""search[bill_date_lte]"" => Date.today.end_of_month)",true,1,月营业额统计,2,Tue Aug 02 09:59:29 UTC 2011
+22,Tue Aug 02 09:59:29 UTC 2011,"simple_search_carrying_bills_path(:rpt_type => ""rpt_return_no_ship"",:show_fields =>"".stranded_days"",:hide_fields => "".insured_fee"",""search[state_eq]"" => ""billed"",""search[type_eq]"" => ""ReturnBill"",:sort => ""carrying_bills.bill_date asc,carrying_bills.goods_no"",:direction => ""asc"" )",true,1,退货未发票据统计,2,Tue Aug 02 09:59:29 UTC 2011
+23,Tue Aug 02 09:59:30 UTC 2011,new_settlement_path,true,1,结算员交款清单,3,Tue Aug 02 09:59:30 UTC 2011
+24,Tue Aug 02 09:59:30 UTC 2011,new_refound_path,true,1,返款清单管理,3,Tue Aug 02 09:59:30 UTC 2011
+25,Tue Aug 02 09:59:30 UTC 2011,remittances_path,false,1,汇款记录,3,Tue Aug 02 09:59:30 UTC 2011
+26,Tue Aug 02 09:59:30 UTC 2011,"receive_refounds_path(""search[state_eq]"" => ""refunded"")",true,1,收款清单管理,3,Tue Aug 02 09:59:30 UTC 2011
+27,Tue Aug 02 09:59:30 UTC 2011,cash_payment_lists_path,true,1,代收货款支付清单,3,Tue Aug 02 09:59:30 UTC 2011
+28,Tue Aug 02 09:59:30 UTC 2011,transfer_payment_lists_path,false,1,转账-代收货款支付,3,Tue Aug 02 09:59:30 UTC 2011
+29,Tue Aug 02 09:59:31 UTC 2011,new_cash_pay_info_path,true,1,客户提款-现金,3,Tue Aug 02 09:59:31 UTC 2011
+30,Tue Aug 02 09:59:31 UTC 2011,new_transfer_pay_info_path,false,1,客户提款-转账,3,Tue Aug 02 09:59:31 UTC 2011
+31,Tue Aug 02 09:59:31 UTC 2011,post_infos_path,true,1,客户提款结算清单,3,Tue Aug 02 09:59:31 UTC 2011
+32,Tue Aug 02 09:59:31 UTC 2011,journals_path,false,1,帐目盘点登记表,3,Tue Aug 02 09:59:31 UTC 2011
+33,Tue Aug 02 09:59:31 UTC 2011,orgs_path,true,1,分理处/分公司管理,4,Tue Aug 02 09:59:31 UTC 2011
+34,Tue Aug 02 09:59:32 UTC 2011,users_path,true,1,用户信息管理,4,Tue Aug 02 09:59:32 UTC 2011
+35,Tue Aug 02 09:59:32 UTC 2011,roles_path,true,1,角色/权限管理,4,Tue Aug 02 09:59:32 UTC 2011
+36,Tue Aug 02 09:59:32 UTC 2011,vips_path,false,1,转账客户管理,5,Tue Aug 02 09:59:32 UTC 2011
+37,Tue Aug 02 09:59:32 UTC 2011,imported_customers_path,true,1,客户管理,5,Tue Aug 02 09:59:32 UTC 2011
+38,Tue Aug 02 09:59:32 UTC 2011,banks_path,false,1,银行信息设置,6,Tue Aug 02 09:59:32 UTC 2011
+39,Tue Aug 02 09:59:33 UTC 2011,transit_companies_path,true,1,中转公司信息,6,Tue Aug 02 09:59:33 UTC 2011
+40,Tue Aug 02 09:59:33 UTC 2011,config_cashes_path,true,1,手续费比例设置-现金,6,Tue Aug 02 09:59:33 UTC 2011
+41,Tue Aug 02 09:59:33 UTC 2011,config_transits_path,false,1,手续费比例设置-转账,6,Tue Aug 02 09:59:33 UTC 2011
+42,Tue Aug 02 09:59:33 UTC 2011,il_configs_path,true,1,系统参数设置,6,Tue Aug 02 09:59:33 UTC 2011
+43,Tue Aug 02 09:59:34 UTC 2011,"goods_exceptions_path(""search[state_ne]"" => ""identified"")",false,1,货损理赔,7,Tue Aug 02 09:59:34 UTC 2011
+44,Tue Aug 02 09:59:34 UTC 2011,senders_path,false,1,送货员信息,8,Tue Aug 02 09:59:34 UTC 2011
+45,Tue Aug 02 09:59:34 UTC 2011,send_lists_path,false,1,送货清单,8,Tue Aug 02 09:59:34 UTC 2011
+46,Tue Aug 02 09:59:34 UTC 2011,new_send_list_post_path,false,1,交票清单,8,Tue Aug 02 09:59:34 UTC 2011
+47,Tue Aug 02 09:59:35 UTC 2011,send_list_backs_path,false,1,未交票统计,8,Tue Aug 02 09:59:35 UTC 2011
+48,Tue Aug 02 09:59:35 UTC 2011,"goods_errors_path(""search[state_ne]"" => ""authorized"")",false,1,多货少货登记,7,Tue Aug 02 09:59:35 UTC 2011
