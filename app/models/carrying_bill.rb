@@ -230,8 +230,14 @@ class CarryingBill < ActiveRecord::Base
     end
 
     #得到提货应收金额
+    #FIXME 如何计算提货应收,还有问题
     def th_amount
-      amount = self.carrying_fee_th - self.transit_hand_fee - self.transit_carrying_fee + self.goods_fee
+      amout = 0
+      if self.pay_type == CarryingBill::PAY_TYPE_TH
+        amount = self.carrying_fee_th - self.transit_hand_fee - self.transit_carrying_fee + self.goods_fee
+      else
+        amount = self.goods_fee
+      end
       amount
     end
     #运费总计
