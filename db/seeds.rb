@@ -17,13 +17,13 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :subject => subject,
-  :default_action => 'can?(:create,ComputerBill) ? new_computer_bill_path : collection_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
+  :default_action => 'can?(:create,ComputerBill) ? new_computer_bill_path : computer_bills_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
   :function => {
   #查看相关运单,其他机构发往当前用户机构的运单
   :create => {:title => "新建"},
   :update_all =>{:title =>"修改",:conditions =>"{:state => ['loaded','billed'],:from_org_id => user.current_ability_org_ids}"},
   :destroy => {:title => "删除",:conditions =>"{:state => ['loaded','billed'],:from_org_id => user.current_ability_org_ids}"},
-  :re_print => {:title => "票据打印",:conditions =>"{:state => 'billed'}"},
+  :print => {:title => "票据打印",:conditions =>"{:state => 'billed'}"},
   :export => {:title => "导出"}
 }
 }
@@ -35,7 +35,7 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :subject => subject,
-  :default_action => 'can?(:create,HandBill) ? new_computer_bill_path : collection_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
+  :default_action => 'can?(:create,HandBill) ? new_computer_bill_path : hand_bills_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
   :is_active => false,
   :function => {
   :create => {:title => "新建"},
@@ -51,11 +51,11 @@ subject = "TransitBill"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'can?(:create,TransitBill) ? new_transit_bill_path : collection_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
+  :default_action => 'can?(:create,TransitBill) ? new_transit_bill_path : transit_bills_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
   :subject => subject,
   :function => {
   :create => {:title => "新建"},
-  :re_print => {:title => "票据打印",:conditions =>"{:state => 'billed'}"},
+  :print => {:title => "票据打印",:conditions =>"{:state => 'billed'}"},
   :update_all =>{:title =>"修改",:conditions =>"{:state => ['loaded','billed'],:from_org_id => user.current_ability_org_ids}"},
   :destroy => {:title => "删除",:conditions =>"{:state => ['loaded','billed'],:from_org_id => user.current_ability_org_ids}"},
   :export => {:title => "导出"}
@@ -70,7 +70,7 @@ subject = "HandTransitBill"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'can?(:create,HandTransitBill) ? new_hand_transit_bill_path : collection_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
+  :default_action => 'can?(:create,HandTransitBill) ? new_hand_transit_bill_path : hand_transit_bills_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
   :subject => subject,
   :is_active => false,
   :function => {
@@ -87,8 +87,7 @@ subject = "KidsTransitBill"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'new_kids_transit_bill_path',
-  :default_action => 'can?(:create,KidsTransitBill) ? new_kids_transit_bill_path : collection_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
+  :default_action => 'can?(:create,KidsTransitBill) ? new_kids_transit_bill_path : kids_transit_bills_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
   :subject => subject,
   :function => {
   :create => {:title => "新建"},
@@ -139,7 +138,7 @@ subject = "DistributionList"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'new_distribution_list_path',
+  :default_action => 'can?(:create,DistributionList) ? new_distribution_list_path : distribution_lists_path',
   :is_active => false,
   :subject => subject,
   :function => {
@@ -156,7 +155,7 @@ subject = "TransitInfo"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'new_transit_info_path',
+  :default_action => 'can?(:create,TransitInfo) ? new_transit_info_path : transit_infos_path',
   :subject => subject,
   :function => {
   :read =>{:title => "查看",:conditions =>"{:org_id => user.current_ability_org_ids}"} ,
@@ -174,7 +173,7 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :subject => subject,
-  :default_action => 'new_deliver_info_path(:show_multi => 1)',
+  :default_action => 'can?(:create,DeliverInfo) ? new_deliver_info_path(:show_multi => 1) : deliver_infos_path',
   :function => {
   :read =>{:title => "查看",:conditions =>"{:org_id => user.current_ability_org_ids }"},
   :create => {:title => "新建"},
@@ -192,7 +191,7 @@ subject = "TransitDeliverInfo"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'new_transit_deliver_info_path',
+  :default_action => 'can?(:create,TransitDeliverInfo) ? new_transit_deliver_info_path : transit_deliver_infos_path',
   :subject => subject,
   :function => {
   :read =>{:title => "查看",:conditions =>"{:org_id => user.current_ability_org_ids}"},
@@ -214,7 +213,7 @@ sf_hash = {
   :create => {:title => "新建"},
   :update =>{:title =>"修改",:conditions =>"{:from_org_id => user.current_ability_org_ids}"},
   :destroy => {:title => "删除",:conditions =>"{:state => ['loaded','billed']}"},
-  :re_print => {:title => "票据重打",:conditions =>"{:state => 'billed'}"},
+  :print => {:title => "票据重打",:conditions =>"{:state => 'billed'}"},
   :export => {:title => "导出"}
 }
 }
@@ -326,7 +325,7 @@ sf_hash = {
   :default_action => 'rpt_turnover_carrying_bills_path("search[type_in]" => ["ComputerBill","HandBill","ReturnBill"],"search[bill_date_gte]" => Date.today.beginning_of_day,"search[bill_date_lte]" => Date.today.end_of_day)',
   :subject => subject,
   :function => {
-  :rpt_to_me =>{:title =>"日营业额统计"}
+  :rpt_daily_income =>{:title =>"日营业额统计"}
 }
 }
 SystemFunction.create_by_hash(sf_hash)
@@ -352,7 +351,7 @@ sf_hash = {
   :default_action => 'rpt_turnover_carrying_bills_path("search[type_in]" => ["ComputerBill","HandBill","ReturnBill"],"search[bill_date_gte]" => Date.today.beginning_of_month,"search[bill_date_lte]" => Date.today.end_of_month)',
   :subject => subject,
   :function => {
-  :rpt_to_me =>{:title =>"月营业额统计"}
+  :rpt_mth_income =>{:title =>"月营业额统计"}
 }
 }
 SystemFunction.create_by_hash(sf_hash)
@@ -380,7 +379,7 @@ subject = "Settlement"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'new_settlement_path',
+  :default_action => 'can?(:create,Settlement) ? new_settlement_path : settlements_path',
   :subject => subject,
   :subject => subject,
   :function => {
@@ -396,7 +395,7 @@ subject = "Refound"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'new_refound_path',
+  :default_action => 'can?(:create,Refound) ? new_refound_path : refounds_path',
   :subject => subject,
   :function => {
   :read =>{:title => "查看",:conditions =>"{:from_org_id => user.current_ability_org_ids }"} ,
@@ -477,7 +476,7 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
 
-  :default_action => 'new_cash_pay_info_path',
+  :default_action => 'can?(:create,CashPayInfo) ? new_cash_pay_info_path : cash_pay_infos_path',
   :subject => subject,
   :function => {
   :read =>{:title => "查看",:conditions =>"{:org_id => user.current_ability_org_ids }"} ,
@@ -494,7 +493,7 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :subject => subject,
-  :default_action => 'new_transfer_pay_info_path',
+  :default_action => 'can?(:create,TransferPayInfo) ? new_transfer_pay_info_path : transfer_pay_infos_path',
   :is_active => false,
   :function => {
   :read =>{:title => "查看",:conditions =>"{:org_id => user.current_ability_org_ids }"} ,
@@ -797,7 +796,7 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :subject => subject,
-  :default_action => 'new_send_list_post_path',
+  :default_action => 'can?(:create,SendListPost) ? new_send_list_post_path : send_list_posts_path',
 
   :is_active => false,
   :function => {
