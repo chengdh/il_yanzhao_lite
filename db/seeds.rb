@@ -207,7 +207,7 @@ subject = "ReturnBill"
 sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
-  :default_action => 'before_new_return_bills_path',
+  :default_action => 'can?(:create,ReturnBill) ? before_new_return_bills_path : return_bills_path',
   :subject => subject,
   :function => {
   :create => {:title => "新建"},
