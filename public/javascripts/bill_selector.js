@@ -72,6 +72,7 @@
 			sum_insured_fee: "#sum_insured_fee",
 			sum_from_short_carrying_fee: "#sum_from_short_carrying_fee",
 			sum_to_short_carrying_fee: "#sum_to_short_carrying_fee",
+			sum_refound_fee: "#sum_refound_fee",
 			btn_select_all: "#btn_select_all",
 			btn_unselect_all: "#btn_unselect_all"
 
@@ -94,7 +95,8 @@
 				$.bill_selector.sum_info.sum_agent_carrying_fee = 0;
 				$.bill_selector.sum_info.sum_th_amount = 0;
 				$.bill_selector.sum_info.sum_from_short_carrying_fee = 0;
-				$.bill_selector.sum_info.sum_to_short_carrying_fee = 0;
+				$.bill_selector.sum_info.sum_from_short_carrying_fee = 0;
+				$.bill_selector.sum_info.sum_refound_fee = 0;
 			}
 			$.bill_selector.set_checkbox();
 			$.bill_selector.update_html();
@@ -131,6 +133,7 @@
 				$.bill_selector.sum_info.sum_transit_hand_fee = parseFloat($.bill_selector.sum_info.sum_transit_hand_fee) + parseFloat(the_bill.transit_hand_fee);
 				$.bill_selector.sum_info.sum_agent_carrying_fee = parseFloat($.bill_selector.sum_info.sum_agent_carrying_fee) + parseFloat(the_bill.agent_carrying_fee);
 				$.bill_selector.sum_info.sum_th_amount = parseFloat($.bill_selector.sum_info.th_amount) + parseFloat(the_bill.th_amount);
+				$.bill_selector.sum_info.sum_refound_fee = parseFloat($.bill_selector.sum_info.sum_refound_fee)+ parseFloat(the_bill.refound_fee); ;
 
 			}
 			else {
@@ -153,6 +156,8 @@
 				$.bill_selector.sum_info.sum_agent_carrying_fee = parseFloat($.bill_selector.sum_info.sum_agent_carrying_fee) - parseFloat(the_bill.agent_carrying_fee);
 				$.bill_selector.sum_info.sum_th_amount = parseFloat($.bill_selector.sum_info.th_amount) - parseFloat(the_bill.th_amount);
 
+				$.bill_selector.sum_info.sum_refound_fee = parseFloat($.bill_selector.sum_info.sum_refound_fee)+ parseFloat(the_bill.refound_fee); ;
+
 			}
 			$.bill_selector.update_html();
 		},
@@ -174,6 +179,7 @@
 			$($.bill_selector.options.sum_transit_hand_fee).html($.bill_selector.sum_info.sum_transit_hand_fee);
 			$($.bill_selector.options.sum_agent_carrying_fee).html($.bill_selector.sum_info.sum_agent_carrying_fee);
 			$($.bill_selector.options.sum_th_amount).html($.bill_selector.sum_info.sum_th_amount);
+			$($.bill_selector.options.sum_refound_fee).html($.bill_selector.sum_info.sum_refound_fee);
 			//触发选择改变事件
 			$($.bill_selector).trigger('select:change');
 

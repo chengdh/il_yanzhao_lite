@@ -13,18 +13,19 @@
   zoom : 1;   /*解决ie6下的bug*/
 }
 
-/*accordion icon 显示问题*/
-#menu_bar .ui-icon,#role_system_functions_list .ui-icon{ position : absolute;}
 /*左侧当前活动菜单显示 样式*/
 #menu_bar a:link{}
 #menu_bar a:visited{}
 #menu_bar a:hover {font-weight : bold;color : blue;}
 #menu_bar a:active {font-weight : bold;color : blue;}
-.ui-accordion-header a {
-  display : block;
-  padding-left : 26px;
-}
-.
+#menu_bar .navigation {background : #FFF;}
+#menu_bar .menu-group h3 {
+    background : #7A97B7;
+    color : #FFF;
+    font-weight : bold;
+    cursor : pointer;
+ }
+
 /*柱状图显示*/
 .visualize{
   margin : 10px 5px 5px 10px;

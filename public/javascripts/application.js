@@ -165,13 +165,6 @@ jQuery(function($) {
 	//对需要长时间处理的操作,显示blockUI
 	$('.btn_process_handle').bind('click', $.blockUI);
 
-	//组织机构列表
-	$('#role_system_functions_list').accordion({
-		collapsible: true,
-		autoHeight: false,
-		animated: false,
-		active: false
-	});
 	//根据客户编号查询查询客户信息
 	var search_customer_by_code = function() {
 		var code = $(this).val();
@@ -206,25 +199,24 @@ jQuery(function($) {
 	$('.datepicker').livequery(function() {
 		$(this).datepicker();
 	});
-
 	//初始化左侧菜单树
-	var cookieName = 'il_menubar';
-	var get_current_menu = function() {
+	var cookieName = 'il_cur_menu_group';
+	var get_current_menu_group = function() {
 		var cookie_menu = $.cookies.get(cookieName);
-		var cur_menu = 0;
-		if (cookie_menu) cur_menu = parseInt(cookie_menu.substr(12));
-		return cur_menu;
+		return cookie_menu;
 	};
-
-	$('#menu_bar').accordion({
-		active: get_current_menu.apply(),
-		collapsible: true,
-		autoHeight: false,
-		animated: false,
-		change: function(e, ui) {
-			$.cookies.set(cookieName, "cur_il_menu_" + $(this).find('h3').index(ui.newHeader[0]));
-		}
+	var cur_menu_group = get_current_menu_group();
+	if (cur_menu_group) $('#' + cur_menu_group).next('.navigation:first').show();
+	/*menu_bar的点击事件*/
+	$('#menu_bar .group_name').click(function() {
+		var cur_el = $(this).next('.navigation:first')[0];
+		$('#menu_bar .navigation').each(function(index, el) {
+			if (el == cur_el) $(el).toggle();
+			else $(el).hide();
+		});
+		$.cookies.set(cookieName, $(this).attr('id'));
 	});
+
 	$('#menu_bar .navigation a').click(function() {
 		$.fancybox.showActivity();
 	});
@@ -533,16 +525,17 @@ jQuery(function($) {
 			"search[goods_fee_or_carrying_fee_gt]": 0,
 			"search[settlement_id_in][]": selected_bill_ids,
 			"hide_fields": ".carrying_fee,.insured_fee",
-			'show_fields': ".carrying_fee_th,.th_amount,.transit_hand_fee,.k_hand_fee,.transit_carrying_fee"
+			'show_fields': ".carrying_fee_th,.th_amount,.transit_hand_fee,.k_hand_fee,.transit_carrying_fee,.refound_fee"
 		};
 		$(this).data('params', params);
 		//选定单据改变时,修改对应返款清单相关金额字段
 		$($.bill_selector).bind('select:change', function() {
 			$('#refound_sum_goods_fee').val($.bill_selector.sum_info.sum_goods_fee);
+			$('#refound_sum_k_hand_fee').val($.bill_selector.sum_info.sum_k_hand_fee);
 			$('#refound_sum_carrying_fee').val($.bill_selector.sum_info.sum_carrying_fee_th);
 			$('#refound_sum_transit_carrying_fee').val($.bill_selector.sum_info.sum_transit_carrying_fee);
 			$('#refound_sum_transit_hand_fee').val($.bill_selector.sum_info.sum_transit_hand_fee);
-			$('#refound_sum_fee').html($.bill_selector.sum_info.sum_th_amount);
+			$('#refound_sum_fee').html($.bill_selector.sum_info.sum_refound_fee);
 		});
 
 	});
@@ -790,11 +783,6 @@ jQuery(function($) {
 		$('#carrying_bill_form :input,#carrying_bill_form select').attr('readonly', false);
 	});
 
-	$('.edit_lock_time').livequery(function() {
-		$(this).find(':input').attr('readonly', true);
-		$(this).find('select').attr('disabled', true);
-		$(this).find('[name*="lock_time"]').attr('readonly', false);
-	});
 	//修改org的录单限制时间
 	$('.only_edit_lock_time').livequery(function() {
 		$('#org_form :input[type="text"],#org_form :input[type="checkbox"],#org_form select').attr('readonly', true);

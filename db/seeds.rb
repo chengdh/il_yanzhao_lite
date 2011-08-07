@@ -550,9 +550,9 @@ sf_hash = {
   :function => {
   :read =>{:title => "查看"} ,
   :create => {:title => "新建"},
-  :update =>{:title =>"修改"},
+  :update_all =>{:title =>"修改"},
   :destroy => {:title => "删除"},
-  :edit_lock_time => {:title => "修改录单截至时间"}
+  :only_edit_lock_time => {:title => "修改录单截至时间"}
 }
 }
 SystemFunction.create_by_hash(sf_hash)
@@ -568,7 +568,8 @@ sf_hash = {
   :read =>{:title => "查看"} ,
   :create => {:title => "新建"},
   :update =>{:title =>"修改"},
-  :destroy => {:title => "删除"}
+  :destroy => {:title => "删除"},
+  :reset_usb_pin => {:title => "重设USB PIN"}
 }
 }
 SystemFunction.create_by_hash(sf_hash)

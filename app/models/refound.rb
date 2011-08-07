@@ -24,9 +24,18 @@ class Refound < ActiveRecord::Base
   default_value_for :bill_date do
     Date.today
   end
+  #合计收取手续费金额
+  def sum_k_hand_fee
+    self.carrying_bills.sum(:k_hand_fee)
+  end
+  def sum_k_hand_fee=(val)
+  end
 
+  #合计应返款金额
   def sum_fee
-    self.sum_goods_fee + self.sum_carrying_fee - self.sum_transit_hand_fee - self.sum_transit_carrying_fee
+    self.sum_goods_fee - self.sum_k_hand_fee
+  end
+  def sum_fee=(val)
   end
   #导出到csv
   def to_csv

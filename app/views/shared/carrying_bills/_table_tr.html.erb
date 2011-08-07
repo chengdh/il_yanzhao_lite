@@ -1,4 +1,4 @@
-<tr id='<%="bill_#{bill.id}" %>'  data-bill='<%=bill.to_json(:methods => [:carrying_fee_th,:k_carrying_fee,:act_pay_fee,:th_amount,:weight_fee,:total_transit_carrying_fee,:profit,:profit_weight,:send_state])%>' class='bill_cal_sum'>
+<tr id='<%="bill_#{bill.id}" %>'  data-bill='<%=bill.to_json(:methods => [:carrying_fee_th,:k_carrying_fee,:act_pay_fee,:th_amount,:weight_fee,:total_transit_carrying_fee,:profit,:profit_weight,:refound_fee,:send_state])%>' class='bill_cal_sum'>
   <td class='bill_date'>
     <%= link_to "查看",   polymorphic_url(bill,:format => :js),:class => "show_link fancybox",:style => 'display : none;'%>
     <%=bill.bill_date.strftime('%y-%m-%d')%>
@@ -31,20 +31,26 @@
   <td class="goods_fee">
     <%=bill.goods_fee %>
   </td>
-  <td class="th_amount" style='display : none;'>
-    <%=bill.th_amount %>
-  </td>
-  <td class="k_hand_fee" style='display : none;'><%=bill.k_hand_fee%></td>
-  <td class="k_carrying_fee" style='display : none;'><%= bill.k_carrying_fee %></td>
-
-  <td class="transit_fee" style='display : none;'><%= bill.transit_fee %></td>
+  <td class="transit_hand_fee" style='display : none;'><%= bill.transit_hand_fee %></td>
+  <td class="transit_hand_fee_edit" style='display : none;'><%=text_field_tag "transit_hand_fee_edit[]", bill.transit_hand_fee %></td>
   <td class="transit_carrying_fee" style='display : none;'><%= bill.transit_carrying_fee %></td>
   <td class="transit_carrying_fee_edit" style='display : none;'><%= text_field_tag "transit_carrying_fee_edit[]",bill.transit_carrying_fee %></td>
   <td class="total_transit_carrying_fee" style='display : none;'><%= bill.total_transit_carrying_fee %></td>
-  <td class="transit_hand_fee" style='display : none;'><%= bill.transit_hand_fee %></td>
-  <td class="transit_hand_fee_edit" style='display : none;'><%=text_field_tag "transit_hand_fee_edit[]", bill.transit_hand_fee %></td>
   <td class="agent_carrying_fee" style='display : none;'><%= bill.agent_carrying_fee %></td>
   <td class="agent_carrying_fee_edit" style='display : none;'><%= text_field_tag "agent_carrying_fee_edit[]",bill.agent_carrying_fee %></td>
+
+  <td class="th_amount" style='display : none;'>
+    <%=bill.th_amount %>
+  </td>
+
+  <td class="k_hand_fee" style='display : none;'><%=bill.k_hand_fee%></td>
+  <td class="k_carrying_fee" style='display : none;'><%= bill.k_carrying_fee %></td>
+  <td class="refound_fee" style='display : none;'>
+    <%=bill.refound_fee %>
+  </td>
+
+
+  <td class="transit_fee" style='display : none;'><%= bill.transit_fee %></td>
   <td class="commission" style='display : none;'><%= bill.commission %></td>
   <td class="commission_edit" style='display : none;'><%= text_field_tag "commission_edit[]",bill.commission %></td>
   <td class="goods_weight" style='display : none;'<%= bill.goods_weight %>></td>

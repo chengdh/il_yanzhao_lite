@@ -138,7 +138,7 @@ class CarryingBill < ActiveRecord::Base
       event :write_off  do
         transition :draft => :offed
       end
-      state :off do
+      state :offed do
         validates_presence_of :short_fee_info_id
       end
     end
@@ -259,6 +259,10 @@ class CarryingBill < ActiveRecord::Base
     def profit_weight
       transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2) - commission + k_hand_fee
     end
+    #应返款金额
+    def refound_fee
+      self.goods_fee - self.k_hand_fee
+    end
 
     #代收货款支付方式,无客户编号时,为现金支付
     def goods_fee_cash?
@@ -368,6 +372,8 @@ class CarryingBill < ActiveRecord::Base
       sum_info[:sum_act_pay_fee] = sum_info[:sum_goods_fee] - sum_info[:sum_k_carrying_fee] - sum_info[:sum_k_hand_fee] - sum_info[:sum_transit_hand_fee]
 
       sum_info[:sum_th_amount] = sum_info[:sum_carrying_fee_th] - sum_info[:sum_transit_carrying_fee] -  sum_info[:sum_transit_hand_fee] + sum_info[:sum_goods_fee]
+      #应返款金额 = 货款 - 扣手续费
+      sum_info[:sum_refound_fee] = sum_info[:sum_goods_fee] - sum_info[:sum_k_hand_fee]
       sum_info
     end
     #转换为打印使用的json

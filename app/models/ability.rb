@@ -55,7 +55,8 @@ class Ability
     alias_action :read,:update,:to => :show_authorize #授权核销
     alias_action :read,:update,:to => :show_claim
     alias_action :read,:update,:to => :show_identify
-
+    #修改录单限制时间
+    alias_action :read,:update,:to => :only_edit_lock_time
     #运费及货款修改
     alias_action :read,:update,:to => :update_carrying_fee_20
     alias_action :read,:update,:to => :update_carrying_fee_50
@@ -117,6 +118,7 @@ class Ability
       ability_org_ids.include?(bill.from_org_id) or ability_org_ids.include?(bill.to_org_id) or ability_org_ids.include?(bill.transit_org_id)
     end
     can :read,CarryingBill
+    can :simple_search,CarryingBill
     #录入票据时,默认可读取转账客户信息
     can :read,Vip
 
@@ -135,21 +137,21 @@ class Ability
       #重新设置运单不可修改
       cannot :update_carrying_fee_20,CarryingBill
       can :update_carrying_fee_20,CarryingBill do |bill|
-        (bill.original_carrying_fee - bill.carrying_fee)/bill.original_carrying_fee <= 0.2 and ability_org_ids.include?(bill.from_org_id)
+        (bill.original_carrying_fee > 0) ? ((bill.original_carrying_fee - bill.carrying_fee)/bill.original_carrying_fee <= 0.2 and ability_org_ids.include?(bill.from_org_id)) : true
       end
     end
     #可修改50%运费
     if can? :update_carrying_fee_50,CarryingBill
       cannot :update_carrying_fee_50,CarryingBill
       can :update_carrying_fee_50,CarryingBill do |bill|
-        (bill.original_carrying_fee - bill.carrying_fee)/bill.original_carrying_fee <= 0.5 and ability_org_ids.include?(bill.from_org_id)
+        (bill.original_carrying_fee > 0) ? ((bill.original_carrying_fee - bill.carrying_fee)/bill.original_carrying_fee <= 0.5 and ability_org_ids.include?(bill.from_org_id)) : true
       end
     end
     #可修改100%运费
     if can? :update_carrying_fee_100,CarryingBill
       cannot :update_carrying_fee_100,CarryingBill
       can :update_carrying_fee_100,CarryingBill do |bill|
-        (bill.original_carrying_fee - bill.carrying_fee) >= 0 and ability_org_ids.include?(bill.from_org_id)
+        ability_org_ids.include?(bill.from_org_id)
       end
     end
   end

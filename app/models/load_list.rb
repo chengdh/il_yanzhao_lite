@@ -3,7 +3,7 @@ class LoadList < ActiveRecord::Base
   belongs_to :from_org,:class_name => "Org"
   belongs_to :to_org,:class_name => "Org"
   belongs_to :user
-  has_many :carrying_bills,:order => "from_org_id ASC,bill_date ASC,bill_no ASC"
+  has_many :carrying_bills,:order => "to_org_id ASC,transit_org_id ASC,bill_date ASC,bill_no ASC"
 
   validates_presence_of :from_org_id,:to_org_id,:bill_no
   #待确认收货清单
