@@ -37,7 +37,7 @@
   <tfoot>
     <tr>
       <td colspan='6' style='text-align : right;border : thin solid #000;'>合计</td>
-      <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:carrying_fee)%>/现金付:@load_list.carrying_bills.sum(:carrying_fee,:conditions=>{:pay_type => CarryingBill::PAY_TYPE_CASH})</td>
+      <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:carrying_fee)%>/现金付:<%=@load_list.carrying_bills.sum(:carrying_fee,:conditions=>{:pay_type => CarryingBill::PAY_TYPE_CASH}) %></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:goods_fee)%></td>
       <td style='border : thin solid #000;'></td>
       <td style='border : thin solid #000;'></td>
