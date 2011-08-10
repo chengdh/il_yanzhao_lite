@@ -416,9 +416,7 @@ zh-CN:
         note: "备注"  #g
         org: "所属机构"  #g
         transit_company_id: "中转公司"  #g
-        transit_company: "中转公司"  #g
-        transit_company:
-          name: "中转公司名称"
+        transit_company: "中转公司"
         carrying_bills: "中转运单"  #g
 
       user:

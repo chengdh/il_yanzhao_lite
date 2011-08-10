@@ -7,6 +7,7 @@ class TransitInfo < ActiveRecord::Base
   has_many :carrying_bills
 
   validates_presence_of :org_id
+  validates_associated :transit_company,:message => "中转公司名称不可为空."
 
   accepts_nested_attributes_for :transit_company
 
