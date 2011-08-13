@@ -370,6 +370,8 @@ jQuery(function($) {
 		var sum_insured_fee = 0;
 		var sum_th_amount = 0;
 
+                var sum_goods_num = 0;
+
 		$('[data-bill]').each(function() {
 			var the_bill = $(this).data('bill');
 			sum_carrying_fee += parseFloat(the_bill.carrying_fee);
@@ -397,6 +399,7 @@ jQuery(function($) {
 			sum_from_short_carrying_fee += parseFloat(the_bill.from_short_carrying_fee);
 			sum_to_short_carrying_fee += parseFloat(the_bill.to_short_carrying_fee);
 			sum_insured_fee += parseFloat(the_bill.insured_fee);
+			sum_goods_num += parseFloat(the_bill.goods_num);
 
 		});
 
@@ -425,6 +428,7 @@ jQuery(function($) {
 		$('#sum_goods_fee').html(sum_goods_fee);
 		$('#sum_th_amount').html(sum_th_amount);
 		$('#sum_insured_fee').html(sum_insured_fee);
+		$('#sum_goods_num').html(sum_goods_num);
 
 		//计算可修改字段
 		var cal_edit_field_sum = function(field_class) {

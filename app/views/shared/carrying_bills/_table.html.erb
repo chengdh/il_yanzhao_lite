@@ -13,6 +13,7 @@
       <th class='from_to'>&nbsp;</th>
       <th class='customer'>&nbsp;</th>
       <th class='pay_type'>&nbsp;</th>
+      <th class='goods_num' style='display : none;'>&nbsp;</th>
 
       <th class="carrying_fee"><span id="sum_carrying_fee"></span></th>
       <th class="carrying_fee_th" style='display : none;'><span id="sum_carrying_fee_th"></span></th>
@@ -57,6 +58,7 @@
       <th class='from_to'><%=sortable "from_org_id","发货地" %>--<%=sortable "to_org_id","到货地" %></th>
       <th class='customer'>发货人-收货人</th>
       <th class='pay_type'><%=sortable "pay_type","付款方式" %></th>
+      <th class='goods_num' style='display : none;'>件数</th>
       <th class="carrying_fee">运费</th>
       <th class="carrying_fee_th" style='display : none;'>提付运费</th>
       <th class="goods_fee">代收货款</th>
@@ -124,6 +126,10 @@
         <td class='pay_type'>
           <%=pay_type_des(bill.pay_type) %>
         </td>
+        <td class='goods_num' style='display : none;'>
+          <%=bill.goods_num %>
+        </td>
+
         <td class="carrying_fee">
           <%=bill.carrying_fee %>
         </td>
@@ -184,6 +190,7 @@
       <td class='from_to'>&nbsp;</td>
       <td class='customer'>总计</td>
       <td class='pay_type'><%=sum_info[:count]%>票</td>
+      <td class='goods_num' style='display : none;'><%=sum_info[:sum_goods_num]%></td>
       <td class="carrying_fee"><%=sum_info[:sum_carrying_fee]%>|现付:<%=sum_info[:sum_carrying_fee_cash]%></td>
       <td class="carrying_fee_th" style='display : none;'><%=sum_info[:sum_carrying_fee_th]%></td>
       <td class="goods_fee"><%=sum_info[:sum_goods_fee]%></td>

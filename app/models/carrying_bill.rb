@@ -362,14 +362,14 @@ class CarryingBill < ActiveRecord::Base
         #:sum_to_short_carrying_fee => search.relation.sum(:to_short_carrying_fee),
         #:sum_goods_num => search.relation.sum(:goods_num)
       }
-      sum_info_tmp = search.select('sum(1) as count,sum(carrying_fee) as sum_carrying_fee,sum(k_hand_fee) as sum_k_hand_fee,sum(goods_fee) as sum_goods_fee,sum(insured_fee) as sum_insured_fee,sum(transit_carrying_fee) as sum_transit_carrying_fee,sum(transit_hand_fee) as sum_transit_hand_fee,sum(from_short_carrying_fee) as sum_from_short_carrying_fee,sum(to_short_carrying_fee) as sum_to_short_carrying_fee,sum(goods_num) as sum_goods_num,sum(goods_weight) as sum_goods_weight,sum(transit_fee) as sum_transit_fee,sum(agent_carrying_fee) as sum_agent_carrying_fee,sum(commission) as sum_commission,sum(send_fee) as sum_send_fee,sum(goods_weight*unit_price_weight) as sum_weight_fee,sum(carrying_fee - transit_carrying_fee - commission + k_hand_fee) as sum_profit,sum(transit_carrying_fee + commission) as sum_total_transit_carrying_fee,sum(transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2) - commission + k_hand_fee) as sum_profit_weight').first.attributes
+      sum_info_tmp = search.select('sum(1) as count,sum(carrying_fee) as sum_carrying_fee,sum(k_hand_fee) as sum_k_hand_fee,sum(goods_fee) as sum_goods_fee,sum(insured_fee) as sum_insured_fee,sum(transit_carrying_fee) as sum_transit_carrying_fee,sum(transit_hand_fee) as sum_transit_hand_fee,sum(from_short_carrying_fee) as sum_from_short_carrying_fee,sum(to_short_carrying_fee) as sum_to_short_carrying_fee,sum(goods_num) as sum_goods_num,sum(goods_weight) as sum_goods_weight,sum(goods_num) as sum_goods_num,sum(transit_fee) as sum_transit_fee,sum(agent_carrying_fee) as sum_agent_carrying_fee,sum(commission) as sum_commission,sum(send_fee) as sum_send_fee,sum(goods_weight*unit_price_weight) as sum_weight_fee,sum(carrying_fee - transit_carrying_fee - commission + k_hand_fee) as sum_profit,sum(transit_carrying_fee + commission) as sum_total_transit_carrying_fee,sum(transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2) - commission + k_hand_fee) as sum_profit_weight').first.attributes
       sum_info_tmp.each do |key,value|
         sum_info_tmp.delete(key)
         sum_info_tmp[key.to_sym] = value.blank? ? 0 : value
       end
       sum_info.merge!(sum_info_tmp)
       #实提货款合计
-      sum_info[:sum_act_pay_fee] = sum_info[:sum_goods_fee] - sum_info[:sum_k_carrying_fee] - sum_info[:sum_k_hand_fee] - sum_info[:sum_transit_hand_fee]
+      sum_info[:sum_act_pay_fee] = sum_info[:sum_goods_fee] - sum_info[:sum_k_carrying_fee] - sum_info[:sum_k_hand_fee]
 
       sum_info[:sum_th_amount] = sum_info[:sum_carrying_fee_th] - sum_info[:sum_transit_carrying_fee] -  sum_info[:sum_transit_hand_fee] + sum_info[:sum_goods_fee]
       #应返款金额 = 货款 - 扣手续费
@@ -404,7 +404,9 @@ class CarryingBill < ActiveRecord::Base
           added_fee = ConfigCash.cal_added_fee(self.from_org_id,self.goods_fee)
           self.k_hand_fee =(hand_fee + added_fee).ceil
         else
-          self.k_hand_fee =ConfigCash.cal_hand_fee(self.from_org_id,self.goods_fee).ceil
+          added_fee = ConfigCash.cal_added_fee(self.from_org_id,self.goods_fee)
+          hand_fee = ConfigCash.cal_hand_fee(self.from_org_id,self.goods_fee)
+          self.k_hand_fee =(hand_fee + added_fee).ceil
         end
       else
         self.k_hand_fee = (self.from_customer.config_transit.rate * self.goods_fee).ceil

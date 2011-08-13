@@ -36,10 +36,12 @@
   <thead>
     <tr>
       <th style='border : thin solid #000;'>序号</th>
+      <th style='border : thin solid #000;'>日期</th>
       <th style='border : thin solid #000;'>运单号</th>
       <th style='border : thin solid #000;'>货号</th>
       <th style='border : thin solid #000;'>发货人</th>
       <th style='border : thin solid #000;'>收货人</th>
+      <th style='border : thin solid #000;'>到货地</th>
       <th style='border : thin solid #000;'>代收货款</th>
       <th style='border : thin solid #000;'>中转手续费</th>
       <th style='border : thin solid #000;'>手续费</th>
@@ -52,10 +54,12 @@
     <%@refound.carrying_bills.each_with_index do |bill,index| %>
       <tr>
         <td style='border : thin solid #000;'><%= index + 1 %></td>
+        <td style='border : thin solid #000;'>&nbsp;<%=bill.bill_date.strftime('%y-%m-%d')%></td>
         <td style='border : thin solid #000;'>&nbsp;<%= bill.bill_no %></td>
         <td style='border : thin solid #000;'>&nbsp;<%= bill.goods_no %></td>
         <td style='border : thin solid #000;'><%= bill.from_customer_name %></td>
         <td style='border : thin solid #000;'><%= bill.to_customer_name %></td>
+        <td style='border : thin solid #000;'><%= bill.to_org ? bill.to_org : bill.to_area %></td>
         <td style='border : thin solid #000;'><%= bill.goods_fee %></td>
         <td style='border : thin solid #000;'><%= bill.transit_hand_fee %></td>
         <td style='border : thin solid #000;'><%= bill.k_hand_fee %></td>
@@ -66,7 +70,7 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan='5' style='text-align : right;border : thin solid #000;'>合计</td>
+      <td colspan='6' style='text-align : right;border : thin solid #000;'>合计</td>
       <td style='border : thin solid #000;'><%=@refound.carrying_bills.sum(:goods_fee)%></td>
       <td style='border : thin solid #000;'><%=@refound.carrying_bills.sum(:transit_hand_fee)%></td>
       <td style='border : thin solid #000;'><%=@refound.carrying_bills.sum(:k_hand_fee)%></td>
