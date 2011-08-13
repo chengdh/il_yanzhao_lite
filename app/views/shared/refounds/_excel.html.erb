@@ -1,13 +1,14 @@
 <table style='border-collapse : collapse;border : thin solid #000;'>
   <thead>
     <tr>
-      <th colspan='10' style='text-align : center;font-size : 14px;'>返款清单</th>
+      <th colspan='12' style='text-align : center;font-size : 14px;'>返款清单</th>
     </tr>
     <tr>
       <td style='border : thin solid #000;'>返款单位:</td>
       <td colspan='2' style='border : thin solid #000;'><%=@refound.from_org.name%></td>
       <td style='border : thin solid #000;'>收款单位:</td>
       <td colspan='2' style='border : thin solid #000;'><%= @refound.to_org.name %></td>
+      <td colspan='2' style='border : thin solid #000;'>&nbsp;</td>
       <td style='border : thin solid #000;'>返款日期:</td>
       <td style='border : thin solid #000;'><%= @refound.bill_date.strftime('%Y-%M-%d') %></td>
       <td style='border : thin solid #000;'>经手人:</td>
@@ -70,7 +71,7 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan='6' style='text-align : right;border : thin solid #000;'>合计</td>
+      <td colspan='7' style='text-align : right;border : thin solid #000;'>合计</td>
       <td style='border : thin solid #000;'><%=@refound.carrying_bills.sum(:goods_fee)%></td>
       <td style='border : thin solid #000;'><%=@refound.carrying_bills.sum(:transit_hand_fee)%></td>
       <td style='border : thin solid #000;'><%=@refound.carrying_bills.sum(:k_hand_fee)%></td>

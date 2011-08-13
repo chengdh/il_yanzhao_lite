@@ -1,7 +1,7 @@
 <table cellspacing='0' cellpadding='0' border='0' style='border-collapse : collapse;border : thin solid #000;'>
   <thead>
     <tr>
-      <td colspan='10' style='text-align : center;font-size : 14px;'>货物运输清单(<%=@load_list.bill_no%>)</td>
+      <td colspan='13' style='text-align : center;font-size : 14px;'>货物运输清单(<%=@load_list.bill_no%>)</td>
     </tr>
     <tr>
       <td style='border : thin solid #000;'>序号</td>
@@ -40,7 +40,7 @@
   </tbody>
   <tfoot>
     <tr>
-      <td colspan='6' style='text-align : right;border : thin solid #000;'>合计</td>
+      <td colspan='7' style='text-align : right;border : thin solid #000;'>合计</td>
       <td style='border : thin solid #000;'><%= @load_list.carrying_bills.sum(:goods_num) %></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:carrying_fee)%>/现金付:<%=@load_list.carrying_bills.sum(:carrying_fee,:conditions=>{:pay_type => CarryingBill::PAY_TYPE_CASH}) %></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:goods_fee)%></td>
