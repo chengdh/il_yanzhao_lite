@@ -1,15 +1,15 @@
 #coding: utf-8
 module OrgsHelper
   def orgs_for_select
-    Org.where(:is_active => true).all.map {|b| ["#{b.name}(#{b.py})",b.id]}
+    Org.where(:is_active => true).all.map {|b| ["#{b.name}[#{b.py}]",b.id]}
   end
 
   def branches_for_select
-    Branch.where(:is_active => true).all.map {|b| ["#{b.name}(#{b.py})",b.id]}
+    Branch.where(:is_active => true).all.map {|b| ["#{b.name}[#{b.py}]",b.id]}
   end
   #中转中心
   def yards_for_select
-    Org.where(:is_active => true,:is_yard => true).all.map {|b| ["#{b.name}(#{b.py})",b.id]}
+    Org.where(:is_active => true,:is_yard => true).all.map {|b| ["#{b.name}[#{b.py}]",b.id]}
   end
   #根据当前登录用户的选择机构
   def current_org_for_select
@@ -17,7 +17,7 @@ module OrgsHelper
   end
   #除去当前机构的机构选择
   def branches_for_select_ex
-    Branch.search(:is_active_eq => true,:id_ne => current_user.default_org.id).all.map {|b| ["#{b.name}(#{b.py})",b.id]}
+    Branch.search(:is_active_eq => true,:id_ne => current_user.default_org.id).all.map {|b| ["#{b.name}[#{b.py}]",b.id]}
   end
 
   #当前登录用户可使用的的org
@@ -25,7 +25,7 @@ module OrgsHelper
     default_org = current_user.default_org
     ret = ActiveSupport::OrderedHash.new
     ret["#{default_org.name}(#{default_org.py})"] = default_org.id
-    default_org.children.each {|child_org|  ret["#{child_org.name}(#{child_org.py})"] = child_org.id}
+    default_org.children.each {|child_org|  ret["#{child_org.name}[#{child_org.py}]"] = child_org.id}
     ret
   end
 
@@ -41,7 +41,7 @@ module OrgsHelper
     yards_ids = Org.where(:is_active => true,:is_yard => true).collect(&:id)
     exclude_ids -= yards_ids if with_yard
     exclude_ids.uniq!
-    ret_orgs = Branch.search(:is_active_eq => true,:id_ni => exclude_ids).all.map {|b| ["#{b.name}(#{b.py})",b.id]}
+    ret_orgs = Branch.search(:is_active_eq => true,:id_ni => exclude_ids).all.map {|b| ["#{b.name}[#{b.py}]",b.id]}
   end
   #得到修改权限
   def get_org_edit_permission_class

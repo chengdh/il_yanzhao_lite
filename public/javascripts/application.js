@@ -160,11 +160,20 @@ jQuery(function($) {
 
 	});
 	//blockUI处理
-	$.blockUI.defaults.message = '<h1><img src="/images/ajax-spinner.gif" width="20px" height="20px"/>处理中,请稍候...</h1>';
-	$(document).ajaxStart($.blockUI).ajaxStop($.unblockUI);
-	//对需要长时间处理的操作,显示blockUI
-	$('.btn_process_handle').bind('click', $.blockUI);
-
+	$.blockUI.defaults.message = null;
+	$.blockUI.defaults.overlayCSS.opacity = 0.2;
+	$(document).ajaxStart(function() {
+		$.fancybox.showActivity();
+		$.blockUI();
+	}).ajaxStop(function() {
+		$.fancybox.hideActivity();
+		$.unblockUI();
+	});
+        //对需要长时间处理的操作,显示blockUI
+	$('.btn_process_handle').bind('click', function() {
+		$.fancybox.showActivity();
+		$.blockUI();
+	});
 	//根据客户编号查询查询客户信息
 	var search_customer_by_code = function() {
 		var code = $(this).val();
@@ -228,13 +237,7 @@ jQuery(function($) {
 		});
 	});
 	//初始化区域选择
-	$('.select_org').livequery(function() {
-		$(this).ufd();
-	});
-	//提高select_org list-wrapper的z-index
-	$('.list-wrapper').livequery(function() {
-		$(this).css('z-index', 9001);
-	});
+	$('.select_org').select_combobox();
 
 	//初始化tip
 	$('.tipsy').livequery(function() {
@@ -260,7 +263,7 @@ jQuery(function($) {
 		$(this).form_with_select_bills();
 	});
 	//首页运单查询
-	$('#home-search-box').watermark('录入运单号/货号查询').keypress(function(e) {
+	$('#home-search-box').watermark('录入运单号/货号查询').keydown(function(e) {
 		if (e.keyCode == 13) {
 			$('#home-search-form').trigger('submit');
 		}
@@ -370,7 +373,7 @@ jQuery(function($) {
 		var sum_insured_fee = 0;
 		var sum_th_amount = 0;
 
-                var sum_goods_num = 0;
+		var sum_goods_num = 0;
 
 		$('[data-bill]').each(function() {
 			var the_bill = $(this).data('bill');
@@ -755,10 +758,6 @@ jQuery(function($) {
 		backgroundColor: 'black',
 		color: '#fff'
 	});
-	$('.turnover_chart').visualize({
-		width: '850px'
-	});
-
 	//自动获取明细信息
 	$('[data-detailUrl]').livequery(function() {
 		var url = $(this).data('detailUrl');
