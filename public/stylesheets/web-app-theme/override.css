@@ -12,6 +12,11 @@
   position : relative;
   zoom : 1;   /*解决ie6下的bug*/
 }
+/*table_wrap样式*/
+#table_wrap{
+  width : 100%;
+  overflow-x : scroll;
+}
 
 /*左侧当前活动菜单显示 样式*/
 #menu_bar a:link{}
