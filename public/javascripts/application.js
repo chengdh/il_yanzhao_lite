@@ -774,18 +774,6 @@ jQuery(function($) {
 	$('[data-hideFields]').livequery(function() {
 		$($(this).data('hideFields')).hide();
 	});
-	//运单修改时,判断权限
-	$('form.update_carrying_fee ,form.update_goods_fee').livequery(function() {
-		$('#carrying_bill_form :input').attr('readonly', true);
-		$('#carrying_bill_form select').attr('disabled', true);
-	});
-	$('form.update_carrying_fee #carrying_fee,form.update_goods_fee #goods_fee').livequery(function() {
-		$(this).attr('readonly', false);
-	});
-	$('form.update_all').livequery(function() {
-		$('#carrying_bill_form :input,#carrying_bill_form select').attr('readonly', false);
-	});
-
 	//修改org的录单限制时间
 	$('.only_edit_lock_time').livequery(function() {
 		$('#org_form :input[type="text"],#org_form :input[type="checkbox"],#org_form select').attr('readonly', true);

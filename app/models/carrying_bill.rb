@@ -131,6 +131,33 @@ class CarryingBill < ActiveRecord::Base
     state :loaded,:shipped,:reached do
       validates_presence_of :load_list_id
     end
+    state :transited do
+      validates_presence_of :transit_info_id
+    end
+
+    state :deliveried do
+      validates_presence_of :deliver_info_id, :unless => :transit_bill?
+    end
+    state :deliveried do
+      validates_presence_of :transit_deliver_info_id, :if => :transit_bill?
+    end
+
+    state :settlemented do
+      validates_presence_of :settlement_id
+    end
+    state :refunded,:refunded_confirmed do
+      validates_presence_of :refound_id
+    end
+    state :payment_listed do
+      validates_presence_of :payment_list_id
+    end
+    state :paid do
+      validates_presence_of :pay_info_id
+    end
+    state :posted do
+      validates_presence_of :post_info_id
+    end
+
     end
 
     #短途运费状态声明
@@ -268,6 +295,11 @@ class CarryingBill < ActiveRecord::Base
     def goods_fee_cash?
       self.from_customer.blank?
     end
+    #是中转运单还是其他运单
+    def transit_bill?
+      ["TransitBill","HandTransitBill","KidsTransitBill"].include? self.type
+    end
+    #
     #中转费用
     #包括业务员提成
     def total_transit_carrying_fee
