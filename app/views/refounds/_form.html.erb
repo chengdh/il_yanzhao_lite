@@ -16,7 +16,7 @@
       </td>
       <td>收款单位:</td>
       <td>
-        <%=f.select :to_org_id,exclude_current_ability_orgs_for_select,{:prompt => "--选择收款单位--"},:class => "select_org",:id => "to_org_id" %>
+        <%=f.select :to_org_id,exclude_current_ability_orgs_for_select,{:prompt => "--选择收款单位--"},:id => "to_org_id" %>
       </td>
       <td class='text-center'>
         <%= link_to_function image_tag("arrow-circle-double-135.png"), :id => 'btn_refound_refresh',:title => "刷新",:class => "tipsy"  %>

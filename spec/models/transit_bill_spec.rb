@@ -12,6 +12,7 @@ describe TransitBill do
   it "到货确认后,下一步操作应为'中转处理'" do
     @transit_bill.load_list = @load_list
 
+    @transit_bill.transit_info_id =1
     @transit_bill.standard_process  #装车
     @transit_bill.standard_process  #发货
     @transit_bill.standard_process  #到货
@@ -20,6 +21,8 @@ describe TransitBill do
   end
   it "中转处理后,下一步操作应为'已提货'" do
     @transit_bill.load_list = @load_list
+    @transit_bill.transit_info_id =1
+    @transit_bill.transit_deliver_info_id =1
 
     @transit_bill.standard_process  #装车
     @transit_bill.standard_process  #发货
@@ -30,6 +33,9 @@ describe TransitBill do
   end
   it "提货处理后,下一步操作应为'已日结'" do
     @transit_bill.load_list = @load_list
+    @transit_bill.transit_info_id =1
+    @transit_bill.transit_deliver_info_id =1
+    @transit_bill.settlement_id =1
 
     @transit_bill.standard_process  #装车
     @transit_bill.standard_process  #发货

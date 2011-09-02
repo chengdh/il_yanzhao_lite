@@ -25,7 +25,8 @@ module OrgsHelper
     default_org = current_user.default_org
     ret = ActiveSupport::OrderedHash.new
     ret["#{default_org.name}(#{default_org.py})"] = default_org.id
-    default_org.children.each {|child_org|  ret["#{child_org.name}[#{child_org.py}]"] = child_org.id}
+    child_orgs = default_org.children.select {|child_org| child_org.is_active?}
+    child_orgs.each {|child_org|  ret["#{child_org.name}[#{child_org.py}]"] = child_org.id}
     ret
   end
 
