@@ -169,7 +169,7 @@ jQuery(function($) {
 		$.fancybox.hideActivity();
 		$.unblockUI();
 	});
-        //对需要长时间处理的操作,显示blockUI
+	//对需要长时间处理的操作,显示blockUI
 	$('.btn_process_handle').bind('click', function() {
 		$.fancybox.showActivity();
 		$.blockUI();
@@ -194,6 +194,13 @@ jQuery(function($) {
 		$(this).find('input').attr('readonly', true);
 		$('#return_bill_note').attr('readonly', false);
 
+	});
+	//运单录入界面,自动生成货号
+	$('#carrying_bill_form #bill_no,#carrying_bill_form #goods_num').live('change', function() {
+		var bill_no = $('#bill_no').val();
+		var goods_num = $('#goods_num').val();
+		var goods_no = bill_no.substr(bill_no.length - 4, 4) + "-" + goods_num;
+		$('#goods_no').val(goods_no);
 	});
 	//设定只读字段的背景色
 	$('input[readonly]').css({
@@ -452,6 +459,14 @@ jQuery(function($) {
 	//货物中转及中转提货时,进行合计
 	$('#bills_table_body').bind('tr_changed', cal_sum).bind('change', function(evt) {
 		var target_el = $(evt.target).parent('td');
+		var parent_tr = target_el.parent('tr');
+                //自动计算代收运费
+		if (target_el && target_el.hasClass('transit_carrying_fee_edit')) {
+			var carrying_fee = parent_tr.find('td.carrying_fee').text();
+			var transit_carrying_fee = target_el.find('input').val();
+			var agent_carrying_fee = parseFloat(carrying_fee) - parseFloat(transit_carrying_fee);
+			$(parent_tr).find('td.agent_carrying_fee_edit input').val(agent_carrying_fee);
+		}
 
 		if (target_el && (target_el.hasClass('transit_carrying_fee_edit') || target_el.hasClass('transit_hand_fee_edit') || target_el.hasClass('agent_carrying_fee_edit')))
 		//触发运单明细改变事件

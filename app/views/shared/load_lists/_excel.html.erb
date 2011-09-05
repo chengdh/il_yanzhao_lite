@@ -14,6 +14,8 @@
       <td style='border : thin solid #000;'>件数</td>
       <td style='border : thin solid #000;'>运费</td>
       <td style='border : thin solid #000;'>代收货款</td>
+      <td style='border : thin solid #000;'>重量</td>
+      <td style='border : thin solid #000;'>转货费</td>
       <td style='border : thin solid #000;'>返款备注</td>
       <td style='border : thin solid #000;'>运费支付方式</td>
       <td style='border : thin solid #000;'>备注</td>
@@ -32,6 +34,8 @@
         <td style='border : thin solid #000;'><%= bill.goods_num %></td>
         <td style='border : thin solid #000;'><%= bill.carrying_fee %></td>
         <td style='border : thin solid #000;'><%= bill.goods_fee%></td>
+        <td style='border : thin solid #000;'><%= bill.goods_weight%></td>
+        <td style='border : thin solid #000;'><%= bill.transit_fee %></td>
         <td style='border : thin solid #000;'></td>
         <td style='border : thin solid #000;'><%= bill.pay_type_des%></td>
         <td style='border : thin solid #000;'><%= bill.note %></td>
@@ -44,6 +48,8 @@
       <td style='border : thin solid #000;'><%= @load_list.carrying_bills.sum(:goods_num) %></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:carrying_fee)%>/现金付:<%=@load_list.carrying_bills.sum(:carrying_fee,:conditions=>{:pay_type => CarryingBill::PAY_TYPE_CASH}) %></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:goods_fee)%></td>
+      <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:goods_weight)%></td>
+      <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:transit_fee)%></td>
       <td style='border : thin solid #000;'></td>
       <td style='border : thin solid #000;'></td>
       <td style='border : thin solid #000;'></td>
