@@ -72,7 +72,7 @@
       </li>
       -->
       <li>
-        <%= link_to image_tag("document-excel-table.png",:alt => "导出为EXCEL"), self.send("export_excel_#{controller_name.tableize}_path",:search => params[:search],:show_fields => params[:show_fields],:hide_fields => params[:hide_fields],:sort => params[:sort],:direction => params[:direction]),:title => "导出为EXCEL",:class => "btn_export_excel tipsy"  %>
+        <%= link_to image_tag("document-excel-table.png",:alt => "导出为EXCEL"), self.send("export_excel_#{controller_name.tableize}_path",:search => params[:search],:show_fields => params[:show_fields].blank? ? ".transit_company" : ".transit_company" << params[:show_fields],:hide_fields => params[:hide_fields],:sort => params[:sort],:direction => params[:direction]),:title => "导出为EXCEL",:class => "btn_export_excel tipsy"  %>
       </li>
     <%end%>
     <%if params[:action] == "rpt_turnover"%>
