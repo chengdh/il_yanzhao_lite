@@ -278,17 +278,17 @@ class CarryingBill < ActiveRecord::Base
     #毛利润
     #毛利润 =  收入的运费 - 中转运费 - 业务员提成 + 扣手续费
     def profit
-      carrying_fee - transit_carrying_fee - commission - transit_hand_fee + k_hand_fee
+      carrying_fee.to_i - transit_carrying_fee.to_i - commission.to_i - transit_hand_fee.to_i + k_hand_fee.to_i
     end
 
     #毛利润-按照重量计算
     #@unit_price 每公斤费用
     def profit_weight
-      transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2) - commission + k_hand_fee
+      transit_fee.to_i - transit_carrying_fee.to_i + (goods_weight.to_i*unit_price_weight.to_i/2) - commission.to_i + k_hand_fee.to_i
     end
     #应返款金额
     def refound_fee
-      self.goods_fee - self.k_hand_fee
+      self.goods_fee.to_i - self.k_hand_fee.to_i
     end
 
     #代收货款支付方式,无客户编号时,为现金支付
@@ -303,7 +303,7 @@ class CarryingBill < ActiveRecord::Base
     #中转费用
     #包括业务员提成
     def total_transit_carrying_fee
-      transit_carrying_fee + commission
+      transit_carrying_fee.to_i + commission.to_i
     end
 
     #滞留天数
