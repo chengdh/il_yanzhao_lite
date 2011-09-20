@@ -253,7 +253,7 @@ class CarryingBill < ActiveRecord::Base
     end
     #实提货款 原货款 - 扣运费 - 扣手续费
     def act_pay_fee
-      ret = (self.goods_fee.nil? ? 0 : self.goods_fee) - (self.k_hand_fee.nil? ? 0 : self.k_hand_fee) - (self.k_carrying_fee.nil? ? 0 : self.k_carrying_fee)
+      ret = self.goods_fee.to_i - self.k_hand_fee.to_i - self.k_carrying_fee.to_i
     end
 
     #得到提货应收金额
@@ -261,7 +261,7 @@ class CarryingBill < ActiveRecord::Base
     def th_amount
       amout = 0
       if self.pay_type == CarryingBill::PAY_TYPE_TH
-        amount = self.carrying_fee_th - self.transit_hand_fee - self.transit_carrying_fee + self.goods_fee
+        amount = self.carrying_fee_th - self.transit_hand_fee.to_i - self.transit_carrying_fee.to_i + self.goods_fee.to_i
       else
         amount = self.goods_fee
       end
