@@ -60,7 +60,7 @@
         </td>
         <td class='customer'>
           <%=bill.from_customer_name%>
-          --
+          ~
           <%=bill.to_customer_name%>
         </td>
         <td class='paytype'>
@@ -95,8 +95,8 @@
         <td class="profit_weight hide"><%= bill.profit_weight%></td>
 
 
-        <td class='transit_bill_no hide'>bill.transit_bill_no</td>
-        <td class='transit_company hide'>bill.transit_info.try(:transit_company)</td>
+        <td class='transit_bill_no hide'><%=bill.transit_bill_no%></td>
+        <td class='transit_company hide'><%=bill.transit_info.try(:transit_company)%></td>
         <td class="th_amount hide"><%=bill.th_amount%></td>
         <td class="from_short_carrying_fee hide"><%= bill.from_short_carrying_fee %></td>
         <td class="to_short_carrying_fee hide"><%= bill.to_short_carrying_fee %></td>

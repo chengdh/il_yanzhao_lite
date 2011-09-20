@@ -1,0 +1,16 @@
+<%= semantic_form_for resource ,:remote => true,:html => {:id => "transit_info_form"} do |f|%>
+
+  <%=f.error_messages %>
+  <%= f.inputs do %>
+    <%= f.hidden_field :user_id,:value => current_user.id if f.object.new_record?%>
+    <%= f.input :org_id,:as => :select,:label=>"中转部门",:collection => current_ability_orgs_for_select,:include_blank => false,:input_html => {:id => "transit_org_id"} %>
+    <%= f.input :bill_date,:label =>"中转日期",:as => :string,:input_html =>{:readonly => true,:size => 20,:class => 'datepicker'} %>
+    <%= f.input :note,:as => :string,:label=> "备注",:input_html => {:size => 60} %>
+    <%= f.input :transit_company_id,:as => :select,:label => "中转公司",:prompt =>"--新建中转公司--",:collection => TransitCompany.where(:is_active => true),:input_html => {:id => "select_transit_company"} %>
+  <%end%>
+  <div id="new_transit_company">
+    <%=f.inputs "新建中转公司", :name,:phone,:for => :transit_company %>
+  </div>
+<% end%>
+<div id="table_wrap"  data-detailUrl='<%=transit_info_carrying_bills_path(resource,:show_fields => ".transit_carrying_fee,.transit_hand_fee,.agent_carrying_fee,.transit_bill_no",:hide_fields => ".insured_fee,.customer,.bill_no,.note")%>'>
+</div>
