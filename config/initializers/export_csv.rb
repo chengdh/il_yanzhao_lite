@@ -22,7 +22,8 @@ class Array
     output = FasterCSV.generate(:col_sep => "\t", :row_sep => "\r\n") do |csv|
       csv << ["序号"] + columns.map { |column| klass.human_attribute_name(column) } unless options[:headers] == false
       self.each_with_index do |item,index|
-        csv << [index + 1] + columns.collect { |column| " " + item.send(column) }
+        #加空格防止excel打开时自动转换格式
+        csv << [index + 1] + columns.collect { |column| " " + item.send(column).to_s }
       end
     end
     output
