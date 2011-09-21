@@ -174,6 +174,11 @@ zh-CN:
         agent_carrying_fee: "代收运费"
         th_amount: "提货应收合计"
         human_state_name: "状态"
+        transit_company: "中转公司"
+        unit_price_weight: "单价(重量)"
+        weight_fee: "金额(童装)"
+        profit: "利润"
+        profit_weight: "利润(童装)"
 
 
       cash_pay_info:

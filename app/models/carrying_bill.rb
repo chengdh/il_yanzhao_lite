@@ -226,6 +226,10 @@ class CarryingBill < ActiveRecord::Base
       return '' if self.from_customer.blank?
       self.from_customer.bank.name
     end
+    #中转公司
+    def transit_company
+      self.transit_info.try(:transit_company)
+    end
 
     #以千分数表示的保价费
     def insured_rate_disp
@@ -421,9 +425,9 @@ class CarryingBill < ActiveRecord::Base
         :methods => [
           :bill_date,:bill_no,:goods_no,:from_customer_name,:from_customer_phone,:from_customer_mobile,
           :to_customer_name,:to_customer_phone,:to_customer_mobile,:from_org_name,
-          :transit_org_name,:to_org_name,:pay_type_des,:from_short_carrying_fee,:to_short_carrying_fee,
+          :transit_org_name,:to_org_name,:pay_type_des,:transit_company,
           :carrying_fee,:carrying_fee_th,:k_carrying_fee,:k_hand_fee,:goods_fee,:insured_fee,:transit_carrying_fee,
-          :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:note,:human_state_name
+          :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:goods_weight,:unit_price_weight,:weight_fee,:profit,:profit_weight,:note,:human_state_name
       ]}
     end
     private
