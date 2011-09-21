@@ -230,6 +230,13 @@ class CarryingBill < ActiveRecord::Base
     def transit_company
       self.transit_info.try(:transit_company)
     end
+    #到货地,如果不是中转运单,到货地是to_org
+    #如果是中转运单,到货地是 to_area
+    def to_org_or_area
+      ret = to_org if to_org
+      ret = to_area unless to_org
+      ret
+    end
 
     #以千分数表示的保价费
     def insured_rate_disp
@@ -425,7 +432,7 @@ class CarryingBill < ActiveRecord::Base
         :methods => [
           :bill_date,:bill_no,:goods_no,:from_customer_name,:from_customer_phone,:from_customer_mobile,
           :to_customer_name,:to_customer_phone,:to_customer_mobile,:from_org_name,
-          :transit_org_name,:to_org_name,:pay_type_des,:transit_company,
+          :to_org_or_area,:pay_type_des,:transit_company,
           :carrying_fee,:carrying_fee_th,:k_carrying_fee,:k_hand_fee,:goods_fee,:insured_fee,:transit_carrying_fee,
           :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:goods_weight,:unit_price_weight,:weight_fee,:profit,:profit_weight,:note,:human_state_name
       ]}

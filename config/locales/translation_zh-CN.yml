@@ -166,6 +166,7 @@ zh-CN:
         send_list_line: "送货清单信息"  #g
         from_org_name: "发货地"
         to_org_name: "到货地"
+        to_org_or_area: "到货地"
         transit_org_name: "中转地"
         pay_type_des: "付款方式"
         carrying_fee_th: "提货应付运费"
