@@ -19,11 +19,20 @@ set :branch,:master
 #role :app, "your app-server here"                          # This may be the same as your `Web` server
 #role :db,  "your primary db-server here", :primary => true # This is where Rails migrations will run
 #role :db,  "your slave db-server here"
-server "50.93.202.143",:app,:web,:db,:primary => true
+server "handan.yanzhaowuliu.com",:app,:web,:db,:primary => true
 
 set :user,"root"
 set :use_sudo,false
 default_run_options[:pty]=true
+#set rvm support
+set :default_environment, {
+  'PATH' => "/usr/local/rvm/gems/ree-1.8.7-2011.03/bin:/usr/local/rvm/bin:$PATH",
+  'RUBY_VERSION' => 'ree 1.8.7',
+  'GEM_HOME'     => '/usr/local/rvm/gems/ree-1.8.7-2011.01@rails3_gemset',
+  'GEM_PATH'     => '/usr/local/rvm/gems/ree-1.8.7-2011.03:/usr/local/rvm/gems/ree-1.8.7-2011.01@rails3_gemset',
+  'BUNDLE_PATH'     => '/usr/local/rvm/gems/ree-1.8.7-2011.03'
+}
+
 
 # If you are using Passenger mod_rails uncomment this:
 # if you're still using the script/reapear helper you will need
@@ -32,12 +41,23 @@ default_run_options[:pty]=true
 namespace :deploy do
   desc "Generate assets with Jammit"
   task :generate_assets, :roles => :web do
-      run "cd #{deploy_to}/current && bundle exec jammit"
+    run "cd #{deploy_to}/current && bundle exec jammit"
   end
   after "deploy:symlink", "deploy:generate_assets"
   task :start do ; end
   task :stop do ; end
   task :restart, :roles => :app, :except => { :no_release => true } do
     run "#{try_sudo} touch #{File.join(current_path,'tmp','restart.txt')}"
+  end
+end
+#自定义系统维护界面
+namespace :web do
+  task :disable do
+    on_rollback { delete "#{shared_path}/system/maintenance.html" }
+    require 'rubygems'
+    require 'erb'
+    template = File.read("./app/views/layouts/maintenance.html.erb")
+    erb = ERB.new(template)
+    put erb.result, "#{shared_path}/system/maintenance.html",:mode => 0644
   end
 end
