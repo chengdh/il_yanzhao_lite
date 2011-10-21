@@ -231,7 +231,7 @@ jQuery(function($) {
 
 	});
 	//运单录入界面,自动生成货号
-	$('form.hand_bill #bill_no,#form.hand_transit_bill #goods_num').live('change', function() {
+	$('form.hand_bill #bill_no,#form.hand_bill #goods_num,form.hand_transit_bill #bill_no,#form.hand_transit_bill #goods_num').live('change', function() {
 		var bill_no = $('#bill_no').val();
 		var goods_num = $('#goods_num').val();
 		var goods_no = bill_no.substr(bill_no.length - 4, 4) + "-" + goods_num;
