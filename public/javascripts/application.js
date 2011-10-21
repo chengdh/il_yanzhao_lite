@@ -48,25 +48,6 @@ jQuery(function($) {
 		return false;
 	});
 
-	var calculate_carrying_bill = function() {
-		//计算保价费合计
-		var insured_amount = parseFloat($('#insured_amount').val());
-		var insured_rate = parseFloat($('#insured_rate').val());
-		var insured_fee = Math.ceil(insured_amount * insured_rate / 1000);
-		$('#insured_fee').val(insured_fee);
-		//计算运费合计
-		var carrying_fee = parseFloat($('#carrying_fee').val());
-		var from_short_carrying_fee = parseFloat($('#from_short_carrying_fee').val());
-		var to_short_carrying_fee = parseFloat($('#to_short_carrying_fee').val());
-		var sum_carrying_fee = carrying_fee;
-		$('#sum_carrying_fee').text(sum_carrying_fee);
-		//计算总金额合计
-		var goods_fee = parseFloat($('#goods_fee').val());
-		var sum_fee = sum_carrying_fee + insured_fee;
-
-		$('#sum_fee').text(sum_fee);
-
-	};
 	$('.editable-select').editableSelect({
 		bg_iframe: true
 	});
@@ -185,10 +166,64 @@ jQuery(function($) {
 		null, 'script');
 
 	};
+	var calculate_carrying_bill = function() {
+		//计算保价费合计
+		var insured_amount = parseFloat($('#insured_amount').val());
+		var insured_rate = parseFloat($('#insured_rate').val());
+		var insured_fee = Math.ceil(insured_amount * insured_rate / 1000);
+		$('#insured_fee').val(insured_fee);
+		//计算运费合计
+		var carrying_fee = parseFloat($('#carrying_fee').val());
+		var from_short_carrying_fee = parseFloat($('#from_short_carrying_fee').val());
+		var to_short_carrying_fee = parseFloat($('#to_short_carrying_fee').val());
+		var sum_carrying_fee = carrying_fee;
+		$('#sum_carrying_fee').text(sum_carrying_fee);
+		//计算总金额合计
+		var goods_fee = parseFloat($('#goods_fee').val());
+		var sum_fee = sum_carrying_fee + insured_fee;
+
+		$('#sum_fee').text(sum_fee);
+
+	};
+	//货物重量或运费单价变动时,计算运费
+	var cal_carrying_fee = function() {
+		//计算运费
+		var goods_weight = $('#goods_weight').val();
+		var unit_carrying_fee_price = $('#unit_carrying_fee_price').val();
+		var carrying_fee = goods_weight * unit_carrying_fee_price;
+		$('#carrying_fee').val(carrying_fee);
+
+	};
+	$('form.carrying_bill #goods_weight,form.carrying_bill #unit_carrying_fee_price').live('change', cal_carrying_fee);
+
 	//lite系统中没有客户编号
 	//$('#customer_code').live('change', search_customer_by_code);
 	$('form.carrying_bill').live("change", calculate_carrying_bill);
 	$('form.carrying_bill').livequery(calculate_carrying_bill);
+	//根据不同的运单录入界面,隐藏部分字段
+	$('form.computer_bill').livequery(function() {
+		$('#bill_no').attr('readonly', true);
+		$('#goods_no').attr('readonly', true);
+	});
+	$('form.hand_bill').livequery(function() {
+		$('#bill_no').attr('readonly', false);
+		$('#goods_no').attr('readonly', false);
+
+	});
+	$('form.transit_bill').livequery(function() {
+		$('#bill_no').attr('readonly', true);
+		$('#goods_no').attr('readonly', true);
+	});
+	$('form.hand_transit_bill').livequery(function() {
+		$('#bill_no').attr('readonly', false);
+		$('#goods_no').attr('readonly', false);
+
+	});
+	$('form.kids_transit_bill').livequery(function() {
+		$('#bill_no').attr('readonly', false);
+		$('#goods_no').attr('readonly', false);
+
+	});
 
 	$('form.return_bill').livequery(function() {
 		$(this).find('input').attr('readonly', true);
@@ -196,7 +231,7 @@ jQuery(function($) {
 
 	});
 	//运单录入界面,自动生成货号
-	$('#carrying_bill_form #bill_no,#carrying_bill_form #goods_num').live('change', function() {
+	$('form.hand_bill #bill_no,#form.hand_transit_bill #goods_num').live('change', function() {
 		var bill_no = $('#bill_no').val();
 		var goods_num = $('#goods_num').val();
 		var goods_no = bill_no.substr(bill_no.length - 4, 4) + "-" + goods_num;
@@ -460,7 +495,7 @@ jQuery(function($) {
 	$('#bills_table_body').bind('tr_changed', cal_sum).bind('change', function(evt) {
 		var target_el = $(evt.target).parent('td');
 		var parent_tr = target_el.parent('tr');
-                //自动计算代收运费
+		//自动计算代收运费
 		if (target_el && target_el.hasClass('transit_carrying_fee_edit')) {
 			var carrying_fee = parent_tr.find('td.carrying_fee').text();
 			var transit_carrying_fee = target_el.find('input').val();
@@ -857,6 +892,5 @@ jQuery(function($) {
 		$.cookies.set('il_notify_' + notify.id, notify.notify_text);
 		$('#notify-bar').hide();
 	});
-
 });
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110920064929) do
+ActiveRecord::Schema.define(:version => 20111021032129) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20110920064929) do
     t.decimal  "commission",                                     :precision => 15, :scale => 2, :default => 0.0
     t.decimal  "unit_price_weight",                              :precision => 15, :scale => 2, :default => 0.3
     t.decimal  "send_fee",                                       :precision => 15, :scale => 2, :default => 0.0
+    t.decimal  "unit_carrying_fee_price",                        :precision => 15, :scale => 2, :default => 0.0
   end
 
   add_index "carrying_bills", ["bill_date"], :name => "index_carrying_bills_on_bill_date"

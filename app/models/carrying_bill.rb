@@ -61,8 +61,11 @@ class CarryingBill < ActiveRecord::Base
   has_one :send_list_line
 
   validates :bill_no,:uniqueness => true
+  #运单编号为7位数字
+  validates_format_of :bill_no,:with => /^(TH)*\d{7}$/
+
   validates_presence_of :bill_no,:goods_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
-  validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:goods_num,:agent_carrying_fee,:transit_fee,:transit_hand_fee,:transit_carrying_fee,:k_hand_fee,:commission,:goods_weight,:unit_price_weight,:send_fee
+  validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:goods_num,:agent_carrying_fee,:transit_fee,:transit_hand_fee,:transit_carrying_fee,:k_hand_fee,:commission,:goods_weight,:unit_price_weight,:send_fee,:unit_price_weight,:unit_carrying_fee_price
   validates_numericality_of :carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:less_than => 1000000
 
   #定义state_machine
@@ -120,7 +123,7 @@ class CarryingBill < ActiveRecord::Base
     #after_transition :on => :return,[:reached,:distributed] => :returned,:do => :generate_return_bill
     event :return do
       #货物已发出,进行退货操作,会自动生成一张相反的单据
-      transition :reached => :returned
+      transition [:reached,:transited] => :returned
     end
     #运单重置处理
     after_transition :on => :reset,any => :billed,:do => :reset_bill
@@ -256,6 +259,14 @@ class CarryingBill < ActiveRecord::Base
       ret = self.carrying_fee if self.pay_type == CarryingBill::PAY_TYPE_TH
       ret
     end
+    #现付运费
+    #付款方式为现金付,等于运费,其他为0
+    def carrying_fee_cash
+      ret = 0
+      ret = self.carrying_fee if self.pay_type == CarryingBill::PAY_TYPE_CASH
+      ret
+    end
+
     #扣运费,运费支付方式为从货款扣除时等于运费,否则为0
     def k_carrying_fee
       ret = 0
@@ -437,6 +448,22 @@ class CarryingBill < ActiveRecord::Base
           :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:goods_weight,:unit_price_weight,:weight_fee,:profit,:profit_weight,:note,:human_state_name
       ]}
     end
+    #机打运单编号从4000000开始
+    #生成票据编号
+    def generate_bill_no
+      self.bill_no = BillNo.gen_bill_no
+      generate_goods_no
+    end
+
+    #货号规则
+    #票据号后四位+ "-" + 货物数量
+    def generate_goods_no
+      if self.new_record?  or (self.changes[:from_org_id].present? or self.changes[:to_org_id].present? or self.changes[:transit_org_id].present?)
+        pre_goods_no = self.bill_no.to_s[-4,4]
+        self.goods_no = "#{pre_goods_no}-#{self.goods_num}"
+      end
+    end
+
     private
     #计算手续费
     def cal_hand_fee

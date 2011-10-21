@@ -12,7 +12,8 @@
       <td style='border : thin solid #000;'>收货人</td>
       <td style='border : thin solid #000;'>到货地</td>
       <td style='border : thin solid #000;'>件数</td>
-      <td style='border : thin solid #000;'>运费</td>
+      <td style='border : thin solid #000;'>提付运费</td>
+      <td style='border : thin solid #000;'>现付运费</td>
       <td style='border : thin solid #000;'>代收货款</td>
       <td style='border : thin solid #000;'>重量</td>
       <td style='border : thin solid #000;'>转货费</td>
@@ -32,7 +33,8 @@
         <td style='border : thin solid #000;'><%= bill.to_customer_name %></td>
         <td style='border : thin solid #000;'><%= bill.to_org ? bill.to_org : bill.to_area %></td>
         <td style='border : thin solid #000;'><%= bill.goods_num %></td>
-        <td style='border : thin solid #000;'><%= bill.carrying_fee %></td>
+        <td style='border : thin solid #000;'><%= bill.carrying_fee_th %></td>
+        <td style='border : thin solid #000;'><%= bill.carrying_fee_cash %></td>
         <td style='border : thin solid #000;'><%= bill.goods_fee%></td>
         <td style='border : thin solid #000;'><%= bill.goods_weight%></td>
         <td style='border : thin solid #000;'><%= bill.transit_fee %></td>
@@ -46,7 +48,8 @@
     <tr>
       <td colspan='7' style='text-align : right;border : thin solid #000;'>合计</td>
       <td style='border : thin solid #000;'><%= @load_list.carrying_bills.sum(:goods_num) %></td>
-      <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:carrying_fee)%>/现金付:<%=@load_list.carrying_bills.sum(:carrying_fee,:conditions=>{:pay_type => CarryingBill::PAY_TYPE_CASH}) %></td>
+      <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:carrying_fee,:conditions=>{:pay_type => CarryingBill::PAY_TYPE_TH}) %></td>
+      <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:carrying_fee,:conditions=>{:pay_type => CarryingBill::PAY_TYPE_CASH}) %></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:goods_fee)%></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:goods_weight)%></td>
       <td style='border : thin solid #000;'><%=@load_list.carrying_bills.sum(:transit_fee)%></td>

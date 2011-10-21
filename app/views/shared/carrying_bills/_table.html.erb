@@ -17,6 +17,7 @@
 
       <th class="carrying_fee"><span id="sum_carrying_fee"></span></th>
       <th class="carrying_fee_th" style='display : none;'><span id="sum_carrying_fee_th"></span></th>
+      <th class="carrying_fee_cash" style='display : none;'><span id="sum_carrying_fee_cash"></span></th>
       <th class="goods_fee"><span id="sum_goods_fee"></span></th>
       <th class="k_hand_fee" style='display : none;'><span id="sum_k_hand_fee"></span></th>
       <th class="k_carrying_fee" style='display : none;'><span id="sum_k_carrying_fee"></span></th>
@@ -61,6 +62,7 @@
       <th class='goods_num' style='display : none;'>件数</th>
       <th class="carrying_fee">运费</th>
       <th class="carrying_fee_th" style='display : none;'>提付运费</th>
+      <th class="carrying_fee_cash" style='display : none;'>现付运费</th>
       <th class="goods_fee">代收货款</th>
       <th class="k_hand_fee" style='display : none;'>扣手续费</th>
       <th class="k_carrying_fee" style='display : none;'>扣运费</th>
@@ -136,6 +138,10 @@
         <td class="carrying_fee_th" style='display : none;'>
           <%=bill.carrying_fee_th %>
         </td>
+        <td class="carrying_fee_cash" style='display : none;'>
+          <%=bill.carrying_fee_cash %>
+        </td>
+
         <td class="goods_fee">
           <%=bill.goods_fee %>
         </td>
@@ -191,8 +197,9 @@
       <td class='customer'>总计</td>
       <td class='pay_type'><%=sum_info[:count]%>票</td>
       <td class='goods_num' style='display : none;'><%=sum_info[:sum_goods_num]%></td>
-      <td class="carrying_fee"><%=sum_info[:sum_carrying_fee]%>|现付:<%=sum_info[:sum_carrying_fee_cash]%></td>
+      <td class="carrying_fee"><%=sum_info[:sum_carrying_fee]%></td>
       <td class="carrying_fee_th" style='display : none;'><%=sum_info[:sum_carrying_fee_th]%></td>
+      <td class="carrying_fee_cash" style='display : none;'><%=sum_info[:sum_carrying_fee_cash]%></td>
       <td class="goods_fee"><%=sum_info[:sum_goods_fee]%></td>
       <td class="k_hand_fee" style='display : none;'><%=sum_info[:sum_k_hand_fee]%></td>
       <td class="k_carrying_fee" style='display : none;'><%= sum_info[:sum_k_carrying_fee] %></td>
