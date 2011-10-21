@@ -35,7 +35,7 @@ sf_hash = {
   :group_name => group_name,
   :subject_title => subject_title,
   :subject => subject,
-  :default_action => 'can?(:create,HandBill) ? new_computer_bill_path : hand_bills_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
+  :default_action => 'can?(:create,HandBill) ? new_hand_bill_path : hand_bills_path("search[from_org_id_in]" => current_user.current_ability_org_ids,"search[completed_eq]" => 0,"search[bill_date_eq]" => Date.today,:sort => "carrying_bills.bill_date desc,goods_no",:direction => "asc")',
   :is_active => false,
   :function => {
   :create => {:title => "新建"},
