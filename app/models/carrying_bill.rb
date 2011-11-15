@@ -319,7 +319,7 @@ class CarryingBill < ActiveRecord::Base
     end
     #是中转运单还是其他运单
     def transit_bill?
-      ["TransitBill","HandTransitBill","KidsTransitBill"].include? self.type
+      ["TransitBill","HandTransitBill","KidsTransitBill","HandKidsTransitBill"].include? self.type
     end
     #
     #中转费用

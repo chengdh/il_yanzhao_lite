@@ -8,6 +8,6 @@
     <%= f.input :to_org_id,:as => :select,:collection => exclude_current_ability_orgs_for_select(true),:include_blank => true,:input_html => {:id => :to_org_id} %>
     <%= f.input :note,:as => :string,:input_html => {:size => 60} %>
     <%=hidden_field_tag :state_eq,:billed%>
-    <%=hidden_field_tag :type_in,"","data-type" => ['ComputerBill','HandBill','ReturnBill','TransitBill','HandTransitBill','KidsTransitBill'].to_json %>
+    <%=hidden_field_tag :type_in,"","data-type" => ['ComputerBill','HandBill','ReturnBill','TransitBill','HandTransitBill','KidsTransitBill','HandKidsTransitBill'].to_json %>
   <% end %>
 <% end%>

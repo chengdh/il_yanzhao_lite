@@ -14,7 +14,7 @@
     <tr>
       <td>发货站</td>
       <td><%= f.select :from_org_id,current_ability_orgs_for_select,{},:id => :from_org_id %></td>
-      <% if ["TransitBill","HandTransitBill","KidsTransitBill"].include? f.object.type %>
+      <% if ["TransitBill","HandTransitBill","KidsTransitBill","HandKidsTransitBill"].include? f.object.type %>
         <td>中转站</td>
         <td><%= f.select :transit_org_id,yards_for_select,{},:id => :transit_org_id %></td>
         <td>到货地</td>
@@ -62,7 +62,7 @@
     <tr>
       <td>代收货款</td>
       <td colspan='3'><%= f.text_field :goods_fee,:id => "goods_fee",:size => 15  %></td>
-      <%if ["KidsTransitBill"].include? f.object.type %>
+      <%if ["KidsTransitBill","HandKidsTransitBill"].include? f.object.type %>
         <td>转货费</td>
         <td><%= f.text_field :transit_fee,:id => "transit_fee",:size => 15  %></td>
       <%else%>

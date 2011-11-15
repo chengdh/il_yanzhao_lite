@@ -282,7 +282,7 @@
 				"transit_org_id_eq": ($('#transit_org_id').length == 0) ? "": $('#transit_org_id').val(),
 				"search[bill_date_eq]": ($('#bill_date_eq').length == 0) ? "": $('#bill_date_eq').val(),
 				"search[state_eq]": ($('#state_eq').length == 0) ? "": $('#state_eq').val(),
-				"search[type_in][]": ($('#type_in').length == 0) ? ['ComputerBill', 'HandBill', 'ReturnBill', 'TransitBill', 'HandTransitBill'] : $('#type_in').data('type') //要查询的运单类型
+				"search[type_in][]": ($('#type_in').length == 0) ? ['ComputerBill', 'HandBill', 'ReturnBill', 'TransitBill', 'HandTransitBill','KidsTransitBill','HandKidsTransitBill'] : $('#type_in').data('type') //要查询的运单类型
 			}
 		}
 	}
