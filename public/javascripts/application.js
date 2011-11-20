@@ -226,8 +226,8 @@ jQuery(function($) {
 	});
 
 	$('form.kids_transit_bill').livequery(function() {
-		$('#bill_no').attr('readonly', false);
-		$('#goods_no').attr('readonly', false);
+		$('#bill_no').attr('readonly', true);
+		$('#goods_no').attr('readonly', true);
 
 	});
 
