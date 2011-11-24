@@ -325,7 +325,7 @@ Factory.define :hand_kids_transit_bill do |bill|
   bill.goods_fee 5000
   bill.from_short_carrying_fee 20
   bill.to_short_carrying_fee 20
-  bill.pay_type CarrygngBill::PAY_TYPE_CASH
+  bill.pay_type CarryingBill::PAY_TYPE_CASH
   bill.goods_weight 100
   bill.unit_price_weight 0.3
 
