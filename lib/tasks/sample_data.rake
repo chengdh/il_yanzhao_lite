@@ -74,7 +74,6 @@ namespace :db do
 
   desc "向数据库中添加示例数据"
   task :gen_test_data => :environment do
-    Rake::Task['db:reset'].invoke
     zz_branch = Branch.create!(:name => "郑州中转部",
                                :simp_name => "郑",
                                :manager => "张安起",

@@ -62,7 +62,8 @@ class CarryingBill < ActiveRecord::Base
 
   validates :bill_no,:uniqueness => true
   #运单编号为7位数字
-  validates_format_of :bill_no,:with => /^(TH)*\d{7}$/
+  #20120328 运单编号生成时，自动添加两个字母
+  #validates_format_of :bill_no,:with => /^(TH)*\d{7}$/
 
   validates_presence_of :bill_no,:goods_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
   validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:goods_num,:agent_carrying_fee,:transit_fee,:transit_hand_fee,:transit_carrying_fee,:k_hand_fee,:commission,:goods_weight,:unit_price_weight,:send_fee,:unit_price_weight,:unit_carrying_fee_price

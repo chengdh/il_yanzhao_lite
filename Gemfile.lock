@@ -89,8 +89,7 @@ GEM
       activesupport (~> 3.0.2)
       arel (~> 2.0.2)
     mime-types (1.16)
-    mysql2 (0.2.6)
-    mysql2 (0.2.6-x86-mingw32)
+    mysql2 (0.2.7)
     open4 (1.1.0)
     polyglot (0.3.1)
     rack (1.2.2)
@@ -166,7 +165,7 @@ DEPENDENCIES
   jquery-rails
   jquery_notify_bar (~> 0.0.4)
   meta_search
-  mysql2 (= 0.2.6)
+  mysql2 (= 0.2.7)
   rails (= 3.0.3)
   rspec (~> 2.4.0)
   rspec-rails (~> 2.4.1)
