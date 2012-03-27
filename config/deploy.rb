@@ -48,7 +48,7 @@ namespace :deploy do
     run "cd #{deploy_to}/current && chmod 777 tmp"
     run "cd #{deploy_to}/current/tmp && mkdir cache && chmod 777 cache"
   end
-  after "deploy:symlink","deploy:generate_assets","deploy:create_cache_dir"
+  after "deploy:create_symlink","deploy:generate_assets","deploy:create_cache_dir"
 
   task :start do ; end
   task :stop do ; end
