@@ -9,6 +9,6 @@ class HandKidsTransitBill < CarryingBill
   private
   def add_bill_no_pre
     #201203287单据号有重复,前边添加字母
-    self.bill_no = "#{self.from_org.try(:py)[0..1]}#{BillNo.gen_bill_no}" if self.from_org.try(:py).present?
+    self.bill_no = "#{self.from_org.try(:py)[0..1]}#{self.bill_no}" if self.from_org.try(:py).present?
   end
 end
