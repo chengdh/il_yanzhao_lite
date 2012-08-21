@@ -3,29 +3,187 @@
 jQuery(function($) {
 	//扩展jQuery function
 	$.extend({
-		//导出数据到excel, ie only
-		export_excel: function(table_content, func_set_style) {
-			try {
+		/*
+          功能：将货币数字（阿拉伯数字）(小写)转化成中文(大写）
+          参数：Num为字符型,小数点之后保留两位,例：Arabia_to_Chinese("1234.06")
+          说明：
+          1.目前本转换仅支持到 拾亿（元） 位，金额单位为元，不能为万元，最小单位为分
+          2.不支持负数
+         */
+		num2chinese: function(Num) {
+			for (i = Num.length - 1; i >= 0; i--) {
+				Num = Num.replace(",", "") //替换tomoney()中的“,”
+				Num = Num.replace(" ", "") //替换tomoney()中的空格
+			}
 
-				window.clipboardData.setData("Text", table_content);
-				ExApp = new ActiveXObject("Excel.Application");
-				var ExWBk = ExApp.Workbooks.add();
-				var ExWSh = ExWBk.ActiveSheet;
-				ExApp.DisplayAlerts = false;
-				if (func_set_style) func_set_style(ExWSh);
-				ExApp.visible = true;
-				ExWSh.Paste();
+			Num = Num.replace("￥", "") //替换掉可能出现的￥字符
+			if (isNaN(Num)) {
+				//验证输入的字符是否为数字
+				alert("请检查小写金额是否正确");
+				return;
 			}
-			catch(e) {
-				$.notifyBar({
-					html: "导出失败,请确认您已安装excel软件,并调整了IE的安全设置.",
-					delay: 3000,
-					animationSpeed: "normal",
-					cls: 'error'
-				});
-				return false;
+			//---字符处理完毕，开始转换，转换采用前后两部分分别转换---//
+			part = String(Num).split(".");
+			newchar = "";
+			//小数点前进行转化
+			for (i = part[0].length - 1; i >= 0; i--) {
+				if (part[0].length > 10) {
+					alert("位数过大，无法计算");
+					return "";
+				} //若数量超过拾亿单位，提示
+				tmpnewchar = ""
+				perchar = part[0].charAt(i);
+				switch (perchar) {
+				case "0":
+					tmpnewchar = "零" + tmpnewchar;
+					break;
+				case "1":
+					tmpnewchar = "壹" + tmpnewchar;
+					break;
+				case "2":
+					tmpnewchar = "贰" + tmpnewchar;
+					break;
+				case "3":
+					tmpnewchar = "叁" + tmpnewchar;
+					break;
+				case "4":
+					tmpnewchar = "肆" + tmpnewchar;
+					break;
+				case "5":
+					tmpnewchar = "伍" + tmpnewchar;
+					break;
+				case "6":
+					tmpnewchar = "陆" + tmpnewchar;
+					break;
+				case "7":
+					tmpnewchar = "柒" + tmpnewchar;
+					break;
+				case "8":
+					tmpnewchar = "捌" + tmpnewchar;
+					break;
+				case "9":
+					tmpnewchar = "玖" + tmpnewchar;
+					break;
+				}
+				switch (part[0].length - i - 1) {
+				case 0:
+					tmpnewchar = tmpnewchar + "元";
+					break;
+				case 1:
+					if (perchar != 0) tmpnewchar = tmpnewchar + "拾";
+					break;
+				case 2:
+					if (perchar != 0) tmpnewchar = tmpnewchar + "佰";
+					break;
+				case 3:
+					if (perchar != 0) tmpnewchar = tmpnewchar + "仟";
+					break;
+				case 4:
+					tmpnewchar = tmpnewchar + "万";
+					break;
+				case 5:
+					if (perchar != 0) tmpnewchar = tmpnewchar + "拾";
+					break;
+				case 6:
+					if (perchar != 0) tmpnewchar = tmpnewchar + "佰";
+					break;
+				case 7:
+					if (perchar != 0) tmpnewchar = tmpnewchar + "仟";
+					break;
+				case 8:
+					tmpnewchar = tmpnewchar + "亿";
+					break;
+				case 9:
+					tmpnewchar = tmpnewchar + "拾";
+					break;
+				}
+				newchar = tmpnewchar + newchar;
 			}
+			//小数点之后进行转化
+			if (Num.indexOf(".") != - 1) {
+				if (part[1].length > 2) {
+					alert("小数点之后只能保留两位,系统将自动截断");
+					part[1] = part[1].substr(0, 2)
+				}
+				for (i = 0; i < part[1].length; i++) {
+					tmpnewchar = ""
+					perchar = part[1].charAt(i)
+					switch (perchar) {
+					case "0":
+						tmpnewchar = "零" + tmpnewchar;
+						break;
+					case "1":
+						tmpnewchar = "壹" + tmpnewchar;
+						break;
+					case "2":
+						tmpnewchar = "贰" + tmpnewchar;
+						break;
+					case "3":
+						tmpnewchar = "叁" + tmpnewchar;
+						break;
+					case "4":
+						tmpnewchar = "肆" + tmpnewchar;
+						break;
+					case "5":
+						tmpnewchar = "伍" + tmpnewchar;
+						break;
+					case "6":
+						tmpnewchar = "陆" + tmpnewchar;
+						break;
+					case "7":
+						tmpnewchar = "柒" + tmpnewchar;
+						break;
+					case "8":
+						tmpnewchar = "捌" + tmpnewchar;
+						break;
+					case "9":
+						tmpnewchar = "玖" + tmpnewchar;
+						break;
+					}
+					if (i == 0) tmpnewchar = tmpnewchar + "角";
+					if (i == 1) tmpnewchar = tmpnewchar + "分";
+					newchar = newchar + tmpnewchar;
+				}
+			}
+			//替换所有无用汉字
+			while (newchar.search("零零") != - 1)
+			newchar = newchar.replace("零零", "零");
+			newchar = newchar.replace("零亿", "亿");
+			newchar = newchar.replace("亿万", "亿");
+			newchar = newchar.replace("零万", "万");
+			newchar = newchar.replace("零元", "元");
+			newchar = newchar.replace("零角", "");
+			newchar = newchar.replace("零分", "");
+
+			if (newchar.charAt(newchar.length - 1) == "元" || newchar.charAt(newchar.length - 1) == "角") newchar = newchar + "整"
+			return newchar;
 		},
+
+        	//导出数据到excel, for none ie browser
+		export_excel: function() {
+			var uri = 'data:application/vnd.ms-excel;base64,',
+			template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+			base64 = function(s) {
+				return window.btoa(unescape(encodeURIComponent(s)))
+			},
+			format = function(s, c) {
+				return s.replace(/{(\w+)}/g, function(m, p) {
+					return c[p];
+				})
+			};
+			return function(table, func_set_style) {
+				try {
+					if (func_set_style) func_set_style($(table));
+				}
+				catch(ex) {}
+				var ctx = {
+					worksheet: name || 'Worksheet',
+					table: $(table).html()
+				};
+				window.location.href = uri + base64(format(template, ctx));
+			}
+		} (),
+
 		//模拟mouseclick
 		fireClick: function(el) {
 			if (!el) return;
@@ -38,7 +196,33 @@ jQuery(function($) {
 				el.click();
 			}
 
+		},
+        		//判断是否已安装打印控件
+		//已安装,返回true
+		//未安装,返回false
+		check_lodop: function() {
+			var print_object = $.get_print_object();
+			if ((print_object == null) || (typeof(print_object.VERSION) == "undefined") || print_object.VERSION < "6.1.2.0") {
+				var download_bar = $("<div id='notify-down-print-object' class='notify'><span class='notify-text'>系统检测到您的浏览器需要安装打印控件,请点击<a href='/ocx/install_lodop32.exe'>此处</a>下载安装,安装后关闭浏览器并重新进入系统.</span></div>");
+				$('#notify-bar').after(download_bar);
+
+				return false;
+			}
+			return true;
+		},
+		//获取打印控件,可以在chrome safari下使用,在ie下,该函数被重写
+		get_print_object: function() {
+			//先看看是否存在print对象
+			if ($('#print_object').length == 0) {
+				var print_object = $('<span id="print_object"><object id="print_object_ie" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0><embed id="print_object_other" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop32.exe"></embed></object></span>');
+
+				$('body').append(print_object);
+			}
+			//判断返回那个对象
+			if ($.browser.msie) return print_object_ie;
+			else return print_object_other;
 		}
+
 	});
 
 	//导出excel按钮绑定

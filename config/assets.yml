@@ -19,10 +19,10 @@ javascripts:
     - public/javascripts/bill_selector.js
     - public/javascripts/select_org.js
     - public/javascripts/application.js
+    - public/javascripts/web_print.js
   il_ie_javascripts:
     - public/javascripts/ukey.js
     - public/javascripts/chart/excanvas.js
-    - public/javascripts/web_print.js
   il_ie6_javascripts:
     - public/javascripts/ie6.js
 
