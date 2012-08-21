@@ -340,37 +340,26 @@ jQuery(function($) {
 		},
 		//打印运单
 		print_bill: function(bill_obj) {
-			try {
-				if (!$.check_lodop()) return false;
-				var print_object = $.get_print_object();
-				var config = $.get_print_config(bill_obj);
-				print_object.PRINT_INITA(config.page.top, config.page.left, config.page.width, config.page.height, config.page.name);
-				print_object.SET_PRINT_PAGESIZE(1, config.page.width, config.page.height, "");
-				for (var c in config) {
-					if (typeof(config[c].text) != 'undefined') print_object.ADD_PRINT_TEXT(config[c].top, config[c].left, config[c].width, config[c].height, config[c].text);
-					print_object.SET_PRINT_STYLEA(0, "FontSize", 13);
-					print_object.SET_PRINT_STYLEA(0, "LineSpacing", 10);
-					//判断有无特殊打印格式
-					if (typeof(config[c].style) != 'undefined') {
-						var the_style = config[c].style;
-						for (var s in the_style)
-						print_object.SET_PRINT_STYLEA(0, s, the_style[s]);
-
-					}
+			if (!$.check_lodop()) return;
+			var print_object = $.get_print_object();
+			var config = $.get_print_config(bill_obj);
+			print_object.PRINT_INITA(config.page.top, config.page.left, config.page.width, config.page.height, config.page.name);
+			print_object.SET_PRINT_PAGESIZE(1, config.page.width, config.page.height, "");
+			for (var c in config) {
+				if (typeof(config[c].text) != 'undefined') print_object.ADD_PRINT_TEXT(config[c].top, config[c].left, config[c].width, config[c].height, config[c].text);
+				print_object.SET_PRINT_STYLEA(0, "FontSize", 13);
+				print_object.SET_PRINT_STYLEA(0, "LineSpacing", 10);
+				//判断有无特殊打印格式
+				if (typeof(config[c].style) != 'undefined') {
+					var the_style = config[c].style;
+					for (var s in the_style)
+					print_object.SET_PRINT_STYLEA(0, s, the_style[s]);
 
 				}
-				//print_object.PREVIEW();
-				print_object.PRINT();
-			}
-			catch(ex) {
-				$.notifyBar({
-					html: "打印出现错误,请刷新页面后重试.",
-					delay: 3000,
-					animationSpeed: "normal",
-					cls: 'error'
-				});
 
 			}
+			//print_object.PREVIEW();
+			print_object.PRINT();
 		}
 	});
 	//绑定打印事件

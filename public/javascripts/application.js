@@ -159,7 +159,7 @@ jQuery(function($) {
 			return newchar;
 		},
 
-        	//导出数据到excel, for none ie browser
+		//导出数据到excel, for none ie browser
 		export_excel: function() {
 			var uri = 'data:application/vnd.ms-excel;base64,',
 			template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
@@ -197,13 +197,14 @@ jQuery(function($) {
 			}
 
 		},
-        		//判断是否已安装打印控件
+		//判断是否已安装打印控件
 		//已安装,返回true
 		//未安装,返回false
 		check_lodop: function() {
 			var print_object = $.get_print_object();
 			if ((print_object == null) || (typeof(print_object.VERSION) == "undefined") || print_object.VERSION < "6.1.2.0") {
 				var download_bar = $("<div id='notify-down-print-object' class='notify'><span class='notify-text'>系统检测到您的浏览器需要安装打印控件,请点击<a href='/ocx/install_lodop32.exe'>此处</a>下载安装,安装后关闭浏览器并重新进入系统.</span></div>");
+                $('#notify-down-print-object').remove();
 				$('#notify-bar').after(download_bar);
 
 				return false;
@@ -214,7 +215,7 @@ jQuery(function($) {
 		get_print_object: function() {
 			//先看看是否存在print对象
 			if ($('#print_object').length == 0) {
-				var print_object = $('<span id="print_object"><object id="print_object_ie" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0><embed id="print_object_other" type="application/x-print-lodop" width=0 height=0 pluginspage="install_lodop32.exe"></embed></object></span>');
+				var print_object = $('<span id="print_object"><object id="print_object_ie" classid="clsid:2105C259-1E0C-4534-8141-A753534CB4CA" width=0 height=0><embed id="print_object_other" type="application/x-print-lodop" width=0 height=0></embed></object></span>');
 
 				$('body').append(print_object);
 			}
@@ -705,7 +706,7 @@ jQuery(function($) {
 			"search[to_org_id_or_transit_org_id_eq]": $('#to_org_id').val(),
 			"search[state_eq]": 'deliveried',
 			"search[completed_eq]": 0,
-			"search[type_in][]": ['ComputerBill', 'HandBill', 'ReturnBill', 'TransitBill', 'HandTransitBill', 'KidsTransitBill','HandKidsTransitBill'],
+			"search[type_in][]": ['ComputerBill', 'HandBill', 'ReturnBill', 'TransitBill', 'HandTransitBill', 'KidsTransitBill', 'HandKidsTransitBill'],
 			//以下设定运单列表中的显示及隐藏字段,设定为css选择符
 			"hide_fields": ".carrying_fee,.insured_fee",
 			"show_fields": ".transit_carrying_fee,.transit_hand_fee,.carrying_fee_th,.th_amount"
@@ -732,7 +733,7 @@ jQuery(function($) {
 			//是否显示选择列表
 			"search[carrying_bills_from_org_id_eq]": $('[name="refound[to_org_id]"]').val(),
 			"search[carrying_bills_to_org_id_or_carrying_bills_transit_org_id_eq]": $('[name="refound[from_org_id]"]').val(),
-			"search[carrying_bills_type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill","HandKidsTransitBill","ReturnBill"],
+			"search[carrying_bills_type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill", "HandKidsTransitBill", "ReturnBill"],
 			"search[carrying_bills_state_eq]": "settlemented",
 			"search[carrying_bills_completed_eq]": 0,
 			"search[carrying_bills_goods_fee_or_carrying_bills_carrying_fee_gt]": 0
@@ -766,7 +767,7 @@ jQuery(function($) {
 		var params = {
 			"search[from_org_id_eq]": $('[name="refound[to_org_id]"]').val(),
 			"search[to_org_id_or_transit_org_id_eq]": $('[name="refound[from_org_id]"]').val(),
-			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "ReturnBill", "KidsTransitBill","HandKidsTransitBill"],
+			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "ReturnBill", "KidsTransitBill", "HandKidsTransitBill"],
 			"search[state_eq]": "settlemented",
 			"search[completed_eq]": 0,
 			"search[goods_fee_or_carrying_fee_gt]": 0,
@@ -790,7 +791,7 @@ jQuery(function($) {
 	var gen_payment_list = function(evt) {
 		var params = {
 			"search[state_eq]": "refunded_confirmed",
-			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill","HandKidsTransitBill"],
+			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill", "HandKidsTransitBill"],
 			"search[goods_fee_gt]": 0,
 			"search[completed_eq]": 0,
 			//运单列表显示的字段
@@ -835,7 +836,7 @@ jQuery(function($) {
 
 		}
 		var params = {
-			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill","HandKidsTransitBill"],
+			"search[type_in][]": ["ComputerBill", "HandBill", "TransitBill", "HandTransitBill", "KidsTransitBill", "HandKidsTransitBill"],
 			"search[state_eq]": "payment_listed",
 			"search[payment_list_id_in][]": selected_bill_ids,
 			"hide_fields": ".carrying_fee,.insured_fee",
@@ -860,7 +861,7 @@ jQuery(function($) {
 			"search[state_eq]": 'paid',
 			"search[completed_eq]": 0,
 			"search[from_customer_id_is_null]": 1,
-			"search[type_in][]": ['ComputerBill', 'HandBill', 'TransitBill', 'HandTransitBill', "KidsTransitBill","HandKidsTransitBill"],
+			"search[type_in][]": ['ComputerBill', 'HandBill', 'TransitBill', 'HandTransitBill', "KidsTransitBill", "HandKidsTransitBill"],
 			"hide_fields": ".carrying_fee,.insured_fee",
 			"show_fields": ".k_carrying_fee,.transit_hand_fee,.k_hand_fee,.act_pay_fee"
 
