@@ -1,6 +1,6 @@
 //运单打印相关函数的封装
 jQuery(function($) {
-	$.extend(
+	$.extend({
 		//得到运单打印设置
 		get_print_config: function(the_bill) {
 			var config = {
@@ -341,7 +341,7 @@ jQuery(function($) {
 		//打印运单
 		print_bill: function(bill_obj) {
 			try {
-                if(!$.check_lodop()) return false;
+				if (!$.check_lodop()) return false;
 				var print_object = $.get_print_object();
 				var config = $.get_print_config(bill_obj);
 				print_object.PRINT_INITA(config.page.top, config.page.left, config.page.width, config.page.height, config.page.name);
@@ -397,3 +397,4 @@ jQuery(function($) {
 	//提货打印,触发自动打印事件
 	$('.auto_print_bill').trigger('click');
 });
+
