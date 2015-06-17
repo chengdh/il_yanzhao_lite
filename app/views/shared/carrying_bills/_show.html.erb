@@ -96,7 +96,7 @@
     <td>装车时间</td>
     <td><%= show.load_list.try(:bill_date) %></td>
     <td>到货时间</td>
-    <td><%= (show.billed? or show.loaded? or show.shipped?) ? "" : show.try(:load_list).try(:updated_at).strftime("%y-%m-%d") %></td>
+    <td><%= (show.billed? or show.loaded? or show.shipped?) ? "" : show.try(:load_list).try(:updated_at).try(:strftime,"%y-%m-%d") %></td>
     <td>中转时间</td>
     <td><%= show.transit_info.try(:bill_date) %></td>
     <td>中转提货时间</td>
