@@ -1,3 +1,4 @@
+#coding: utf-8
 class AddAddedFeeToConfigCash < ActiveRecord::Migration
   def self.up
     #附加费用,例如:磁县每张票加6元

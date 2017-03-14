@@ -14,7 +14,10 @@
 <%end%>
 <%if params[:action] == "new" and can? :print,resource_class%>
   <li>
-    <%= link_to image_tag("printer.png",:alt => "仅打印提货单"), "#",:title => "仅打印提货单",:class => "tipsy btn_deliver_only_print" %>
+    <%= link_to image_tag("printer.png",:alt => "仅打印提货单"), "#",
+      :title => "仅打印提货单",
+      "data-print-template" => "#{render 'th_bill' }",
+      :class => "tipsy btn_deliver_only_print" %>
   </li>
 
 <%end%>

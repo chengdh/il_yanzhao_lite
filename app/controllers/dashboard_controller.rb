@@ -18,6 +18,5 @@ class DashboardController < ApplicationController
     @shipped_load_list = LoadList.shipped(org_ids)
     #待确认付款清单
     @refunded = Refound.refunded(org_ids)
-
   end
 end

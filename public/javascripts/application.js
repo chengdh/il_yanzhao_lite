@@ -1083,5 +1083,17 @@ jQuery(function($) {
 		$.cookies.set('il_notify_' + notify.id, notify.notify_text);
 		$('#notify-bar').hide();
 	});
+  //运单录入-货物信息,切换手动录入
+  $(".select_goods_info").change(function(){
+    if($(this).hasClass("select_goods_info")){
+      var val = $(this).val();
+      if(val == "-1"){
+        $(".txt_goods_info").show();
+      }
+      else{
+        $(".txt_goods_info").hide();
+      }
+    }
+  });
 });
 

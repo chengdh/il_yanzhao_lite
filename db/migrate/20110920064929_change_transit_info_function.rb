@@ -1,3 +1,4 @@
+#coding: utf-8
 class ChangeTransitInfoFunction < ActiveRecord::Migration
   def self.up
     #添加货物中转的update功能

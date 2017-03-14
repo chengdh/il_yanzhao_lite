@@ -360,7 +360,26 @@ jQuery(function($) {
 			}
 			//print_object.PREVIEW();
 			print_object.PRINT();
-		}
+		},
+    //打印html内容
+    print_html: function(config) {
+      if (!$.check_lodop()) return;
+      var print_object = $.get_print_object();
+      print_object.PRINT_INITA(config.top, config.left, config.width, config.height, config.print_name);
+      //添加content
+      print_object.ADD_PRINT_HTM(config.top, config.left, config.width, config.height, config.content);
+
+      var orient = 1;
+      if(config.orient)
+        orient = config.orient;
+      print_object.SET_PRINT_PAGESIZE(orient, config.width, config.height, "");
+      if(config.printer_index)
+        set_printer_ret = print_object.SET_PRINTER_INDEX(config.printer_index);
+      if(config.preview)
+        print_object.PREVIEW();
+      else
+        print_object.PRINT();
+    }
 	});
 	//绑定打印事件
 	$('.print_carrying_bill').click(function() {
@@ -368,22 +387,116 @@ jQuery(function($) {
 		$.print_bill(bill);
 	});
 
-	//提货时,仅仅打印运单
-	$('.btn_deliver_only_print').click(function() {
-		if ($('.carrying_bill_show').length == 0) $.notifyBar({
-			html: "请先查询要提货的运单,然后再进行打印操作.",
-			delay: 3000,
-			animationSpeed: "normal",
-			cls: 'error'
-		});
-		else {
-			var bill = $('.carrying_bill_show').data('print');
-			$.print_bill(bill);
-		}
+	// //提货时,仅仅打印运单
+	// $('.btn_deliver_only_print').click(function() {
+	// 	if ($('.carrying_bill_show').length == 0) $.notifyBar({
+	// 		html: "请先查询要提货的运单,然后再进行打印操作.",
+	// 		delay: 3000,
+	// 		animationSpeed: "normal",
+	// 		cls: 'error'
+	// 	});
+	// 	else {
+	// 		var bill = $('.carrying_bill_show').data('print');
+	// 		$.print_bill(bill);
+	// 	}
+  //
+	// });
+  //
+	// //提货打印,触发自动打印事件
+	// $('.auto_print_bill').trigger('click');
+  //打印单张提货单
+  var print_single_th_bill = function(print_template,bill) {
+    bill.carrying_fee_total_plus_insured_fee = parseInt(bill.carrying_fee_total) + parseInt(bill.insured_fee);
+    bill.th_bill_print_count = parseInt(bill.th_bill_print_count) + 1
+    //备注限制为15个字
+    bill.note = bill.note.substr(0,15);
+    //是否有到货短途标志
+    bill.to_short_carrying_fee_flag = "";
+    if(parseInt(bill.to_short_carrying_fee) > 0 || parseInt(bill.from_short_carrying_fee) > 0  )
+      bill.to_short_carrying_fee_flag = "*";
 
-	});
+    //分部电话
+    if(typeof(bill.to_org) == 'undefined' || bill.to_org == null){
+      bill['to_org']={};
+      bill['to_org']['phone']={};
+      bill['to_org']['phone']='';
+    }
+    if(typeof(bill.transit_org) == 'undefined' || bill.transit_org == null){
+      bill['transit_org']={};
+      bill['transit_org']['phone']='';
+    }
 
-	//提货打印,触发自动打印事件
-	$('.auto_print_bill').trigger('click');
+    var print_content = nano(print_template,bill);
+    var config = {
+      print_name: "提货单",
+      top: "0",
+      left: "0",
+      orient : 2,
+      width: "95mm",
+      height: "210mm",
+      content: print_content
+    };
+    $.print_html(config);
+    //打印计数
+    var print_counter_url = "/carrying_bills/" + bill.id + "/th_bill_print_counter";
+    $.ajax({
+      url: print_counter_url,
+      type: 'PUT',
+    });
+  };
+  //打印提货票据,check_selected是否检查票据选中状态
+  var print_th_bill = function(check_selected){
+    var print_template = $(this).data('print-template');
+    $.each($('[data-bill]'),function(idx,el_bill){
+      var bill = $(el_bill).data('bill');
+      if (check_selected && $.inArray(bill.id, $.bill_selector.selected_ids) == - 1)
+        ;
+      else{
+        print_single_th_bill(print_template,bill);
+      }
+    });
+  };
+
+  //提货时,仅仅打印运单
+  $('.btn_deliver_only_print,.btn_deliver_re_print').click(function() {
+    if ($('[data-bill]').length == 0) $.notifyBar({
+      html: "请先查询要提货的运单,然后再进行打印操作.",
+      delay: 3000,
+      animationSpeed: "normal",
+      cls: 'error'
+    });
+    else {
+      print_th_bill.call(this);
+    }
+  });
+  $('.auto_print_bill').click(function() {
+    if ($('[data-bill]').length == 0) $.notifyBar({
+      html: "请先查询要提货的运单,然后再进行打印操作.",
+      delay: 3000,
+      animationSpeed: "normal",
+      cls: 'error'
+    });
+    else {
+      var print_template = $(this).data("print-template")
+      var bill  = $(this).data("bill")
+      print_single_th_bill.call(this,print_template,bill);
+    }
+  });
+  //提货打印,触发自动打印事件
+  $('.auto_print_bill').trigger('click');
+
+  //货物运输清单打印
+  $('.btn_print_th_bill').click(function() {
+    if ($('[data-bill]').length == 0) $.notifyBar({
+      html: "请先查询要提货的运单,然后再进行打印操作.",
+      delay: 3000,
+      animationSpeed: "normal",
+      cls: 'error'
+    });
+    else {
+      print_th_bill.call(this,true);
+    }
+  });
+
 });
 

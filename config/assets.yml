@@ -15,6 +15,7 @@ javascripts:
     - public/javascripts/jquery.cookies.2.2.0.min.js
     - public/javascripts/jquery.printElement.min.js
     - public/javascripts/jquery.editable-select.pack.js
+    - public/javascripts/nano.js
     - public/javascripts/enter2tab.js
     - public/javascripts/bill_selector.js
     - public/javascripts/select_org.js

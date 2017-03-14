@@ -5,7 +5,7 @@ GIT
     acts_as_tree (1.2.3)
 
 GEM
-  remote: http://rubygems.org/
+  remote: https://gems.ruby-china.org/
   specs:
     POpen4 (0.1.4)
       Platform (>= 0.4.0)
@@ -192,3 +192,6 @@ DEPENDENCIES
   web-app-theme (>= 0.6.2)
   will_paginate (~> 3.0.pre2)
   yui-compressor
+
+BUNDLED WITH
+   1.12.5

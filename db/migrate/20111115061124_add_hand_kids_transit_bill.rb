@@ -1,3 +1,4 @@
+#coding: utf-8
 class AddHandKidsTransitBill < ActiveRecord::Migration
   def self.up
     ##############################手工运单录入#################################################

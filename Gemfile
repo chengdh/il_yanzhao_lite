@@ -1,4 +1,9 @@
-source 'http://rubygems.org'
+if RUBY_VERSION =~ /1.9/ # assuming you're running Ruby ~1.9
+  Encoding.default_external = Encoding::UTF_8
+  Encoding.default_internal = Encoding::UTF_8
+end
+#source 'http://rubygems.org'
+source 'https://gems.ruby-china.org'
 
 gem 'rails', '3.0.3'
 gem 'mysql2','0.2.7'

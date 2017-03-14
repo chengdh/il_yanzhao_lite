@@ -33,7 +33,7 @@ module CarryingBillsHelper
   end
   #货物信息列表
   def goods_infos_for_select
-    [['手套','手套'],['童装','童装'],['劳保用品','劳保用品'],['衣服','衣服'],['电器','电器'],['其他','其他']]
+    [['手套','手套'],['童装','童装'],['劳保用品','劳保用品'],['衣服','衣服'],['电器','电器'],['其他','其他'],['手动录入',-1]]
   end
   #生成show_fields/hide_fields字段显示
   def gen_fields_selector(fields_selector='',show=true)

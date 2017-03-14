@@ -1,3 +1,4 @@
+#coding: utf-8
 class ActiveComputerBillPrint < ActiveRecord::Migration
   def self.up
     #激活手工运单

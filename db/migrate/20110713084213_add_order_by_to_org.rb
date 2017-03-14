@@ -1,5 +1,6 @@
+#coding: utf-8
 class AddOrderByToOrg < ActiveRecord::Migration
-def self.up
+  def self.up
     #添加列表顺序
     add_column :orgs, :order_by, :integer,:default => 0
     #更新org功能的default_action
