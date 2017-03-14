@@ -1088,11 +1088,14 @@ jQuery(function($) {
     if($(this).hasClass("select_goods_info")){
       var val = $(this).val();
       if(val == "-1"){
-        $(".txt_goods_info").show();
+        // $(".txt_goods_info").show();
+        $(".txt_goods_info").val("");
       }
       else{
-        $(".txt_goods_info").hide();
+        // $(".txt_goods_info").hide();
+        $(".txt_goods_info").val(val);
       }
+      $(".txt_goods_info").focus();
     }
   });
 });
