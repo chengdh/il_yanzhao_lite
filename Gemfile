@@ -5,6 +5,7 @@ end
 #source 'http://rubygems.org'
 source 'http://gems.ruby-china.org'
 
+gem 'rails_12factor'
 gem 'rails', '3.0.3'
 gem 'mysql2','0.2.7'
 gem "will_paginate", "~> 3.0.pre2"
@@ -26,12 +27,15 @@ gem 'fastercsv'
 gem 'uuid'
 gem 'factory_girl_rails', '1.0'
 gem 'easy_http_cache'
-gem "meta_search"
+gem 'meta_search', '~> 0.5.0'
 #js and css compressor
 gem "jammit"
 gem "yui-compressor"
 gem "default_value_for","~>1.0.4"
 gem "jquery_notify_bar","~>0.0.4"
+gem 'rake', '~> 10.5'
+gem 'net-ssh', '~> 2.6'
+gem 'highline', '1.6.21'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -42,8 +46,7 @@ gem "jquery_notify_bar","~>0.0.4"
 # gem 'unicorn'
 
 # Deploy with Capistrano
-gem 'capistrano'
-gem 'rails_12factor'
+gem 'capistrano', '~> 2.15', '>= 2.15.9'
 
 # To use debugger
 # gem 'ruby-debug'
