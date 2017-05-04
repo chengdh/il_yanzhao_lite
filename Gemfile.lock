@@ -95,7 +95,7 @@ GEM
       activesupport (>= 3.0.0.beta4)
       arel (>= 0.4.0)
     mime-types (1.25.1)
-    mysql2 (0.2.7)
+    mysql2 (0.4.6)
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-sftp (2.1.2)
@@ -186,7 +186,7 @@ DEPENDENCIES
   jquery-rails
   jquery_notify_bar (~> 0.0.4)
   meta_search (~> 0.5.0)
-  mysql2 (= 0.2.7)
+  mysql2
   net-ssh (~> 2.6)
   rails (= 3.0.3)
   rails_12factor
@@ -201,6 +201,9 @@ DEPENDENCIES
   web-app-theme (>= 0.6.2)
   will_paginate (~> 3.0.pre2)
   yui-compressor
+
+RUBY VERSION
+   ruby 1.8.7p374
 
 BUNDLED WITH
    1.14.6

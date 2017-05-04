@@ -1,13 +1,11 @@
-if RUBY_VERSION =~ /1.9/ # assuming you're running Ruby ~1.9
-  Encoding.default_external = Encoding::UTF_8
-  Encoding.default_internal = Encoding::UTF_8
-end
 #source 'http://rubygems.org'
 source 'http://gems.ruby-china.org'
+ruby '1.8.7'
 
 gem 'rails_12factor'
 gem 'rails', '3.0.3'
-gem 'mysql2','0.2.7'
+#gem 'mysql2','0.2.7'
+gem 'mysql2'
 gem "will_paginate", "~> 3.0.pre2"
 gem "devise",'1.1.5'
 gem "cancan",'1.5.0'
