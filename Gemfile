@@ -3,7 +3,7 @@ if RUBY_VERSION =~ /1.9/ # assuming you're running Ruby ~1.9
   Encoding.default_internal = Encoding::UTF_8
 end
 #source 'http://rubygems.org'
-source 'https://gems.ruby-china.org'
+source 'http://gems.ruby-china.org'
 
 gem 'rails', '3.0.3'
 gem 'mysql2','0.2.7'
@@ -43,6 +43,7 @@ gem "jquery_notify_bar","~>0.0.4"
 
 # Deploy with Capistrano
 gem 'capistrano'
+gem 'rails_12factor'
 
 # To use debugger
 # gem 'ruby-debug'

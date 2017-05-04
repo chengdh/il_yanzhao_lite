@@ -5,7 +5,7 @@ GIT
     acts_as_tree (1.2.3)
 
 GEM
-  remote: https://gems.ruby-china.org/
+  remote: http://gems.ruby-china.org/
   specs:
     POpen4 (0.1.4)
       Platform (>= 0.4.0)
@@ -119,6 +119,11 @@ GEM
       activesupport (= 3.0.3)
       bundler (~> 1.0)
       railties (= 3.0.3)
+    rails_12factor (0.0.3)
+      rails_serve_static_assets
+      rails_stdout_logging
+    rails_serve_static_assets (0.0.5)
+    rails_stdout_logging (0.0.5)
     railties (3.0.3)
       actionpack (= 3.0.3)
       activesupport (= 3.0.3)
@@ -182,6 +187,7 @@ DEPENDENCIES
   meta_search
   mysql2 (= 0.2.7)
   rails (= 3.0.3)
+  rails_12factor
   rspec (~> 2.4.0)
   rspec-rails (~> 2.4.1)
   show_for
@@ -194,4 +200,4 @@ DEPENDENCIES
   yui-compressor
 
 BUNDLED WITH
-   1.12.5
+   1.14.6
