@@ -1,5 +1,6 @@
 # source 'http://rubygems.org'
-source 'http://gems.ruby-china.org'
+#source 'http://gems.ruby-china.org'
+source "https://gems.gzruby.org"
 ruby '1.9.3'
 
 gem 'rails_12factor'
