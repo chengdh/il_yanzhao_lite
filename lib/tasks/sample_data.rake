@@ -6,8 +6,6 @@ namespace :db do
   task :partition_carrying_bills => :environment do
     c = ActiveRecord::Base.connection
     #修改carrying_bill id的定义,便于进行分表操作
-
-
     c.execute("ALTER TABLE carrying_bills MODIFY id INT(11) NOT NULL")
     c.execute("ALTER TABLE carrying_bills DROP PRIMARY KEY")
     c.execute("ALTER TABLE carrying_bills ADD PRIMARY KEY (id,completed)")
