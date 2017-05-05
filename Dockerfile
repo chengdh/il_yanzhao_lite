@@ -1,6 +1,7 @@
 # Inspired by Deepak's setup here - https://gist.github.com/deepak/5925003
 
-FROM former03/dev03-ruby-1.8
+#FROM former03/dev03-ruby-1.8
+FROM ruby:1.9.3
 
 RUN apt-get update -qq && apt-get install -y build-essential git curl mysql-client libmysqlclient-dev libxml2-dev libxslt-dev libreadline-dev
 RUN mkdir -p /il_yanzhao
