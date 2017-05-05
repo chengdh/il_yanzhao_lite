@@ -34,7 +34,7 @@ production:
   encoding: utf8
   reconnect: true
   pool: 5
-  url: <%= ENV['DATABASW_URL'] %> 
+  url: <%= ENV['DOKKU_MYSQL_WHITE_URL'] %>
 
 # production:
 #   adapter: mysql2
