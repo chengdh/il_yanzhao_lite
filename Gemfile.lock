@@ -181,7 +181,7 @@ DEPENDENCIES
   jquery-rails
   jquery_notify_bar (~> 0.0.4)
   meta_search (~> 0.5.0)
-  mysql2 (~> 0.2.24)
+  mysql2
   net-ssh (~> 2.6)
   rails (= 3.0.3)
   rails_12factor
