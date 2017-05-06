@@ -2,7 +2,6 @@
 class CreateCarryingBills < ActiveRecord::Migration
   def self.up
     create_table :carrying_bills do |t|
-      t.integer :id,:null => false
       t.date :bill_date,:null => false
       t.string :bill_no,:limit => 30,:null => false
       t.string :goods_no,:limit => 30,:null => false
