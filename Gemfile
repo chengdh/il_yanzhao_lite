@@ -60,7 +60,7 @@ gem 'capistrano', '~> 2.15', '>= 2.15.9'
 group :development do
 #  gem 'annotate-models', '1.0.4'
   gem 'jquery-rails'
-  gem "bullet"
+  # gem "bullet"
   #windows下运行需要
   #gem "win32-open3"
 end
