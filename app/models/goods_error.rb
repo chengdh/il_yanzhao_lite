@@ -1,3 +1,4 @@
+#coding: utf-8
 #多货少货信息
 class GoodsError < ActiveRecord::Base
   belongs_to :carrying_bill
