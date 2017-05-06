@@ -1,6 +1,5 @@
 # source 'http://rubygems.org'
-#source 'http://gems.ruby-china.org'
-source "https://gems.gzruby.org"
+source 'http://gems.ruby-china.org'
 ruby '1.9.3'
 
 gem 'rails_12factor'
@@ -31,7 +30,7 @@ gem "jammit"
 gem "yui-compressor"
 gem "default_value_for","~>1.0.4"
 gem "jquery_notify_bar","~>0.0.4"
-# gem 'rake', '~> 10.5'
+gem 'rake', '~> 0.8.7'
 gem 'net-ssh', '~> 2.6'
 gem 'highline', '1.6.21'
 
