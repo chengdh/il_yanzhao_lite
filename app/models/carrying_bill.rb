@@ -419,7 +419,7 @@ class CarryingBill < ActiveRecord::Base
         #:sum_goods_num => search.relation.sum(:goods_num)
       }
       sum_info_tmp = search.select('sum(1) as count,sum(carrying_fee) as sum_carrying_fee,sum(k_hand_fee) as sum_k_hand_fee,sum(goods_fee) as sum_goods_fee,sum(insured_fee) as sum_insured_fee,sum(transit_carrying_fee) as sum_transit_carrying_fee,sum(transit_hand_fee) as sum_transit_hand_fee,sum(from_short_carrying_fee) as sum_from_short_carrying_fee,sum(to_short_carrying_fee) as sum_to_short_carrying_fee,sum(goods_num) as sum_goods_num,sum(goods_weight) as sum_goods_weight,sum(goods_num) as sum_goods_num,sum(transit_fee) as sum_transit_fee,sum(agent_carrying_fee) as sum_agent_carrying_fee,sum(commission) as sum_commission,sum(send_fee) as sum_send_fee,sum(goods_weight*unit_price_weight) as sum_weight_fee,sum(carrying_fee - transit_carrying_fee - commission + k_hand_fee) as sum_profit,sum(transit_carrying_fee + commission) as sum_total_transit_carrying_fee,sum(transit_fee - transit_carrying_fee + (goods_weight*unit_price_weight/2) - commission + k_hand_fee) as sum_profit_weight').first.attributes
-      my_hash = my_hash.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
+      # my_hash = my_hash.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo}
       new_hash = Hash[sum_info_tmp.map { |k, v| [k.to_sym, (v.blank? ? 0:v)] }]
       # sum_info_tmp.each do |key,value|
       #   sum_info_tmp.delete(key)
