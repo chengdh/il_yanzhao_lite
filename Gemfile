@@ -25,7 +25,9 @@ gem 'fastercsv'
 gem 'uuid'
 gem 'factory_girl_rails', '1.0'
 gem 'easy_http_cache'
-gem 'meta_search', '~> 0.5.0'
+# gem 'meta_search', '~> 0.5.0'
+# gem 'meta_search', '~> 1.1'
+gem 'meta_search', '~> 0.9.7'
 #js and css compressor
 gem "jammit"
 gem "yui-compressor"
