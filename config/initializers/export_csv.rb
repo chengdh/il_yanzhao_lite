@@ -2,8 +2,8 @@
 #为Array类添加导出csv方法
 require "nkf"
 class Array
-  # BOM_HEADER ="FFFE".gsub(/\s/,'').to_a.pack("H*")
-  BOM_HEADER ="FFFE".scan(/\w/).pack("H*")
+  BOM_HEADER ="FFFE".gsub(/\s/,'').to_a.pack("H*")
+  # BOM_HEADER ="FFFE".scan(/\w/).pack("H*")
   def to_csv(options = {})
     return '' if self.empty?
 
