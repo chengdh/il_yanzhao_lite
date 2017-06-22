@@ -126,6 +126,7 @@ zh-CN:
         insured_rate: "保价比例"  #g
         insured_fee: "保价费"  #g
         carrying_fee: "运费"  #g
+        transit_fee: "转货费"
         goods_fee: "代收货款"  #g
         from_short_carrying_fee: "发货地短途运费"  #g
         to_short_carrying_fee: "到货地短途运费"  #g

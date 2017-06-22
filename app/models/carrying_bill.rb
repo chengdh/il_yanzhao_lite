@@ -376,6 +376,7 @@ class CarryingBill < ActiveRecord::Base
     def to_s
       "#{self.bill_no}/#{self.goods_no}"
     end
+
     #导出方法
     def self.to_csv(search_obj,options = {},with_bom_header = true)
       options = self.export_options if options.blank?
@@ -446,10 +447,11 @@ class CarryingBill < ActiveRecord::Base
         :only => [],
         :methods => [
           :bill_date,:bill_no,:goods_no,:from_customer_name,:from_customer_phone,:from_customer_mobile,
-          :to_customer_name,:to_customer_phone,:to_customer_mobile,:from_org_name,
-          :to_org_or_area,:pay_type_des,:transit_company,
-          :carrying_fee,:carrying_fee_th,:k_carrying_fee,:k_hand_fee,:goods_fee,:insured_fee,:transit_carrying_fee,
-          :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:goods_weight,:unit_price_weight,:weight_fee,:profit,:profit_weight,:note,:human_state_name
+          :to_customer_name,:to_customer_phone,:to_customer_mobile,
+          :from_org_name,:to_org_or_area,:pay_type_des,:transit_company,
+          :carrying_fee,:carrying_fee_th,:k_carrying_fee,:k_hand_fee,:goods_fee,:transit_fee,:insured_fee,:transit_carrying_fee,
+          :transit_hand_fee,:act_pay_fee,:agent_carrying_fee,:th_amount,:goods_num,:goods_weight,:unit_price_weight,
+          :weight_fee,:profit,:profit_weight,:note,:human_state_name
       ]}
     end
     #机打运单编号从4000000开始
