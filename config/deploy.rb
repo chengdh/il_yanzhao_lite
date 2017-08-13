@@ -42,7 +42,7 @@ namespace :deploy do
   task :generate_assets, :roles => :web do
     run "cd #{deploy_to}/current && bundle exec jammit"
   end
-  desc "create cache dir"undefined method `ruby' for
+  desc "create cache dir"
   task :create_cache_dir,:roles => :web do
     run "cd #{deploy_to}/current && chmod 777 tmp"
     run "cd #{deploy_to}/current/tmp && mkdir cache && chmod 777 cache"

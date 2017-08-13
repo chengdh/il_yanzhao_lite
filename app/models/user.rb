@@ -25,7 +25,7 @@ class User < ActiveRecord::Base
     ret.all_user_roles!
     ret.all_user_orgs!
     #创建之前,写入usb_pin
-    ret.set_usb_pin
+    # ret.set_usb_pin
     ret
   end
   #显示所有部门,包括当前角色具备与不具备的部门

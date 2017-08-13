@@ -2,7 +2,7 @@
 source 'http://gems.ruby-china.org'
 # ruby '1.9.3'
 
-gem 'rails_12factor'
+# gem 'rails_12factor'
 gem 'rails', '3.0.3'
 gem 'mysql2', '~> 0.2.24'
 gem "will_paginate", "~> 3.0.pre2"
