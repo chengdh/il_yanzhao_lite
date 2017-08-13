@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
     Role.where(:is_active => true).each do |role|
       self.user_roles.build(:role => role) unless self.user_roles.detect { |the_user_role| the_user_role.role.id == role.id }
     end
-    self.user_roles.to_a.select {|ur| ur.role.is_active?}
+    self.user_roles.to_a.select {|ur| ur.role.try(:is_active?)}
   end
   #显示所有部门,包括当前角色具备与不具备的部门
   def all_user_orgs!
@@ -41,7 +41,7 @@ class User < ActiveRecord::Base
       Org.where(:is_active => true).order("name ASC").each do |org|
         self.user_orgs.build(:org => org) unless self.user_orgs.detect { |the_user_org| the_user_org.org.id == org.id }
       end
-      self.all_user_orgs ||= self.user_orgs.to_a.select {|uo| uo.org.is_active?}
+      self.all_user_orgs ||= self.user_orgs.to_a.select {|uo| uo.org.try(:is_active?)}
     end
     self.all_user_orgs
   end
