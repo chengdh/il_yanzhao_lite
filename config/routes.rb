@@ -181,6 +181,7 @@ IlYanzhao::Application.routes.draw do
     get :process_handle,:on => :member
     get :search,:on => :collection
     get :export_excel,:on => :member
+    get :show_print_th_bill,:on => :member
     resources :carrying_bills
   end
 

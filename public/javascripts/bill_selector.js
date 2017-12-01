@@ -32,6 +32,7 @@
 
 				$.bill_selector.initialized = true;
 			}
+
 			$.bill_selector.set_checkbox();
 			$.bill_selector.update_html();
 			//显示票据选择控件

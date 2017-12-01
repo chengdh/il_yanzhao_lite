@@ -486,7 +486,7 @@ jQuery(function($) {
   $('.auto_print_bill').trigger('click');
 
   //货物运输清单打印
-  $('.btn_print_th_bill').click(function() {
+  $('.btn_print_th_bills_in_arrive_load_list').click(function() {
     if ($('[data-bill]').length == 0) $.notifyBar({
       html: "请先查询要提货的运单,然后再进行打印操作.",
       delay: 3000,
@@ -497,6 +497,5 @@ jQuery(function($) {
       print_th_bill.call(this,true);
     }
   });
-
 });
 
