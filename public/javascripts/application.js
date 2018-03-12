@@ -351,6 +351,8 @@ jQuery(function($) {
     null, 'script');
 
   };
+
+  $('#customer_code').live('change', search_customer_by_code);
   var calculate_carrying_bill = function() {
     //计算保价费合计
     var insured_amount = parseFloat($('#insured_amount').val());
@@ -381,8 +383,6 @@ jQuery(function($) {
   };
   $('form.carrying_bill #goods_weight,form.carrying_bill #unit_carrying_fee_price').live('change', cal_carrying_fee);
 
-  //lite系统中没有客户编号
-  //$('#customer_code').live('change', search_customer_by_code);
   $('form.carrying_bill').live("change", calculate_carrying_bill);
   $('form.carrying_bill').livequery(calculate_carrying_bill);
   //根据不同的运单录入界面,隐藏部分字段

@@ -26,6 +26,11 @@
       <%end%>
     </tr>
     <tr>
+      <td>客户编号</td>
+      <td><%= f.text_field :customer_code,:id => 'customer_code',:size => 20  %></td>
+      <td colspan="4"></td>
+    </tr>
+    <tr>
       <td>发货人</td>
       <td><%= f.text_field :from_customer_name,:id => 'from_customer_name',:size => 20  %></td>
       <td>电话</td>
@@ -127,7 +132,6 @@
         <td>送货费</td>
         <td><%= f.text_field :send_fee,:size => 10,:id => :send_fee  %></td>
       </tr>
-
     <%end%>
 
     <tr>

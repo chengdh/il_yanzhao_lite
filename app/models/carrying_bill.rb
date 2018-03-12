@@ -1,4 +1,19 @@
 #coding: utf-8
+class CustomerCodeValidator < ActiveModel::EachValidator
+  def validate_each(object,attribute,value)
+    if value.present?
+      from_customer = Vip.find_by_code_and_name_and_is_active(value,object.from_customer_name,true)
+      if from_customer.blank?
+        object.errors[attribute] <<(options[:message] || "客户编号与姓名不匹配" )
+      else
+        object.from_customer = from_customer
+      end
+    else #如果customer_code为null
+      object.from_customer = nil
+    end
+  end
+end
+
 class CarryingBill < ActiveRecord::Base
   attr_protected :insured_rate,:original_carrying_fee,:original_goods_fee,:original_from_short_carrying_fee,:original_to_short_carrying_fee,:original_insured_amount,:original_insured_fee
   #营业额统计
@@ -66,6 +81,7 @@ class CarryingBill < ActiveRecord::Base
   #20120328 运单编号生成时，自动添加两个字母
   #validates_format_of :bill_no,:with => /^(TH)*\d{7}$/
 
+  validates :customer_code,:customer_code => true
   validates_presence_of :bill_no,:goods_no,:bill_date,:pay_type,:from_customer_name,:to_customer_name,:from_org_id,:goods_info
   validates_numericality_of :insured_amount,:insured_rate,:insured_fee,:goods_num,:agent_carrying_fee,:transit_fee,:transit_hand_fee,:transit_carrying_fee,:k_hand_fee,:commission,:goods_weight,:unit_price_weight,:send_fee,:unit_price_weight,:unit_carrying_fee_price
   validates_numericality_of :carrying_fee,:goods_fee,:from_short_carrying_fee,:to_short_carrying_fee,:less_than => 1000000
@@ -278,6 +294,14 @@ class CarryingBill < ActiveRecord::Base
     #实提货款 原货款 - 扣运费 - 扣手续费
     def act_pay_fee
       ret = self.goods_fee.to_i - self.k_hand_fee.to_i - self.k_carrying_fee.to_i
+    end
+
+    #定义customer_code虚拟属性
+    def customer_code
+      @customer_code || self.from_customer.try(:code)
+    end
+    def customer_code=(customer_code)
+      @customer_code = customer_code
     end
 
     #得到提货应收金额
