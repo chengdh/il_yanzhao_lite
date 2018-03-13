@@ -33,8 +33,8 @@
     <%end%>
     <%if params[:action] == "show_print_th_bill" %>
       <li>
-        <%= link_to image_tag("printer.png",:alt => "仅打印提货单"), "#",
-          :title => "仅打印提货单",
+        <%= link_to image_tag("printer.png",:alt => "打印提货单"), "#",
+          :title => "打印提货单",
           "data-print-template" => "#{render 'deliver_infos/th_bill' }",
           :class => "tipsy btn_print_th_bills_in_arrive_load_list"
         %>

@@ -80,6 +80,15 @@ class CarryingBillsController < BaseController
     @search = resource_class.where(:from_org_id =>current_user.current_ability_org_ids).turnover.search(params[:search])
     get_collection_ivar || set_collection_ivar(@search.all)
   end
+  #提货票据打印次数
+  #PUT carrying_bills/:id/th_bill_print_counter
+  def th_bill_print_counter
+    bill = resource_class.find(params[:id])
+    get_resource_ivar || set_resource_ivar(bill)
+    bill.increment!(:th_bill_print_count)
+    render :nothing => true
+  end
+
   private
   def check_expire
     if current_user.default_org.input_expire?

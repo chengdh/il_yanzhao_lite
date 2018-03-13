@@ -236,6 +236,8 @@ zh-CN:
         bank: "开户银行"  #g
         config_transit: "手续费配置"  #g
         config_transit_id: "手续费配置"  #g
+        receive_bank: 收款银行及营业网点
+        receive_address: 汇入地址
 
       customer_fee_info:
         mth: "月份"  #g

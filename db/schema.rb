@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20171201074128) do
+ActiveRecord::Schema.define(:version => 20180313032844) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -210,6 +210,8 @@ ActiveRecord::Schema.define(:version => 20171201074128) do
     t.string   "level",             :limit => 20
     t.string   "last_import_mth",   :limit => 6
     t.string   "state",             :limit => 20
+    t.string   "receive_bank",      :limit => 60
+    t.string   "receive_address",   :limit => 60
   end
 
   add_index "customers", ["bank_card"], :name => "index_customers_on_bank_card"

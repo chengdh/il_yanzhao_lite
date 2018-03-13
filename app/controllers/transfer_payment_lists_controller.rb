@@ -18,4 +18,11 @@ class TransferPaymentListsController < BaseController
   def export_excel
     @transfer_payment_list = resource_class.find(params[:id],:include => [:bank,:user,:carrying_bills])
   end
+
+  #导出到兴业银行批量转账EXCEL
+  #GET transfer_payment_list/:id/export_excel_for_cib
+  def export_excel_for_cib
+    @transfer_payment_list = resource_class.find(params[:id],:include => [:bank,:user,:carrying_bills])
+  end
+
 end

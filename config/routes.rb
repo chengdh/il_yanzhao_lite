@@ -119,6 +119,7 @@ IlYanzhao::Application.routes.draw do
   resources :transfer_payment_lists do
     get :search,:on => :collection
     get :export_excel,:on => :member
+    get :export_excel_for_cib,:on => :member
     get :process_handle,:on => :member
     resources :carrying_bills
   end
@@ -219,6 +220,8 @@ IlYanzhao::Application.routes.draw do
     get :simple_search,:on => :collection
     get :export_excel,:on => :collection
     put :reset,:on => :member
+    #提货单打印次数
+    put :th_bill_print_counter,:on => :member
   end
 
   resources :computer_bills do

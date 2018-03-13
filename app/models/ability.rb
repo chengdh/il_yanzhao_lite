@@ -128,6 +128,10 @@ class Ability
     can :edit_password,User
     #可更新自身密码
     can :update_password,User
+    can :export_excel_for_cib,TransferPaymentList if can? :read,TransferPaymentList
+
+    #可打印提货单,就可以记录提货单打印次数
+    can :th_bill_print_counter,CarryingBill if can? :print,DeliverInfo
   end
   #定义运单修改权限
   def set_bill_update_permission(user)

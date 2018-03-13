@@ -1,0 +1,30 @@
+<table style=';border-collapse : collapse;border : thin solid #000;'>
+  <thead>
+    <tr>
+      <td style='border : thin solid #000;'>序号</td>
+      <td style='border : thin solid #000;'>是否兴业帐号</td>
+      <td style='border : thin solid #000;'>收款帐号</td>
+      <td style='border : thin solid #000;'>收款户名</td>
+      <td style='border : thin solid #000;'>收款银行及营业网点</td>
+      <td style='border : thin solid #000;'>是否同城</td>
+      <td style='border : thin solid #000;'>汇入地址</td>
+      <td style='border : thin solid #000;'>转账金额</td>
+      <td style='border : thin solid #000;'>转账用途</td>
+    </tr>
+  </thead>
+  <tbody>
+    <%@transfer_payment_list.carrying_bills.each_with_index do |bill,index| %>
+      <tr>
+        <td style='border : thin solid #000;'><%= index + 1 %></td>
+        <td style='border : thin solid #000;'>否</td>
+        <td style='border : thin solid #000;'>&nbsp;<%= bill.from_customer.bank_card %></td>
+        <td style='border : thin solid #000;'><%= bill.from_customer.name %></td>
+        <td style='border : thin solid #000;'><%= bill.from_customer.receive_bank%></td>
+        <td style='border : thin solid #000;'>否</td>
+        <td style='border : thin solid #000;'><%= bill.from_customer.receive_address%></td>
+        <td style='border : thin solid #000;'>&nbsp;<%= bill.act_pay_fee %></td>
+        <td style='border : thin solid #000;'><%= "燕赵#{bill.bill_date}#{bill.goods_no}#{bill.to_org}"%></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
