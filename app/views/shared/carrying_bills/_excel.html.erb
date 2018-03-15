@@ -12,6 +12,7 @@
       <th class="carrying_fee">运费</th>
       <th class="carrying_fee_th hide">提付运费</th>
       <th class="goods_fee">代收货款</th>
+      <th class="goods_num">货物件数</th>
       <th class="k_hand_fee hide">扣手续费</th>
       <th class="k_carrying_fee hide">扣运费</th>
       <th class="act_pay_fee hide">实提货款</th>
@@ -75,6 +76,8 @@
         <td class="goods_fee">
           <%=bill.goods_fee %>
         </td>
+
+        <td class="goods_num"><%= bill.goods_num %></td>
         <td class="k_hand_fee hide"><%=bill.k_hand_fee%></td>
         <td class="k_carrying_fee hide"><%= bill.k_carrying_fee %></td>
         <td class="act_pay_fee hide"><%= bill.act_pay_fee %></td>
@@ -123,6 +126,7 @@
       <td class="carrying_fee"><%=sum_info[:sum_carrying_fee]%></td>
       <td class="carrying_fee_th hide"><%=sum_info[:sum_carrying_fee_th]%></td>
       <td class="goods_fee"><%=sum_info[:sum_goods_fee]%></td>
+      <td class="goods_num"><%=sum_info[:sum_goods_num]%></td>
       <td class="k_hand_fee hide"><%=sum_info[:sum_k_hand_fee]%></td>
       <td class="k_carrying_fee hide"><%= sum_info[:sum_k_carrying_fee] %></td>
       <td class="act_pay_fee hide"><%= sum_info[:sum_act_pay_fee] %></td>
