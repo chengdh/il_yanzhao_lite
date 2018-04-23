@@ -1,5 +1,7 @@
 IlYanzhao::Application.routes.draw do
 
+  resources :mth_settlements
+
   resources :notifies
 
   resources :hand_kids_transit_bills do

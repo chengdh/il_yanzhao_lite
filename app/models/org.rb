@@ -29,6 +29,11 @@ class Org < ActiveRecord::Base
     ret
   end
 
+  #分支机构列表
+  def self.branch_list(parent_id = nil)
+    Org.where(:is_active => true,:is_yard => false,:parent_id => parent_id)
+  end
+
   private
   def gen_py
     py = PinYin.instance

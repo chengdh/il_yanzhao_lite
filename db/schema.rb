@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180423031604) do
+ActiveRecord::Schema.define(:version => 20180423092217) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -411,6 +411,25 @@ ActiveRecord::Schema.define(:version => 20180423031604) do
   add_index "load_lists", ["state"], :name => "index_load_lists_on_state"
   add_index "load_lists", ["to_org_id"], :name => "index_load_lists_on_to_org_id"
   add_index "load_lists", ["user_id"], :name => "index_load_lists_on_user_id"
+
+  create_table "mth_settlement_lines", :force => true do |t|
+    t.integer  "mth_settlement_id"
+    t.integer  "org_id",                                                          :null => false
+    t.decimal  "from_carrying_fee", :precision => 10, :scale => 0, :default => 0
+    t.decimal  "to_carrying_fee",   :precision => 10, :scale => 0, :default => 0
+    t.decimal  "insured_fee",       :precision => 10, :scale => 0, :default => 0
+    t.decimal  "commission_fee",    :precision => 10, :scale => 0, :default => 0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mth_settlements", :force => true do |t|
+    t.string   "mth",        :limit => 6
+    t.integer  "user_id"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "notifies", :force => true do |t|
     t.text     "notify_text"

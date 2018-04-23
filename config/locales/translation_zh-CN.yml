@@ -70,6 +70,8 @@ zh-CN:
       goods_error: "少货/多货信息"  #g
       role_org: "角色-机构"  #g
       notify: "消息提醒"
+      mth_settlement: 月费用结算单
+      mth_settlement_line: 月费用结算单明细
 
 
     attributes:
@@ -617,3 +619,18 @@ zh-CN:
         is_select: "选中"  #g
         role: "角色"  #g
         org: "机构"  #g
+
+      mth_settlement:
+        mth: 月份
+        sum_from_carrying_fee: 运费
+        sum_to_carrying_fee: 返程运费
+        sum_commission_fee: 提成
+        sum_insured_fee: 保险费
+        sum_income_fee: 收入合计
+      mth_settlement_line:
+        org: 分公司
+        mth: 月份
+        from_carrying_fee: 运费
+        to_carrying_fee: 返程运费
+        commission_fee: 提成
+        insured_fee: 保险费

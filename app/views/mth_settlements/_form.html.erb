@@ -1,0 +1,59 @@
+<%= semantic_form_for resource, :html => {:id => "mth_settlement_form"} do |f|%>
+  <%= f.error_messages %>
+  <table class="table">
+    <tr>
+      <th>月份:</th>
+      <td><%= f.text_field :mth,:readonly => true %></td>
+      <th>操作员:</th>
+      <td>
+        <%= f.hidden_field :user_id,:value => current_user.id if f.object.new_record?%>
+        <%= current_user %>
+      </td>
+    </tr>
+  </table>
+  <table class="table">
+    <tr>
+      <th>分公司</th>
+      <th>返程收入</th>
+      <th>&nbsp;</th>
+      <th>总运费</th>
+      <th>提成</th>
+      <th>保险费</th>
+      <th style='color: red;'>合计</th>
+    </tr>
+    <% f.semantic_fields_for :mth_settlement_lines do |f_msl| %>
+      <tr>
+        <th>
+          <%= f_msl.hidden_field :org_id %>
+          <%= f_msl.object.org %>
+        </th>
+        <td>
+          <%= f_msl.text_field :to_carrying_fee %>
+        </td>
+        <td>&nbsp;</td>
+        <td>
+          <%= f_msl.text_field :to_carrying_fee %>
+        </td>
+        <td>
+          <%= f_msl.text_field :commission_fee %>
+        </td>
+        <td>
+          <%= f_msl.text_field :insured_fee %>
+        </td>
+        <td><span class="sum_line" style='color: red;'></span></td>
+      </td>
+    </tr>
+  <% end %>
+  <tfoot>
+    <tr>
+      <td>合计:</td>
+      <td><span class="sum_to_carrying_fee"></span></td>
+      <td><span class="sum_to_carrying_fee"></span></td>
+      <td><span class="">&nbsp;</span></td>
+      <td><span class="sum_from_carrying_fee"></span></td>
+      <td><span class="sum_commission_fee"></span></td>
+      <td><span class="sum_total"></span></td>
+    </tr>
+  </tfoot>
+</table>
+<% end %>
