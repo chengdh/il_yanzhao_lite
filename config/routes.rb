@@ -1,5 +1,7 @@
 IlYanzhao::Application.routes.draw do
 
+  resources :fee_infos
+
   resources :mth_settlements
 
   resources :notifies

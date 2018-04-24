@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180423092217) do
+ActiveRecord::Schema.define(:version => 20180424030053) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -261,6 +261,25 @@ ActiveRecord::Schema.define(:version => 20180423092217) do
   add_index "distribution_lists", ["org_id"], :name => "index_distribution_lists_on_org_id"
   add_index "distribution_lists", ["state"], :name => "index_distribution_lists_on_state"
   add_index "distribution_lists", ["user_id"], :name => "index_distribution_lists_on_user_id"
+
+  create_table "fee_info_lines", :force => true do |t|
+    t.integer  "fee_info_id"
+    t.integer  "fee_type",                                                 :default => 9
+    t.string   "fee_note",    :limit => 60,                                                 :null => false
+    t.decimal  "fee",                       :precision => 15, :scale => 2, :default => 0.0
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "fee_infos", :force => true do |t|
+    t.date     "fee_date"
+    t.integer  "org_id",     :null => false
+    t.integer  "user_id",    :null => false
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "gerror_authorizes", :force => true do |t|
     t.date     "bill_date",      :null => false

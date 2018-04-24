@@ -72,7 +72,8 @@ zh-CN:
       notify: "消息提醒"
       mth_settlement: 月费用结算单
       mth_settlement_line: 月费用结算单明细
-
+      fee_info: 流水账
+      fee_info_line: 流水账明细
 
     attributes:
       public_attrs:
@@ -116,7 +117,7 @@ zh-CN:
         insured_rate_disp: "保价比例"
         from_customer_name: "发货人"  #g
         from_customer_phone: "发货人电话"  #g
-        from_customer_mobile: "发货人手机"  #g
+        from_customer_mobile: "发货人手机"  #g, :reject_if => proc { |attributes| attributes['name'].blank? }
         from_customer_bank_card: "帐号"
         from_customer_code: "客户编码"
         from_customer_bank_name: "开户行"
@@ -627,6 +628,7 @@ zh-CN:
         sum_commission_fee: 提成
         sum_insured_fee: 保险费
         sum_income_fee: 收入合计
+
       mth_settlement_line:
         org: 分公司
         mth: 月份
@@ -634,3 +636,19 @@ zh-CN:
         to_carrying_fee: 返程运费
         commission_fee: 提成
         insured_fee: 保险费
+
+      fee_info:
+        org: 分公司
+        fee_date: 记账日期
+        fee_info_line: 明细
+        sum_fee: 合计
+        sum_fee_type_9: 费用合计
+        sum_fee_type_1: 收入合计
+
+      fee_info_line:
+        type_des: 费用类型
+        fee_note: 费用说明
+        fee: 金额
+        note: 备注
+
+

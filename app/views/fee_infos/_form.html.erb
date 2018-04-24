@@ -1,0 +1,45 @@
+<%= semantic_form_for resource, :html => {:id => "fee_info_form"} do |f|%>
+  <%= f.error_messages %>
+  <table class="table">
+    <tr>
+      <th>记账日期:</th>
+      <td>
+        <%= f.input :fee_date,:as => :string,:label => false,:input_html =>{:readonly => true,:size => 20,:class => 'datepicker'} %>
+      </td>
+      <th>机构:</th>
+      <th>
+        <%= f.input :org_id,:as => :select,:label => false, :collection => current_ability_orgs_for_select,:include_blank => false,:input_html => {:id => "org_id"} %>
+      </th>
+      <th>操作员:</th>
+      <th>
+        <%= f.hidden_field :user_id,:value => current_user.id if f.object.new_record?%>
+        <%= current_user %>
+      </th>
+    </tr>
+  </table>
+  <table class="table">
+    <tr>
+      <th>类别</th>
+      <th>说明</th>
+      <th>金额</th>
+      <th>备注</th>
+    </tr>
+    <% f.semantic_fields_for :fee_info_lines do |f_line| %>
+      <tr>
+        <td>
+          <%= f_line.input :fee_type,:as => :select,:label => false,:collection => fee_types_for_select,:include_blank => false,:label => false %>
+        </td>
+        <td>
+          <%= f_line.input :fee_note,:label => false %>
+        </td>
+        <td>
+          <%= f_line.input :fee,:label => false %>
+        </td>
+        <td>
+          <%= f_line.input :note,:as => :string,:label => false %>
+        </td>
+      </td>
+    </tr>
+  <% end %>
+</table>
+<% end %>
