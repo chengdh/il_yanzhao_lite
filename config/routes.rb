@@ -1,5 +1,9 @@
 IlYanzhao::Application.routes.draw do
 
+  resources :vehicle_fee_lines
+
+  resources :vehicle_fees
+
   resources :fee_infos
 
   resources :mth_settlements

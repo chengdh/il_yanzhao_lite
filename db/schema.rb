@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20180424030053) do
+ActiveRecord::Schema.define(:version => 20180426011923) do
 
   create_table "banks", :force => true do |t|
     t.string   "name",                                       :null => false
@@ -852,5 +852,25 @@ ActiveRecord::Schema.define(:version => 20180424030053) do
   add_index "users", ["is_active"], :name => "index_users_on_is_active"
   add_index "users", ["is_admin"], :name => "index_users_on_is_admin"
   add_index "users", ["username"], :name => "index_users_on_username", :unique => true
+
+  create_table "vehicle_fee_lines", :force => true do |t|
+    t.integer  "vehicle_fee_id"
+    t.string   "v_no",           :limit => 20,                                                 :null => false
+    t.integer  "to_org_id"
+    t.decimal  "load_fee",                     :precision => 15, :scale => 2, :default => 0.0
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "vehicle_fees", :force => true do |t|
+    t.integer  "org_id",                   :null => false
+    t.string   "name",       :limit => 60
+    t.date     "fee_date"
+    t.integer  "user_id",                  :null => false
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

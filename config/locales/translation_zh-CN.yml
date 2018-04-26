@@ -74,6 +74,8 @@ zh-CN:
       mth_settlement_line: 月费用结算单明细
       fee_info: 流水账
       fee_info_line: 流水账明细
+      vehicle_fee: 大车运费
+      vehicle_fee_line: 运费明细
 
     attributes:
       public_attrs:
@@ -650,5 +652,17 @@ zh-CN:
         fee_note: 费用说明
         fee: 金额
         note: 备注
+      
+      vehicle_fee:
+        org: 机构
+        org_id: 机构
+        fee_date: 日期
+        vehicle_fee_lines:  明细
+        sum_load_fee: 运费合计
+        sum_vehicle_count: 总车次
 
-
+      vehicle_fee_line:
+        to_org: 到货地
+        to_org_id: 到货地
+        v_no: 车牌号
+        load_fee: 运费 

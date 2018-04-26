@@ -1,8 +1,8 @@
-<%= semantic_form_for resource, :html => {:id => "fee_info_form"} do |f|%>
+<%= semantic_form_for resource, :html => {:id => "vehicle_fee_form"} do |f|%>
   <%= f.error_messages %>
   <table class="table">
     <tr>
-      <th>记账日期:</th>
+      <th>日期:</th>
       <th>
         <%= f.input :fee_date,:as => :string,:label => false,:input_html =>{:readonly => true,:size => 20,:class => 'datepicker'} %>
       </th>
@@ -19,28 +19,30 @@
   </table>
   <table class="table">
     <tr>
-      <th>类别</th>
-      <th>说明</th>
+      <% if can? :edit_to_org,VehicleFee %>
+        <th>到货地</th>
+      <% else %>
+        <th></th>
+      <% end %>
+      <th>车牌号</th>
       <th>金额</th>
       <th>备注</th>
     </tr>
-    <% f.semantic_fields_for :fee_info_lines do |f_line| %>
+    <% f.semantic_fields_for :vehicle_fee_lines do |f_line| %>
       <tr>
-        <% if can? :create_income,FeeInfo  %>
+        <% if can? :edit_to_org,VehicleFee %>
           <td>
-            <%= f_line.input :fee_type,:as => :select,:label => false,:collection => fee_types_for_select,:include_blank => false,:label => false %>
+            <%= f_line.input :to_org_id,:as => :select,:label => false, :collection => exclude_current_ability_orgs_for_select,:include_blank => false,:input_html => {:id => "org_id"} %>
           </td>
         <% else %>
           <td>
-            <%= f_line.hidden_field :fee_type,:value => 9 %>
-            支出
           </td>
         <% end %>
         <td>
-          <%= f_line.input :fee_note,:label => false %>
+          <%= f_line.input :v_no,:label => false %>
         </td>
         <td>
-          <%= f_line.input :fee,:label => false %>
+          <%= f_line.input :load_fee,:label => false %>
         </td>
         <td>
           <%= f_line.input :note,:as => :string,:label => false %>
