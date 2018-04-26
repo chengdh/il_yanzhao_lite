@@ -8,6 +8,12 @@ class FeeInfosController < BaseController
       @fee_info.fee_info_lines.build
     end
   end
+  #GET search
+  #显示查询窗口
+  def search
+    render :partial => "search"
+  end
+
   #重写collection方法-只能看到本机构数据
   protected
   def collection

@@ -17,31 +17,22 @@
 <table class="table">
   <tr>
     <th>序号</th>
-    <% if can? :edit_to_org,VehicleFee %>
-      <th>到货地</th>
-    <% else %>
-      <th></th>
-    <% end %>
-    <th>车牌号</th>
+    <th>费用类别</th>
+    <th>说明</th>
     <th>金额</th>
     <th>备注</th>
   </tr>
-  <% resource.vehicle_fee_lines.each_with_index do |line,i| %>
+  <% resource.fee_info_lines.each_with_index do |line,i| %>
     <tr>
       <td><%= i+1 %></td>
-      <% if can? :edit_to_org,VehicleFee %>
-        <td>
-          <%= line.to_org %>
-        </td>
-      <% else %>
-        <td>
-        </td>
-      <% end %>
       <td>
-        <%= line.v_no %>
+        <%= line.fee_type_des %>
       </td>
       <td>
-        <%= line.load_fee %>
+        <%= line.fee_note %>
+      </td>
+      <td>
+        <%= line.fee %>
       </td>
       <td>
         <%= line.note %>
@@ -53,8 +44,8 @@
   <tr>
     <td></td>
     <td>合计</td>
-    <td><%= "共#{resource.sum_vehicle_count}车.次" %></td>
-    <td><%= resource.sum_load_fee %></td>
+    <td></td>
+    <td><%= resource.sum_fee %></td>
     <td></td>
   </tr>
 </tfoot>

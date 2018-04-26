@@ -1,0 +1,94 @@
+<div class="block">
+  <%= render "dynamic_toolbar" %>
+  <div class="content">
+    <div class="inner">
+      <%# <%= render "simple_search" %>
+      <table class="table">
+        <tr>
+          <th style="text-align: center;" colspan="10">
+            <h3 class="title"><%= "#{IlConfig.client_name}#{params[:search][:mth_eq]}财务收支分析表" %></h3>
+          </th>
+        </tr>
+        <tr>
+          <th>月份:</th>
+          <th><%= resource.mth %></th>
+          <th>操作员:</th>
+          <th><%= resource.user %></th>
+        </tr>
+      </table>
+      <table class="table">
+        <tr>
+          <th>分公司</th>
+          <th>返程收入</th>
+          <th>&nbsp;</th>
+          <th>总运费</th>
+          <th>提成</th>
+          <th>保险费</th>
+          <th style='color: red;'>合计</th>
+          <th>经营费用</th>
+          <th>大车费用</th>
+          <th style='color: red;'>合计</th>
+          <th style='color: green;'>利润</th>
+        </tr>
+        <% resource.mth_settlement_lines.each do |msl| %>
+          <tr>
+            <th>
+              <%= msl.org %>
+            </th>
+            <td>
+              <%= msl.to_carrying_fee %>
+            </td>
+            <td>&nbsp;</td>
+            <td>
+              <%= msl.from_carrying_fee %>
+            </td>
+            <td>
+              <%= msl.commission_fee %>
+            </td>
+            <td>
+              <%= msl.insured_fee %>
+            </td>
+            <td><span class="sum_line" style='color: red;'><%= msl.sum_income %></span></td>
+            <td>
+              <%= msl.sum_fee %>
+            </td>
+            <td>
+              <%= msl.sum_load_fee %>
+            </td>
+            <td>
+              <%= msl.sum_cost %>
+            </td>
+            <td>
+              <%= msl.sum_profit %>
+            </td>
+          </tr>
+        <% end %>
+        <tfoot>
+          <tr>
+            <td>合计:</td>
+            <td><span class="sum_to_carrying_fee"><%= resource.sum_to_carrying_fee %></span></td>
+            <td><span class="">&nbsp;</span></td>
+            <td><span class="sum_from_carrying_fee"><%= resource.sum_from_carrying_fee %></span></td>
+            <td><span class="sum_commission_fee"><%= resource.sum_commission_fee %></span></td>
+            <td><span class="sum_insured_fee"><%= resource.sum_insured_fee %></span></td>
+            <td><span class="sum_total"><%= resource.sum_income %></span></td>
+            <td>
+              <%= resource.sum_fee %>
+            </td>
+            <td>
+              <%= resource.sum_load_fee %>
+            </td>
+            <td>
+              <%= resource.sum_cost %>
+            </td>
+            <td>
+              <%= resource.sum_profit %>
+            </td>
+
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+  <%= render "dynamic_toolbar" %>
+</div>

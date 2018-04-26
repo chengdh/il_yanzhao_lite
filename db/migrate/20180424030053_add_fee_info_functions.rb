@@ -9,7 +9,7 @@ class AddFeeInfoFunctions < ActiveRecord::Migration
       :group_name => group_name,
       :subject_title => subject_title,
       :subject => subject,
-      :default_action => 'fee_infoes_path(:sort => "fee_date",:direction => "desc")',
+      :default_action => 'fee_infos_path(:sort => "fee_date",:direction => "desc")',
       :function => {
         :read => {:title => "查看"},
         :create => {:title => "新建"},

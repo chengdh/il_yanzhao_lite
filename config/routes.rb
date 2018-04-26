@@ -1,12 +1,17 @@
 IlYanzhao::Application.routes.draw do
 
-  resources :vehicle_fee_lines
+  resources :vehicle_fees do
+    get :search,:on => :collection
+  end
 
-  resources :vehicle_fees
 
-  resources :fee_infos
+  resources :fee_infos do
+    get :search,:on => :collection
+  end
 
-  resources :mth_settlements
+  resources :mth_settlements do
+    get :mth_rpt,:on => :collection
+  end
 
   resources :notifies
 
