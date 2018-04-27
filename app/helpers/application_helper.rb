@@ -87,5 +87,13 @@ module ApplicationHelper
     ret = column if ret.blank?
     ret.to_sym
   end
-
+  #月份选择,提供自上月开始的月份选择
+  def months_ago_for_select
+    ret = []
+    (1..12).collect do |mth|
+      time = mth.months.ago
+      ret = ret + [ [time.strftime("%Y%m"),time.strftime("%Y年%m月")]]
+    end
+    ret.collect {|item| [item[1],item[0]]}
+  end
 end

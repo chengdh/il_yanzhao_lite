@@ -18,6 +18,16 @@ class VehicleFeesController < BaseController
   def search
     render :partial => "search"
   end
+  #GET vehicle_fees/mth_rpt
+  #大车费用对比表
+  def mth_rpt
+    last_mth = 1.months.ago.strftime("%Y%m")
+    search_params = {:mth_eq => last_mth}
+    params[:search] = {} if params[:search].blank?
+    params[:search].deep_merge!(search_params) if params[:search].blank?
+    @mth_rpt = VehicleFee.mth_rpt(params[:search][:mth_eq])
+  end
+
 
   #重写collection方法-只能看到本机构数据
   protected

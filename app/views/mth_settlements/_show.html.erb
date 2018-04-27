@@ -34,7 +34,7 @@
       <td>
         <%= msl.insured_fee %>
       </td>
-      <td><span class="sum_line" style='color: red;'><%= msl.sum_line %></span></td>
+      <td><span class="sum_line" style='color: red;'><%= msl.sum_income %></span></td>
     </td>
   </tr>
 <% end %>
@@ -46,7 +46,7 @@
     <td><span class="sum_from_carrying_fee"><%= resource.sum_from_carrying_fee %></span></td>
     <td><span class="sum_commission_fee"><%= resource.sum_commission_fee %></span></td>
     <td><span class="sum_insured_fee"><%= resource.sum_insured_fee %></span></td>
-    <td><span class="sum_total"><%= resource.sum_income_fee %></span></td>
+    <td><span class="sum_total"><%= resource.sum_income %></span></td>
   </tr>
 </tfoot>
 </table>

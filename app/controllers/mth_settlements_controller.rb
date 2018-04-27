@@ -14,8 +14,8 @@ class MthSettlementsController < BaseController
     last_mth = 1.months.ago.strftime("%Y%m")
     search_params = {:mth_eq => last_mth}
     params[:search] = {} if params[:search].blank?
-    params[:search].deep_merge!(search_params)
+    params[:search].deep_merge!(search_params) if params[:search].blank?
 
-    @mth_settlement = MthSettlement.search(search_params).try(:first)
+    @mth_settlement = MthSettlement.search(params[:search]).try(:first)
   end
 end

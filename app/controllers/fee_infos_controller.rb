@@ -1,7 +1,7 @@
 #coding: utf-8
 #流水账
 class FeeInfosController < BaseController
-  table :fee_date,:org,:sum_fee_type_9,:sum_fee_type_1,:sum_fee,:user
+  table :fee_date,:org,:sum_fee_type_1,:sum_fee_type_9,:sum_fee,:user
   def new
     @fee_info = FeeInfo.new
     (1..10).each do 

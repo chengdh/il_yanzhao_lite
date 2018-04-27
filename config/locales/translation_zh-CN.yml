@@ -643,9 +643,9 @@ zh-CN:
         org: 分公司
         fee_date: 记账日期
         fee_info_line: 明细
-        sum_fee: 合计
-        sum_fee_type_9: 费用合计
         sum_fee_type_1: 收入合计
+        sum_fee_type_9: 费用合计
+        sum_fee: 利润
 
       fee_info_line:
         type_des: 费用类型

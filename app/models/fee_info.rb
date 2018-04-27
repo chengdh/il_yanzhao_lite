@@ -11,7 +11,7 @@ class FeeInfo < ActiveRecord::Base
   end
 
   def sum_fee
-    fee_info_lines.sum(:fee)
+    sum_fee_type_1 - sum_fee_type_9
   end
 
   #支出合计

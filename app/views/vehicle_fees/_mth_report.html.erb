@@ -1,0 +1,41 @@
+<table class="table">
+  <tr>
+    <th style="text-align: center;" colspan="10">
+      <h3 class="title"><%= "#{IlConfig.client_name}#{params[:search][:mth_eq]}大车费用对比表" %></h3>
+    </th>
+  </tr>
+</table>
+<table class="table">
+  <tr>
+    <th>分公司</th>
+    <th>计划费用</th>
+    <th>实际支付费用</th>
+    <th>差额</th>
+  </tr>
+  <% @mth_rpt.each do |org,v| %>
+    <tr>
+      <th>
+        <%= org %>
+      </th>
+      <td>
+        <%= v.first %>
+      </td>
+      <td>
+        <%= v.last%>
+      </td>
+      <td>
+        <%= v.last - v.first %>
+      </td>
+    </tr>
+  <% end %>
+  <tfoot>
+    <tr>
+      <td>合计:</td>
+      <td><span class="">&nbsp;</span></td>
+      <td>
+      </td>
+      <td>
+      </td>
+    </tr>
+  </tfoot>
+</table>
