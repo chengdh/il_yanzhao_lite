@@ -4,7 +4,7 @@ class FeeInfo < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
   has_many :fee_info_lines
-  validates :org_id,:user_id, presence: true
+  validates :org_id,:user_id, :presence => true
   accepts_nested_attributes_for :fee_info_lines,:allow_destroy => true,:reject_if => proc { |attrs| attrs['fee_note'].blank? or attrs['fee'].to_f <=0 }
   default_value_for :fee_date do 
     Date.today

@@ -3,8 +3,8 @@
 class MthSettlementLine < ActiveRecord::Base
   belongs_to :mth_settlement
   belongs_to :org
-  validates :from_carrying_fee,:to_carrying_fee,:insured_fee,:commission_fee, numericality: true
-  validates :org_id, presence: true
+  validates :from_carrying_fee,:to_carrying_fee,:insured_fee,:commission_fee, :numericality => true
+  validates :org_id, :presence => true
 
   #收入合计
   def sum_income

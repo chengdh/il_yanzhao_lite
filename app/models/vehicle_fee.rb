@@ -3,7 +3,7 @@
 class VehicleFee < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
-  validates :org_id,:user_id, presence: true
+  validates :org_id,:user_id, :presence => true
   has_many :vehicle_fee_lines,:dependent => :destroy
   accepts_nested_attributes_for :vehicle_fee_lines,:allow_destroy => true,:reject_if => proc {|attrs| attrs['v_no'].blank? or attrs['load_fee'].to_f <= 0 }
 

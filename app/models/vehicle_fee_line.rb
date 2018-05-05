@@ -3,5 +3,5 @@
 class VehicleFeeLine < ActiveRecord::Base
   belongs_to :vehicle_fee
   belongs_to :to_org,:class_name => "Org"
-  validates :load_fee, numericality: true
+  validates :load_fee, :numericality => true
 end
