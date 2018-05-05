@@ -1,6 +1,6 @@
 #coding: utf-8
 class MthSettlementsController < BaseController
-  table :mth,:sum_to_carrying_fee,:sum_from_carrying_fee,:sum_commission_fee,:sum_insured_fee,:sum_income_fee,:user
+  table :mth,:sum_to_carrying_fee,:sum_from_carrying_fee,:sum_commission_fee,:sum_insured_fee,:sum_income,:user
   def new
     @mth_settlement = MthSettlement.new
     Org.branch_list.each do |b|

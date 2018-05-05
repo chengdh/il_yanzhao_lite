@@ -9,7 +9,7 @@ class FeeInfoLine < ActiveRecord::Base
   def fee_type_des
     ret = ""
     ret = "收入" if fee_type == 1
-    ret = "费用" if fee_type == 9
+    ret = "支出" if fee_type == 9
     ret
   end
 end

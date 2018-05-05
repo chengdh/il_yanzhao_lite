@@ -629,7 +629,7 @@ zh-CN:
         sum_to_carrying_fee: 返程运费
         sum_commission_fee: 提成
         sum_insured_fee: 保险费
-        sum_income_fee: 收入合计
+        sum_income: 收入合计
 
       mth_settlement_line:
         org: 分公司
