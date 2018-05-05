@@ -26,7 +26,6 @@ class ChangeVipReadAction < ActiveRecord::Migration
         :conditions =>"{:org_id => user.current_ability_org_ids }"
       }
       sfo.save!
-
     end
   end
 
