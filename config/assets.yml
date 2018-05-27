@@ -21,6 +21,7 @@ javascripts:
     - public/javascripts/select_org.js
     - public/javascripts/application.js
     - public/javascripts/web_print.js
+    - public/javascripts/mth_settlements.js
   il_ie_javascripts:
     - public/javascripts/ukey.js
     - public/javascripts/chart/excanvas.js

@@ -1,59 +1,113 @@
 <%= semantic_form_for resource, :html => {:id => "mth_settlement_form"} do |f|%>
   <%= f.error_messages %>
-  <table class="table">
-    <tr>
-      <th>月份:</th>
-      <td><%= f.text_field :mth,:readonly => true %></td>
-      <th>操作员:</th>
-      <td>
-        <%= f.hidden_field :user_id,:value => current_user.id if f.object.new_record?%>
-        <%= current_user %>
-      </td>
-    </tr>
-  </table>
-  <table class="table">
-    <tr>
-      <th>分公司</th>
-      <th>返程收入</th>
-      <th>&nbsp;</th>
-      <th>总运费</th>
-      <th>提成</th>
-      <th>保险费</th>
-      <th style='color: red;'>合计</th>
-    </tr>
-    <% f.semantic_fields_for :mth_settlement_lines do |f_msl| %>
+    <table class="table">
       <tr>
-        <th>
-          <%= f_msl.hidden_field :org_id %>
-          <%= f_msl.object.org %>
-        </th>
+        <th>月份:</th>
         <td>
-          <%= f_msl.text_field :to_carrying_fee %>
+          <%= f.text_field :mth,:readonly => true %>
         </td>
-        <td>&nbsp;</td>
+        <th>操作员:</th>
         <td>
-          <%= f_msl.text_field :to_carrying_fee %>
+          <%= f.hidden_field :user_id,:value => current_user.id if f.object.new_record?%>
+            <%= current_user %>
         </td>
-        <td>
-          <%= f_msl.text_field :commission_fee %>
-        </td>
-        <td>
-          <%= f_msl.text_field :insured_fee %>
-        </td>
-        <td><span class="sum_line" style='color: red;'></span></td>
-      </td>
-    </tr>
-  <% end %>
-  <tfoot>
-    <tr>
-      <td>合计:</td>
-      <td><span class="sum_to_carrying_fee"></span></td>
-      <td><span class="sum_to_carrying_fee"></span></td>
-      <td><span class="">&nbsp;</span></td>
-      <td><span class="sum_from_carrying_fee"></span></td>
-      <td><span class="sum_commission_fee"></span></td>
-      <td><span class="sum_total"></span></td>
-    </tr>
-  </tfoot>
-</table>
-<% end %>
+      </tr>
+    </table>
+    <table class="table">
+      <tr>
+        <th rowspan="2">分公司</th>
+        <th colspan="3" style="text-align: center;">收入</th>
+        <th colspan="4" style="text-align: center;">支出</th>
+        <th rowspan="2">利润</th>
+        <th rowspan="2">返程收入</th>
+        <th rowspan="2">总运费</th>
+        <th rowspan="2"></th>
+      </tr>
+      <tr>
+        <th>提成</th>
+        <th>保险费</th>
+        <th>合计</th>
+        <th>经营费用</th>
+        <th>大车费用</th>
+        <th>装卸组</th>
+        <th>合计</th>
+      </tr>
+      <% f.semantic_fields_for :mth_settlement_lines do |f_msl| %>
+        <tr class="tr_mth_settlement_line" data-line_object=<%= f_msl.object.to_json(:methods => [:sum_cost,:sum_income,:sum_profit]) %>>
+          <th>
+            <%= f_msl.hidden_field :org_id %>
+              <%= f_msl.object.org %>
+          </th>
+          <td>
+            <%= f_msl.text_field :commission_fee,:size => "10",:class => "commission_fee" %>
+          </td>
+          <td>
+            <%= f_msl.text_field :insured_fee,:size => "10",:class => "insured_fee"  %>
+          </td>
+          <td>
+            <span class="sum_income"><%= f_msl.object.sum_income %></span>
+          </td>
+          <td>
+            <%= f_msl.text_field :cost_fee,:size => "10", :class=>"cost_fee"  %>
+          </td>
+          <td>
+            <%= f_msl.text_field :vehicle_fee,:size => "10",:class => "vehicle_fee"   %>
+          </td>
+          <td>
+            <%= f_msl.text_field :load_fee,:size => "10",:class => "load_fee"  %>
+          </td>
+          <td>
+            <span class="sum_cost"><%= f_msl.object.sum_cost %></span>
+          </td>
+          <td>
+            <span class="sum_profit"><%= f_msl.object.sum_profit %></span>
+          </td>
+          <td>
+            <%= f_msl.text_field :to_carrying_fee,:size => "10",:class => "to_carrying_fee"  %>
+          </td>
+          <td>
+            <%= f_msl.text_field :from_carrying_fee,:size => "10",:class => "from_carrying_fee"  %>
+          </td>
+          <td>
+          <%= link_to '删除', "javascript:;",:class => "btn_delete_settlement_line",:style => "color: red;"%>
+          </td>
+        </tr>
+        <% end %>
+          <tfoot>
+            <tr>
+              <td>合计:</td>
+              <td>
+                <span class="total_commission_fee"><%= resource.total_commission_fee  %></span>
+              </td>
+              <td>
+                <span class="total_insured_fee"<%= resource.total_insured_fee %>></span>
+              </td>
+              <td>
+                <span class="total_income"><%= resource.total_income %></span>
+              </td>
+              <td>
+                <span class="total_cost_fee"><%= resource.total_cost_fee %></span>
+              </td>
+              <td>
+                <span class="total_vehicle_fee"><%= resource.total_vehicle_fee %></span>
+              </td>
+              <td>
+                <span class="total_load_fee"><%= resource.total_load_fee %></span>
+              </td>
+              <td>
+                <span class="total_cost"><%= resource.total_cost %></span>
+              </td>
+              <td>
+                <span class="total_profit"><%= resource.total_profit %></span>
+              </td>
+              <td>
+                <span class="total_to_carrying_fee"><%= resource.total_to_carrying_fee %></span>
+              </td>
+              <td>
+                <span class="total_from_carrying_fee"><%= resource.total_from_carrying_fee  %></span>
+              </td>
+              <td></td>
+            </tr>
+          </tfoot>
+    </table>
+    <% end %>

@@ -29,7 +29,7 @@ class FeeInfo < ActiveRecord::Base
     f_day = Date.parse("#{mth}01")
     t_day = f_day.end_of_month
 
-    FeeInfoLine.where(:fee_type => 9).search(:fee_info_org_id_eq => org_id,:fee_info_fee_date_gte => f_day,:fee_info_fee_date_gte => t_day).sum(:fee)
+    FeeInfoLine.where(:fee_type => 9).search(:fee_info_org_id_eq => org_id,:fee_info_fee_date_gte => f_day,:fee_info_fee_date_lte => t_day).sum(:fee)
   end
 
   #月收入合计
@@ -37,6 +37,6 @@ class FeeInfo < ActiveRecord::Base
     f_day = Date.parse("#{mth}01")
     t_day = f_day.end_of_month
 
-    FeeInfoLine.where(:fee_type => 1).search(:fee_info_org_id_eq => org_id,:fee_info_fee_date_gte => f_day,:fee_info_fee_date_gte => t_day).sum(:fee)
+    FeeInfoLine.where(:fee_type => 1).search(:fee_info_org_id_eq => org_id,:fee_info_fee_date_gte => f_day,:fee_info_fee_date_lte => t_day).sum(:fee)
   end
 end

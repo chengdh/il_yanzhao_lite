@@ -12,3 +12,4 @@ doc/app
 .DS_Store
 public/assets/*
 vendor/
+.vscode

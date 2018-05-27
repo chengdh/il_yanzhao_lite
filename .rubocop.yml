@@ -1,0 +1,8 @@
+Style/AsciiComments:
+  Enabled: false
+Style/Encoding:
+  Enabled: false
+Metrics/LineLength:
+  Max: 199
+Rails:
+  Enabled: true
