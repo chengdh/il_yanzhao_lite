@@ -2,11 +2,16 @@
   <tr>
     <td></td>
     <td>合计:</td>
-    <td><%= collection.to_a.sum(&:sum_to_carrying_fee) %>
-    <td><%= collection.to_a.sum(&:sum_from_carrying_fee) %>
-    <td><%= collection.to_a.sum(&:sum_commission_fee) %>
-    <td><%= collection.to_a.sum(&:sum_insured_fee) %>
-    <td><%= collection.to_a.sum(&:sum_income) %>
+    <td><%= collection.to_a.sum(&:total_commission_fee) %>
+    <td><%= collection.to_a.sum(&:total_insured_fee) %>
+    <td><%= collection.to_a.sum(&:total_income) %>
+    <td><%= collection.to_a.sum(&:total_cost_fee) %>
+    <td><%= collection.to_a.sum(&:total_vehicle_fee) %>
+    <td><%= collection.to_a.sum(&:total_load_fee) %>
+    <td><%= collection.to_a.sum(&:total_cost) %>
+    <td><%= collection.to_a.sum(&:total_profit) %>
+    <td><%= collection.to_a.sum(&:total_from_carrying_fee) %>
+    <td><%= collection.to_a.sum(&:total_to_carrying_fee) %>
     <td></td>
     <td></td>
   </tr>

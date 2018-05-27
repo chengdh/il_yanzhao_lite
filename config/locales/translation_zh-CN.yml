@@ -625,11 +625,16 @@ zh-CN:
 
       mth_settlement:
         mth: 月份
-        sum_from_carrying_fee: 运费
-        sum_to_carrying_fee: 返程运费
-        sum_commission_fee: 提成
-        sum_insured_fee: 保险费
-        sum_income: 收入合计
+        total_from_carrying_fee: 总运费
+        total_to_carrying_fee: 返程运费
+        total_commission_fee: 提成
+        total_insured_fee: 保险费
+        total_income: 收入合计
+        total_cost_fee: 经营费用
+        total_vehicle_fee: 大车费
+        total_load_fee: 装卸费
+        total_cost: 费用合计 
+        total_profit: 利润 
 
       mth_settlement_line:
         org: 分公司

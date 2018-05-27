@@ -2,8 +2,7 @@
 
 # 月结算表controller
 class MthSettlementsController < BaseController
-  table :mth, :sum_to_carrying_fee, :sum_from_carrying_fee, :sum_commission_fee,
-        :sum_insured_fee, :sum_income, :user
+  table :mth, :total_commission_fee, :total_insured_fee, :total_income, :total_cost_fee, :total_vehicle_fee, :total_load_fee, :total_cost, :total_profit, :total_to_carrying_fee, :total_from_carrying_fee, :user
   def new
     @mth_settlement = MthSettlement.new
     Org.branch_list.each do |b|
