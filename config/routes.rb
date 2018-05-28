@@ -134,6 +134,7 @@ IlYanzhao::Application.routes.draw do
     get :search,:on => :collection
     get :export_excel,:on => :member
     get :export_excel_for_cib,:on => :member
+    get :export_sms_excel,:on => :member
     get :process_handle,:on => :member
     resources :carrying_bills
   end

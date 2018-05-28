@@ -132,6 +132,8 @@ class Ability
 
     #可打印提货单,就可以记录提货单打印次数
     can :th_bill_print_counter,CarryingBill if can? :print,DeliverInfo
+     #代收货款支付清单导出为sms_excel
+    can :export_sms_excel,TransferPaymentList if can? :read,TransferPaymentList
   end
   #定义运单修改权限
   def set_bill_update_permission(user)

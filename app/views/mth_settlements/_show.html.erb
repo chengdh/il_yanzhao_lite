@@ -1,52 +1,103 @@
 <table class="table">
   <tr>
     <th>月份:</th>
-    <th><%= resource.mth %></th>
+    <td>
+      <%= resource.mth %>
+    </td>
     <th>操作员:</th>
-    <th><%= resource.user %></th>
+    <td>
+      <%= resource.user %>
+    </td>
   </tr>
 </table>
 <table class="table">
   <tr>
-    <th>分公司</th>
-    <th>返程收入</th>
-    <th>&nbsp;</th>
-    <th>总运费</th>
+    <th rowspan="2">分公司</th>
+    <th colspan="3" style="text-align: center;">收入</th>
+    <th colspan="4" style="text-align: center;">支出</th>
+    <th rowspan="2">利润</th>
+    <th rowspan="2">返程收入</th>
+    <th rowspan="2">总运费</th>
+  </tr>
+  <tr>
     <th>提成</th>
     <th>保险费</th>
-    <th style='color: red;'>合计</th>
+    <th>合计</th>
+    <th>经营费用</th>
+    <th>大车费用</th>
+    <th>装卸组</th>
+    <th>合计</th>
   </tr>
-  <% resource.mth_settlement_lines.each do |msl| %>
+  <% resource.mth_settlement_lines.each do |line| %>
     <tr>
       <th>
-        <%= msl.org %>
+        <%= line.org %>
       </th>
       <td>
-        <%= msl.to_carrying_fee %>
-      </td>
-      <td>&nbsp;</td>
-      <td>
-        <%= msl.to_carrying_fee %>
+        <%= line.commission_fee %>
       </td>
       <td>
-        <%= msl.commission_fee %>
+        <%= line.insured_fee  %>
       </td>
       <td>
-        <%= msl.insured_fee %>
+        <%= line.sum_income %>
       </td>
-      <td><span class="sum_line" style='color: red;'><%= msl.sum_income %></span></td>
+      <td>
+        <%= line.cost_fee  %>
+      </td>
+      <td>
+        <%= line.vehicle_fee   %>
+      </td>
+      <td>
+        <%= line.load_fee  %>
+      </td>
+      <td>
+        <%= line.sum_cost %></span>
     </td>
-  </tr>
-<% end %>
-<tfoot>
-  <tr>
-    <td>合计:</td>
-    <td><span class="sum_to_carrying_fee"><%= resource.sum_to_carrying_fee %></span></td>
-    <td><span class="">&nbsp;</span></td>
-    <td><span class="sum_from_carrying_fee"><%= resource.sum_from_carrying_fee %></span></td>
-    <td><span class="sum_commission_fee"><%= resource.sum_commission_fee %></span></td>
-    <td><span class="sum_insured_fee"><%= resource.sum_insured_fee %></span></td>
-    <td><span class="sum_total"><%= resource.sum_income %></span></td>
-  </tr>
-</tfoot>
+    <td>
+      <%= line.sum_profit %></span>
+  </td>
+  <td>
+    <%= line.to_carrying_fee  %>
+  </td>
+  <td>
+    <%= line.from_carrying_fee %>
+  </td>
+</tr>
+  <% end %>
+  <tfoot>
+    <tr>
+      <td>合计:</td>
+      <td>
+        <span class="total_commission_fee"><%= resource.total_commission_fee  %></span>
+      </td>
+      <td>
+        <span class="total_insured_fee"><%= resource.total_insured_fee %></span>
+      </td>
+      <td>
+        <span class="total_income"><%= resource.total_income %></span>
+      </td>
+      <td>
+        <span class="total_cost_fee"><%= resource.total_cost_fee %></span>
+      </td>
+      <td>
+        <span class="total_vehicle_fee"><%= resource.total_vehicle_fee %></span>
+      </td>
+      <td>
+        <span class="total_load_fee"><%= resource.total_load_fee %></span>
+      </td>
+      <td>
+        <span class="total_cost"><%= resource.total_cost %></span>
+      </td>
+      <td>
+        <span class="total_profit"><%= resource.total_profit %></span>
+      </td>
+      <td>
+        <span class="total_to_carrying_fee"><%= resource.total_to_carrying_fee %></span>
+      </td>
+      <td>
+        <span class="total_from_carrying_fee"><%= resource.total_from_carrying_fee  %></span>
+      </td>
+    </tr>
+  </tfoot>
 </table>
