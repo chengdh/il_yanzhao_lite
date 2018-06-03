@@ -4,9 +4,9 @@
 class VehicleFee < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
-  validates :org_id, :user_id, presence: true
-  has_many :vehicle_fee_lines, dependent: :destroy
-  accepts_nested_attributes_for :vehicle_fee_lines, allow_destroy: true, reject_if: proc { |attrs| attrs['v_no'].blank? || (attrs['load_fee'].to_f <= 0) }
+  validates :org_id, :user_id, :presence => true
+  has_many :vehicle_fee_lines, :dependent => :destroy
+  accepts_nested_attributes_for :vehicle_fee_lines, :allow_destroy => true, :reject_if => proc { |attrs| attrs['v_no'].blank? || (attrs['load_fee'].to_f <= 0) }
 
   default_value_for :fee_date do
     1.day.ago.to_date
