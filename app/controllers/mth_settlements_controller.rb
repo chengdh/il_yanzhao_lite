@@ -24,4 +24,17 @@ class MthSettlementsController < BaseController
 
     @mth_settlement = MthSettlement.search(params[:search]).try(:first)
   end
+  #导出查询结果为excel
+  #GET mth_settlements/:id/export_excel
+  def export_excel
+    @mth_settlement = MthSettlement.find(params[:id])
+    xls = render_to_string(:partial => "excel",:layout => false)
+    send_data xls,:filename => "月费用结算清单.xls"
+  end
+  #GET search
+  #显示查询窗口
+  def search
+    render :partial => "search"
+  end
+
 end

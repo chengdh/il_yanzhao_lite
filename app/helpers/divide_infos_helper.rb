@@ -1,0 +1,2 @@
+module DivideInfosHelper
+end

@@ -1,0 +1,137 @@
+<table class="table1" style="border-collapse: collapse;border: 0;width: 100%;">
+  <tr>
+    <td style="padding: 0;margin: 0;">
+      <table class="table">
+        <tr>
+          <th style="text-align: center;" colspan="2">
+            <h3><%= "#{IlConfig.client_name}" %>分部管理返款明细表</h3>
+          </th>
+        </tr>
+        <tr>
+          <th><%= "分部:#{resource.org}" %></th>
+          <th><%= "月份:#{resource.bill_mth}" %></th>
+        </tr>
+        <tr><th style="text-align: center;" colspan="2">提成结算</th></tr>
+        <tr>
+          <th>项目</th>
+          <th>金额</th>
+        </tr>
+        <% resource.in_fee_lines.each do |line| %>
+          <tr>
+            <th>
+              <%= line.item_name %>
+            </th>
+            <td>
+              <%= line.item_amt %>
+            </td>
+          </tr>
+        <% end %>
+        <% (1..9-resource.in_fee_lines.size).each do |i|%>
+          <tr>
+            <th>
+              &nbsp;
+            </th>
+            <td>
+              &nbsp;
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <th>合计</th>
+          <td><%= resource.sum_in_fee %></td>
+        </tr>
+
+      </table>
+    </td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td style="padding: 0;margin: 0;">
+      <table class="table">
+        <tr>
+          <th style="text-align: center;" colspan="2">
+            <h3>扣款结算&nbsp;&nbsp;&nbsp;</h3>
+          </th>
+        </tr>
+        <tr><th style="text-align: center;" colspan="2">&nbsp;</th></tr>
+        <tr><th style="text-align: center;" colspan="2">扣款结算</th></tr>
+        <tr>
+          <th>项目</th>
+          <th>金额</th>
+        </tr>
+        <% resource.out_fee_lines.each  do |line| %>
+          <tr>
+            <th>
+              <%= line.item_name %>
+            </th>
+            <td>
+              <%= line.item_amt %>
+            </td>
+          </tr>
+        <% end %>
+        <% (1..9-resource.out_fee_lines.size).each do |i|%>
+          <tr>
+            <th>
+              &nbsp;
+            </th>
+            <td>
+              &nbsp;
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <th>合计</th>
+          <td><%= resource.sum_out_fee %></td>
+        </tr>
+
+
+      </table>
+    </td>
+    <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td style="padding: 0;margin: 0;">
+      <table class="table">
+
+        <tr><th colspan="3" style="text-align: center;"><h3>副联</h3></th></tr>
+        <tr><th style="text-align: center;" colspan="3">&nbsp;</th></tr>
+        <tr><th style="text-align: center;" colspan="3">应返明细</th></tr>
+        <tr>
+          <th>项目</th>
+          <th>金额</th>
+          <th>备注</th>
+        </tr>
+        <% resource.other_fee_lines.each  do |line| %>
+          <tr>
+            <th>
+              <%= line.item_name %>
+            </th>
+            <td>
+              <%= line.item_amt %>
+            </td>
+            <td>
+              <%= line.item_note %>
+            </td>
+          </tr>
+        <% end %>
+        <% (1..9-resource.other_fee_lines.size).each do |i|%>
+          <tr>
+            <th>
+              &nbsp;
+            </th>
+            <td>
+              &nbsp;
+            </td>
+            <td>
+              &nbsp;
+            </td>
+          </tr>
+        <% end %>
+        <tr>
+          <th>合计</th>
+          <td><%= resource.sum_other_fee %></td>
+          <td></td>
+        </tr>
+      </table>
+    </td>
+    <tr>
+      <td colspan="5" style="text-align: right;"><h4>实提金额:&nbsp;&nbsp;¥<%= resource.sum_act_fee %></h4></td>
+    </tr>
+  </tr>
+</table>

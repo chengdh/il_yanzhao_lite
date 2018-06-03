@@ -7,9 +7,9 @@ jQuery(function($) {
 				page: {
 					name: "运单打印-" + the_bill.bill_no,
 					width: "186mm",
-					height: '140mm',
+					height: '129mm',
 					left: '0mm',
-					top: '4mm',
+					top: '0mm',
 					style: {
 						FontSize: 13,
 						LineSpacing: 13
@@ -20,30 +20,30 @@ jQuery(function($) {
 				from_org: {
 					text: the_bill.from_org.name,
 					left: '35mm',
-					top: '17mm',
-					width: '30mm',
-					height: '5.3mm'
+					top: '23mm',
+					width: '33mm',
+					height: '5mm'
 				},
 				to_org: {
 					text: (the_bill.to_org ? the_bill.to_org.name: "") + (the_bill.to_area ? the_bill.to_area: ""),
-					left: '80mm',
-					top: '17mm',
-					width: '30mm',
-					height: '5.3mm'
+					left: '85mm',
+					top: '23mm',
+					width: '33mm',
+					height: '5mm'
 				},
 				bill_no: {
 					text: the_bill.bill_no,
-					left: '130mm',
-					top: '17mm',
+					left: '146mm',
+					top: '11mm',
 					width: '34mm',
-					height: '5.3mm'
+					height: '5mm'
 				},
 				customer_code_1: {
 					text: the_bill.customer_code ? the_bill.customer_code.substr(0, 1) : "",
 					left: '30mm',
-					top: '24mm',
+					top: '30mm',
 					width: '5mm',
-					height: '5.3mm',
+					height: '5mm',
 					style: {
 						FontSize: 14
 					}
@@ -51,10 +51,10 @@ jQuery(function($) {
 				},
 				customer_code_2: {
 					text: the_bill.customer_code ? the_bill.customer_code.substr(1, 1) : "",
-					left: '37mm',
-					top: '24mm',
+					left: '38mm',
+					top: '30mm',
 					width: '5mm',
-					height: '5.3mm',
+					height: '5mm',
 					style: {
 						FontSize: 14
 					}
@@ -62,10 +62,10 @@ jQuery(function($) {
 				},
 				customer_code_3: {
 					text: the_bill.customer_code ? the_bill.customer_code.substr(2, 1) : "",
-					left: '44mm',
-					top: '24mm',
+					left: '46mm',
+					top: '30mm',
 					width: '5mm',
-					height: '5.3mm',
+					height: '5mm',
 					style: {
 						FontSize: 14
 					}
@@ -73,10 +73,10 @@ jQuery(function($) {
 				},
 				customer_code_4: {
 					text: the_bill.customer_code ? the_bill.customer_code.substr(3, 1) : "",
-					left: '51mm',
-					top: '24mm',
+					left: '54mm',
+					top: '30mm',
 					width: '5mm',
-					height: '5.3mm',
+					height: '5mm',
 					style: {
 						FontSize: 14
 					}
@@ -84,10 +84,10 @@ jQuery(function($) {
 				},
 				customer_code_5: {
 					text: the_bill.customer_code ? the_bill.customer_code.substr(4, 1) : "",
-					left: '58mm',
-					top: '24mm',
+					left: '62mm',
+					top: '30mm',
 					width: '5mm',
-					height: '5.3mm',
+					height: '5mm',
 					style: {
 						FontSize: 14
 					}
@@ -95,10 +95,10 @@ jQuery(function($) {
 				},
 				customer_code_6: {
 					text: the_bill.customer_code ? the_bill.customer_code.substr(5, 1) : "",
-					left: '65mm',
-					top: '24mm',
+					left: '70mm',
+					top: '30mm',
 					width: '5mm',
-					height: '5.3mm',
+					height: '5mm',
 					style: {
 						FontSize: 14
 					}
@@ -106,10 +106,10 @@ jQuery(function($) {
 				},
 				customer_code_7: {
 					text: the_bill.customer_code ? the_bill.customer_code.substr(6, 1) : "",
-					left: '72mm',
-					top: '24mm',
+					left: '78mm',
+					top: '30mm',
 					width: '5mm',
-					height: '5.3mm',
+					height: '5mm',
 					style: {
 						FontSize: 14
 					}
@@ -118,17 +118,17 @@ jQuery(function($) {
 
 				goods_no: {
 					text: the_bill.goods_no,
-					left: '92mm',
-					top: '24mm',
-					width: '40mm',
-					height: '5.3mm'
+					left: '105mm',
+					top: '30mm',
+					width: '30mm',
+					height: '7mm'
 				},
 				bill_date_year: {
 					text: the_bill.bill_date.substr(0, 4),
-					left: '135mm',
-					top: '24mm',
+					left: '138mm',
+					top: '30mm',
 					width: '15mm',
-					height: '5.3mm',
+					height: '7mm',
 					style: {
 						FontSize: 15
 					}
@@ -136,10 +136,10 @@ jQuery(function($) {
 				},
 				bill_date_mth: {
 					text: the_bill.bill_date.substr(5, 2),
-					left: '147mm',
-					top: '24mm',
+					left: '151mm',
+					top: '30mm',
 					width: '10mm',
-					height: '5.3mm',
+					height: '7mm',
 					style: {
 						FontSize: 15
 					}
@@ -147,10 +147,10 @@ jQuery(function($) {
 				},
 				bill_date_day: {
 					text: the_bill.bill_date.substr(8, 2),
-					left: '161mm',
-					top: '24mm',
+					left: '164mm',
+					top: '30mm',
 					width: '10mm',
-					height: '5.3mm',
+					height: '7mm',
 					style: {
 						FontSize: 15
 					}
@@ -159,110 +159,110 @@ jQuery(function($) {
 
 				from_customer_name: {
 					text: the_bill.from_customer_name,
-					left: '36mm',
-					top: '32mm',
+					left: '37mm',
+					top: '36mm',
 					width: '23mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				from_customer_phone: {
 					text: the_bill.from_customer_phone,
-					left: '65mm',
-					top: '32mm',
+					left: '67mm',
+					top: '36mm',
 					width: '35mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				from_customer_mobile: {
 					text: the_bill.from_customer_mobile,
-					left: '106mm',
-					top: '32mm',
+					left: '110mm',
+					top: '36mm',
 					width: '38mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				to_customer_name: {
 					text: the_bill.to_customer_name,
-					left: '36mm',
-					top: '39mm',
+					left: '37mm',
+					top: '43mm',
 					width: '23mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				to_customer_phone: {
 					text: the_bill.to_customer_phone,
-					left: '65mm',
-					top: '36mm',
+					left: '67mm',
+					top: '43mm',
 					width: '35mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				to_customer_mobile: {
 					text: the_bill.to_customer_mobile,
-					left: '106mm',
-					top: '39mm',
+					left: '110mm',
+					top: '43mm',
 					width: '38mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				pay_type_des: {
 					text: the_bill.pay_type_des,
-					left: '145mm',
-					top: '39mm',
+					left: '148mm',
+					top: '43mm',
 					width: '30mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 
 				goods_info: {
 					text: the_bill.goods_info,
-					left: '20mm',
-					top: '53mm',
+					left: '22mm',
+					top: '57mm',
 					width: '23mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				goods_package: {
 					text: the_bill.package,
-					left: '44mm',
-					top: '53mm',
+					left: '45mm',
+					top: '57mm',
 					width: '16mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				goods_num: {
 					text: the_bill.goods_num,
-					left: '60mm',
-					top: '53mm',
+					left: '61mm',
+					top: '57mm',
 					width: '14mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				goods_weight: {
 					text: the_bill.goods_weight,
-					left: '74mm',
-					top: '53mm',
+					left: '75mm',
+					top: '57mm',
 					width: '13mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				goods_volume: {
 					text: the_bill.goods_volume,
-					left: '86mm',
-					top: '53mm',
+					left: '88mm',
+					top: '57mm',
 					width: '14mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				unit_carrying_fee_price: {
 					text: the_bill.goods_volume,
-					left: '100mm',
-					top: '53mm',
+					left: '102mm',
+					top: '57mm',
 					width: '14mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 
 				carrying_fee: {
 					text: the_bill.carrying_fee,
-					left: '114mm',
-					top: '53mm',
+					left: '116mm',
+					top: '57mm',
 					width: '14mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				note: {
 					text: the_bill.note,
-					left: '125mm',
-					top: '53mm',
+					left: '126mm',
+					top: '57mm',
 					width: '43mm',
-					height: '17mm',
+					height: '7mm',
 					style: {
 						FontSize: 10,
 						LineSpacing: 1
@@ -271,68 +271,68 @@ jQuery(function($) {
 				},
 				th_amount_chinese: {
 					text: $.num2chinese(the_bill.th_amount),
-					left: '42mm',
-					top: '60mm',
+					left: '45mm',
+					top: '64mm',
 					width: '83mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				th_amount: {
 					text: the_bill.th_amount,
-					left: '126mm',
-					top: '60mm',
+					left: '128mm',
+					top: '64mm',
 					width: '43mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				insured_amount: {
 					text: the_bill.insured_amount,
-					left: '60mm',
-					top: '69mm',
+					left: '62mm',
+					top: '71mm',
 					width: '10mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 
 				insured_fee: {
 					text: the_bill.insured_fee,
-					left: '82mm',
-					top: '69mm',
+					left: '135mm',
+					top: '71mm',
 					width: '45mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				carrying_fee_total_chinese: {
 					text: $.num2chinese(the_bill.carrying_fee_total),
-					left: '42mm',
-					top: '75mm',
+					left: '45mm',
+					top: '78mm',
 					width: '83mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				carrying_fee_total: {
 					text: the_bill.carrying_fee_total,
-					left: '126mm',
-					top: '75mm',
+					left: '128mm',
+					top: '78mm',
 					width: '43mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				goods_fee_chinese: {
 					text: $.num2chinese(the_bill.goods_fee),
-					left: '42mm',
-					top: '81mm',
+					left: '45mm',
+					top: '85mm',
 					width: '83mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 				goods_fee: {
 					text: the_bill.goods_fee,
-					left: '126mm',
-					top: '81mm',
+					left: '128mm',
+					top: '85mm',
 					width: '43mm',
-					height: '5.3mm'
+					height: '7mm'
 				},
 
 				user: {
 					text: the_bill.user.real_name,
-					left: '33mm',
-					top: '95mm',
-					width: '23mm',
-					height: '5.3mm'
+					left: '150mm',
+					top: '115mm',
+					width: '25mm',
+					height: '7mm'
 				}
 
 			};

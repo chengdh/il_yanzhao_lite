@@ -1,5 +1,10 @@
 IlYanzhao::Application.routes.draw do
 
+  resources :divide_infos do
+    get :search,:on => :collection
+    get :export_excel,:on => :member
+  end
+
   resources :vehicle_fees do
     get :search,:on => :collection
     get :mth_rpt,:on => :collection
@@ -12,6 +17,8 @@ IlYanzhao::Application.routes.draw do
 
   resources :mth_settlements do
     get :mth_rpt,:on => :collection
+    get :search,:on => :collection
+    get :export_excel,:on => :member
   end
 
   resources :notifies

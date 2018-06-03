@@ -1,0 +1,83 @@
+<%= semantic_form_for resource, :html => {:id => "divide_info_form"} do |f|%>
+  <%= f.error_messages %>
+    <table class="table">
+      <tr>
+        <th>分部:</th>
+        <td>
+          <%= f.select :org_id,branches_for_select,{},:id => :org_id %>
+        </td>
+
+        <th>月份:</th>
+        <td>
+          <%= f.text_field :bill_mth,:readonly => true %>
+        </td>
+        <th>操作员:</th>
+        <td>
+          <%= f.hidden_field :user_id,:value => current_user.id if f.object.new_record?%>
+          <%= current_user %>
+        </td>
+      </tr>
+    </table>
+    <table class="table">
+      <tr><th style="text-align: center;" colspan="3"><h3>提成结算</h3></th></tr>
+      <tr>
+        <th>项目</th>
+        <th>金额</th>
+        <th>备注</th>
+      </tr>
+      <% f.semantic_fields_for :divide_info_lines,resource.in_fee_lines do |f_line| %>
+        <tr>
+          <th>
+            <%= f_line.text_field :item_name,:size => "30" %>
+            <%= f_line.hidden_field :item_type %>
+          </th>
+          <td>
+            <%= f_line.text_field :item_amt,:size => "20" %>
+          </td>
+          <td>
+            <%= f_line.text_field :item_note,:size => "100"  %>
+          </td>
+        </tr>
+      <% end %>
+      <tr><th style="text-align: center;" colspan="3"><h3>扣款结算</h3></th></tr>
+      <tr>
+        <th>项目</th>
+        <th>金额</th>
+        <th>备注</th>
+      </tr>
+      <% f.semantic_fields_for :divide_info_lines,resource.out_fee_lines do |f_line| %>
+        <tr>
+          <th>
+            <%= f_line.text_field :item_name,:size => "30" %>
+            <%= f_line.hidden_field :item_type %>
+          </th>
+          <td>
+            <%= f_line.text_field :item_amt,:size => "20" %>
+          </td>
+          <td>
+            <%= f_line.text_field :item_note,:size => "100"  %>
+          </td>
+        </tr>
+      <% end %>
+      <tr><th style="text-align: center;" colspan="3"><h3>应返明细</h3></th></tr>
+      <tr>
+        <th>项目</th>
+        <th>金额</th>
+        <th>备注</th>
+      </tr>
+      <% f.semantic_fields_for :divide_info_lines,resource.other_fee_lines do |f_line| %>
+        <tr>
+          <th>
+            <%= f_line.text_field :item_name,:size => "30" %>
+            <%= f_line.hidden_field :item_type %>
+          </th>
+          <td>
+            <%= f_line.text_field :item_amt,:size => "20" %>
+          </td>
+          <td>
+            <%= f_line.text_field :item_note,:size => "100"  %>
+          </td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>

@@ -76,6 +76,7 @@ zh-CN:
       fee_info_line: 流水账明细
       vehicle_fee: 大车运费
       vehicle_fee_line: 运费明细
+      divide_info: 返款明细表
 
     attributes:
       public_attrs:
@@ -671,3 +672,14 @@ zh-CN:
         to_org_id: 到货地
         v_no: 车牌号
         load_fee: 运费 
+
+      divide_info:
+        org: 分部
+        org_id: 分部
+        bill_date: 报表日期
+        bill_mth: 月份
+        divide_info_lines: 明细
+        sum_in_fee: 提成结算合计
+        sum_out_fee: 扣款合计
+        sum_other_fee: 应返明细
+        sum_act_fee: 实提金额
