@@ -18,7 +18,7 @@ class MthSettlementsController < BaseController
   # 月财务收支明细表
   def mth_rpt
     last_mth = 1.month.ago.strftime('%Y%m')
-    search_params = { mth_eq: last_mth }
+    search_params = { :mth_eq => last_mth }
     params[:search] = {} if params[:search].blank?
     params[:search].deep_merge!(search_params) if params[:search].blank?
 
