@@ -26,21 +26,21 @@ class VehicleFee < ActiveRecord::Base
   def self.sum_vehicle_fee_by_org_and_mth(org_id, mth)
     f_day = Date.parse("#{mth}01")
     t_day = f_day.end_of_month
-    VehicleFeeLine.search(vehicle_fee_org_id_eq: org_id, vehicle_fee_fee_date_gte: f_day, vehicle_fee_fee_date_lte: t_day).sum(:load_fee)
+    VehicleFeeLine.search(:vehicle_fee_org_id_eq => org_id, :vehicle_fee_fee_date_gte => f_day, :vehicle_fee_fee_date_lte => t_day).sum(:load_fee)
   end
 
   # 月发车费用合计
   def self.sum_vehicle_fee_from_summary_org(to_org_id, mth)
     f_day = Date.parse("#{mth}01")
     t_day = f_day.end_of_month
-    VehicleFeeLine.search(to_org_id_eq: to_org_id, vehicle_fee_fee_date_gte: f_day, vehicle_fee_fee_date_lte: t_day).sum(:load_fee)
+    VehicleFeeLine.search(:to_org_id_eq => to_org_id, :vehicle_fee_fee_date_gte => f_day, :vehicle_fee_fee_date_lte => t_day).sum(:load_fee)
   end
 
   # 到货地实付费用
   def self.sum_vehicle_fee_by_to_org_and_mth(to_org_id, mth)
     f_day = Date.parse("#{mth}01")
     t_day = f_day.end_of_month
-    VehicleFeeLine.search(to_org_id_is_null: true, vehicle_fee_org_id_eq: to_org_id, vehicle_fee_fee_date_gte: f_day, vehicle_fee_fee_date_lte: t_day).sum(:load_fee)
+    VehicleFeeLine.search(:to_org_id_is_null => true, :vehicle_fee_org_id_eq => to_org_id, :vehicle_fee_fee_date_gte => f_day, :vehicle_fee_fee_date_lte => t_day).sum(:load_fee)
   end
 
   # 大车运费对比表
