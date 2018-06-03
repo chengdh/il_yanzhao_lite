@@ -5,7 +5,7 @@ class MthSettlement < ActiveRecord::Base
   belongs_to :org
   belongs_to :user
   has_many :mth_settlement_lines, :dependent => :destroy
-  accepts_nested_attributes_for :mth_settlement_lines, allow_destroy: true
+  accepts_nested_attributes_for :mth_settlement_lines, :allow_destroy => true
 
   default_value_for :mth do
     Time.zone.today.months_ago(1).strftime('%Y%m')
