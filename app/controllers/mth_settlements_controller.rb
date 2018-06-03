@@ -6,7 +6,7 @@ class MthSettlementsController < BaseController
   def new
     @mth_settlement = MthSettlement.new
     Org.branch_list.each do |b|
-      line = MthSettlementLine.new(org: b)
+      line = MthSettlementLine.new(:org => b)
       @mth_settlement.mth_settlement_lines << line
       line.mth_settlement = @mth_settlement
       line.cost_fee = line.default_cost_fee
