@@ -4,8 +4,8 @@
 class MthSettlementLine < ActiveRecord::Base
   belongs_to :mth_settlement
   belongs_to :org
-  validates :from_carrying_fee, :to_carrying_fee, :insured_fee, :commission_fee, numericality: true
-  validates :org_id, presence: true
+  validates :from_carrying_fee, :to_carrying_fee, :insured_fee, :commission_fee, :numericality => true
+  validates :org_id, :presence => true
   def default_cost_fee
     FeeInfo.sum_fee_type_9_by_org_and_mth(org_id, mth_settlement.mth)
   end
