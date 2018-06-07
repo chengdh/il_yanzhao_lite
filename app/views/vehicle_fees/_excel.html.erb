@@ -1,0 +1,26 @@
+<table class="table" style="border: 1px solid #000;">
+  <tr>
+    <th style="border: 1px solid #000;">序号</th>
+    <th style="border: 1px solid #000;">日期</th>
+    <th style="border: 1px solid #000;">机构</th>
+    <th style="border: 1px solid #000;">运费合计</th>
+    <th style="border: 1px solid #000;">总车次</th>
+  </tr>
+  <% @search.all.each_with_index do |vf,i| %>
+    <tr>
+      <td style="border: 1px solid #000;"><%= i + 1 %></td>
+      <td style="border: 1px solid #000;"><%= vf.fee_date %></td>
+      <td style="border: 1px solid #000;"><%= vf.org %></td>
+      <td style="border: 1px solid #000;"> <%= vf.sum_load_fee%></td>
+      <td style="border: 1px solid #000;"><%= vf.sum_vehicle_count %></td>
+    </tr>
+  <% end %>
+  <tfoot>
+    <tr>
+      <td style="border: 1px solid #000;"></td>
+      <td style="border: 1px solid #000;">合计:</td>
+      <td style="border: 1px solid #000;"></td>
+      <td style="border: 1px solid #000;"><%= @search.all.to_a.sum(&:sum_load_fee) %>
+      <td style="border: 1px solid #000;"><%= @search.all.to_a.sum(&:sum_vehicle_count) %>
+    </tr>
+  </table>

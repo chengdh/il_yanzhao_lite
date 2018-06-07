@@ -8,6 +8,7 @@ IlYanzhao::Application.routes.draw do
   resources :vehicle_fees do
     get :search,:on => :collection
     get :mth_rpt,:on => :collection
+    get :export_excel,:on => :collection
   end
 
 

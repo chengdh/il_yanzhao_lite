@@ -20,21 +20,21 @@ jQuery(function($) {
 				from_org: {
 					text: the_bill.from_org.name,
 					left: '35mm',
-					top: '23mm',
+					top: '20mm',
 					width: '33mm',
 					height: '5mm'
 				},
 				to_org: {
 					text: (the_bill.to_org ? the_bill.to_org.name: "") + (the_bill.to_area ? the_bill.to_area: ""),
 					left: '85mm',
-					top: '23mm',
+					top: '20mm',
 					width: '33mm',
 					height: '5mm'
 				},
 				bill_no: {
 					text: the_bill.bill_no,
 					left: '146mm',
-					top: '11mm',
+					top: '16mm',
 					width: '34mm',
 					height: '5mm'
 				},
@@ -119,14 +119,14 @@ jQuery(function($) {
 				goods_no: {
 					text: the_bill.goods_no,
 					left: '105mm',
-					top: '30mm',
+					top: '28mm',
 					width: '30mm',
 					height: '7mm'
 				},
 				bill_date_year: {
 					text: the_bill.bill_date.substr(0, 4),
-					left: '138mm',
-					top: '30mm',
+					left: '135mm',
+					top: '28mm',
 					width: '15mm',
 					height: '7mm',
 					style: {
@@ -136,8 +136,8 @@ jQuery(function($) {
 				},
 				bill_date_mth: {
 					text: the_bill.bill_date.substr(5, 2),
-					left: '151mm',
-					top: '30mm',
+					left: '150mm',
+					top: '28mm',
 					width: '10mm',
 					height: '7mm',
 					style: {
@@ -147,8 +147,8 @@ jQuery(function($) {
 				},
 				bill_date_day: {
 					text: the_bill.bill_date.substr(8, 2),
-					left: '164mm',
-					top: '30mm',
+					left: '162mm',
+					top: '28mm',
 					width: '10mm',
 					height: '7mm',
 					style: {
@@ -252,7 +252,7 @@ jQuery(function($) {
 
 				carrying_fee: {
 					text: the_bill.carrying_fee,
-					left: '116mm',
+					left: '114mm',
 					top: '57mm',
 					width: '14mm',
 					height: '7mm'
@@ -278,7 +278,7 @@ jQuery(function($) {
 				},
 				th_amount: {
 					text: the_bill.th_amount,
-					left: '128mm',
+					left: '132mm',
 					top: '64mm',
 					width: '43mm',
 					height: '7mm'
@@ -293,7 +293,7 @@ jQuery(function($) {
 
 				insured_fee: {
 					text: the_bill.insured_fee,
-					left: '135mm',
+					left: '132mm',
 					top: '71mm',
 					width: '45mm',
 					height: '7mm'
@@ -307,7 +307,7 @@ jQuery(function($) {
 				},
 				carrying_fee_total: {
 					text: the_bill.carrying_fee_total,
-					left: '128mm',
+					left: '132mm',
 					top: '78mm',
 					width: '43mm',
 					height: '7mm'
@@ -321,7 +321,7 @@ jQuery(function($) {
 				},
 				goods_fee: {
 					text: the_bill.goods_fee,
-					left: '128mm',
+					left: '132mm',
 					top: '85mm',
 					width: '43mm',
 					height: '7mm'
