@@ -14,6 +14,7 @@ IlYanzhao::Application.routes.draw do
 
   resources :fee_infos do
     get :search,:on => :collection
+    get :export_excel,:on => :collection
   end
 
   resources :mth_settlements do

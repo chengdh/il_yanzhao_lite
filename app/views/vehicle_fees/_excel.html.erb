@@ -6,10 +6,10 @@
     <th style="border: 1px solid #000;">车牌号</th>
     <th style="border: 1px solid #000;">运费</th>
   </tr>
-  <% @search.all.each do |vf| %>
-    <% vf.vehicle_fee_lines.each_with_index do |line,i|  %>
+  <% @search.all.each_with_index do |vf,i| %>
+    <% vf.vehicle_fee_lines.each_with_index do |line,j|  %>
       <tr>
-        <td style="border: 1px solid #000;"><%= i + 1 %></td>
+        <td style="border: 1px solid #000;"><%= (i+1)*j + 1 %></td>
         <td style="border: 1px solid #000;"><%= vf.fee_date %></td>
         <td style="border: 1px solid #000;"><%= vf.org %></td>
         <td style="border: 1px solid #000;"> <%= line.v_no %></td>
