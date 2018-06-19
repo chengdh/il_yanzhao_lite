@@ -18,8 +18,8 @@ class FeeInfosController < BaseController
   #GET fee_infos/export_excel
   def export_excel
     @search = end_of_association_chain.where(:org_id => current_user.current_ability_org_ids).search(params[:search])
-    # xls = render_to_string(:partial => "excel",:layout => false)
-    # send_data xls,:filename => "流水账.xls"
+    xls = render_to_string(:partial => "excel",:layout => false)
+    send_data xls,:filename => "流水账.xls",:type =>  "application/vnd.ms-excel"
   end
 
   #重写collection方法-只能看到本机构数据

@@ -32,8 +32,8 @@ class VehicleFeesController < BaseController
   #GET vehicle_fees/export_excel
   def export_excel
     @search = end_of_association_chain.where(:org_id => current_user.current_ability_org_ids).search(params[:search])
-    # xls = render_to_string(:partial => "excel",:layout => false)
-    # send_data xls,:filename => "大车费用表.xls"
+    xls = render_to_string(:partial => "excel",:layout => false)
+    send_data xls,:filename => "大车费用表.xls",:type =>  "application/vnd.ms-excel"
   end
 
 
