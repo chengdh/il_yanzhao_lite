@@ -43,6 +43,6 @@ production:
   reconnect: true
   database: il_yanzhao_lite_production
   pool: 5
-  username: root
-  password: root
+  username: lmis
+  password: PASSWORDislmis
   socket: /var/run/mysqld/mysqld.sock
