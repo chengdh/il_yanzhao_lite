@@ -9,6 +9,8 @@ IlYanzhao::Application.routes.draw do
     get :search,:on => :collection
     get :mth_rpt,:on => :collection
     get :export_excel,:on => :collection
+    get :lines,:on => :collection
+    get :export_excel_lines,:on => :collection
   end
 
 

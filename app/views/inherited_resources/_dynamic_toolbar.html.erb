@@ -23,7 +23,9 @@
 
     <%if params[:action] == "new" or params[:action] == "create" or params[:action] == "update"%>
       <li>
-        <%= link_to_function image_tag("disk-black.png",:alt => "保存#{resource_class.model_name.human}"), "$('##{resource_class.model_name.underscore}_form').trigger('submit')",:title => "保存#{resource_class.model_name.human}",:class => "tipsy btn_save"  %>
+        <%= link_to_function image_tag("disk-black.png",:alt => "保存#{resource_class.model_name.human}"),
+          "if($(this).data('clicked')){return; } ;$(this).data('clicked',true),$('##{resource_class.model_name.underscore}_form').trigger('submit');",
+          :title => "保存#{resource_class.model_name.human}",:class => "tipsy btn_save"  %>
       </li>
     <%end%>
     <%if params[:action] == "edit"%>

@@ -18,6 +18,22 @@ class VehicleFeesController < BaseController
   def search
     render :partial => "search"
   end
+
+  #GET vehicle_fees/lines
+  #查询明细
+  def lines
+    @vehicle_fee_lines = VehicleFeeLine.search(params[:search]).all
+  end
+
+
+  #导出查询结果为excel
+  #GET vehicle_fees/export_excel_lines
+  def export_excel_lines
+    @vehicle_fee_lines = VehicleFeeLine.search(params[:search]).all
+    xls = render_to_string(:partial => "excel",:layout => false)
+    send_data xls,:filename => "大车费用表.xls",:type =>  "application/vnd.ms-excel"
+  end
+
   #GET vehicle_fees/mth_rpt
   #大车费用对比表
   def mth_rpt

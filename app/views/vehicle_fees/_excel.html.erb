@@ -4,30 +4,31 @@
       <th style="border: thin solid #000;">序号</th>
       <th style="border: thin solid #000;">日期</th>
       <th style="border: thin solid #000;">机构</th>
+      <th style="border: thin solid #000;">到货地</th>
       <th style="border: thin solid #000;">车牌号</th>
       <th style="border: thin solid #000;">运费</th>
     </tr>
   </thead>
   <tbody>
-    <% @search.all.each_with_index do |vf,i| %>
-      <% vf.vehicle_fee_lines.each_with_index do |line,j|  %>
+      <% @vehicle_fee_lines.each_with_index do |line,j|  %>
         <tr>
-          <td style="border: thin solid #000;"><%= (i+1)*j + 1 %></td>
-          <td style="border: thin solid #000;"><%= vf.fee_date %></td>
-          <td style="border: thin solid #000;"><%= vf.org %></td>
+          <td style="border: thin solid #000;"><%= j + 1 %></td>
+          <td style="border: thin solid #000;"><%= line.vehicle_fee.fee_date %></td>
+          <td style="border: thin solid #000;"><%= line.vehicle_fee.org %></td>
+          <td style="border: thin solid #000;"><%= line.to_org %></td>
           <td style="border: thin solid #000;"><%= line.v_no %></td>
           <td style="border: thin solid #000;"><%= line.load_fee %></td>
         </tr>
       <% end %>
-    <% end %>
   </tbody>
   <tfoot>
     <tr>
       <td style="border: thin solid #000;"></td>
       <td style="border: thin solid #000;">合计:</td>
-      <td style="border: thin solid #000;"><%= @search.all.to_a.sum(&:sum_vehicle_count) %>车.次</td>
+      <td style="border: thin solid #000;"><%= @vehicle_fee_lines.count%>车.次</td>
       <td style="border: thin solid #000;"></td>
-      <td style="border: thin solid #000;"><%= @search.all.to_a.sum(&:sum_load_fee) %></td>
+      <td style="border: thin solid #000;"></td>
+      <td style="border: thin solid #000;"><%= @vehicle_fee_lines.to_a.sum(&:load_fee) %></td>
     </tr>
   </tfoot>
 </table>
