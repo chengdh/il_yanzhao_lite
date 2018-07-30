@@ -6,6 +6,7 @@ class HandTransitBill < CarryingBill
   #validates_inclusion_of :bill_no,:in => '0000000'..'3999999'
   #20120328 保存前自动在运单编号前加发货地的两个拼音
   before_create :add_bill_no_pre
+  skip_callback :save,:before,:cal_hand_fee
   private
   def add_bill_no_pre
     #201203287单据号有重复,前边添加字母

@@ -4,4 +4,5 @@ class KidsTransitBill < CarryingBill
   validates :transit_org_id,:to_area,:presence => true
   #创建/修改数据前生成票据编号和货号
   before_validation :generate_bill_no,:on => :create
+  skip_callback :save,:before,:cal_hand_fee
 end
