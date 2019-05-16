@@ -220,8 +220,8 @@ jQuery(function($) {
         $('body').append(print_object);
       }
       //判断返回那个对象
-      if ($.browser.msie) return print_object_ie;
-      else return print_object_other;
+      if ($.browser.msie) return $('#print_object_ie')[0];
+      else return $('#print_object_other')[0];
     }
 
   });
