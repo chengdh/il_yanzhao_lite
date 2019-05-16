@@ -25,7 +25,7 @@ RUN mkdir -p /il_yanzhao
 #RUN rbenv install  2.0.0-p598
 #RUN bash -l -c 'rbenv global 1.8.6-p420; gem install bundler; rbenv rehash'
 
-RUN gem install bundler
+RUN gem install bundler -v 1.9.3
 ENV APP_HOME /il_yanzhao
 WORKDIR $APP_HOME
 
