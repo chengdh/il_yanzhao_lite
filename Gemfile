@@ -33,7 +33,7 @@ gem "jammit"
 gem "yui-compressor"
 gem "default_value_for","~>1.0.4"
 gem "jquery_notify_bar","~>0.0.4"
-gem 'rake', '~> 0.8.7'
+gem 'rake', '~> 13.0.1'
 gem 'net-ssh', '~> 2.6'
 gem 'highline', '1.6.21'
 
