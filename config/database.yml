@@ -36,13 +36,24 @@ test:
 #   pool: 5
 #   url: <%= ENV['DATABASE_URL'] %>
 
-
 production:
   adapter: mysql2
   encoding: utf8
   reconnect: true
   database: il_yanzhao_lite_production
   pool: 5
-  username: lmis
-  password: PASSWORDislmis
-  socket: /var/run/mysqld/mysqld.sock
+  username: root
+  password: fizzbuzz
+  host: mysql
+
+
+
+# production:
+#   adapter: mysql2
+#   encoding: utf8
+#   reconnect: true
+#   database: il_yanzhao_lite_production
+#   pool: 5
+#   username: lmis
+#   password: PASSWORDislmis
+#   socket: /var/run/mysqld/mysqld.sock

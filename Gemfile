@@ -43,7 +43,7 @@ gem 'highline', '1.6.21'
 # gem 'sqlite3-ruby', :require => 'sqlite3'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # Deploy with Capistrano
 gem 'capistrano', '~> 2.15', '>= 2.15.9'
